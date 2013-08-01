@@ -117,11 +117,11 @@ if (!empty($this->extra_sidebar)) {
 				<?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_GROUPS_FIELDS', 'a.fields', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_GROUPS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
-				</th>
-				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_GROUPS_ICON', 'a.icon', $listDirn, $listOrder); ?>
 				</th>
+				<th class='left'>
+                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_GROUPS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
+                </th>
                     
                     
                 <?php if (isset($this->items[0]->id)): ?>
@@ -201,13 +201,15 @@ if (!empty($this->extra_sidebar)) {
 					<?php echo $item->fields; ?>
 				</td>
 				<td>
-
-					<?php echo $item->created_by; ?>
+                    <?php if (!empty($item->icon)) { ?>
+                    <img src="<?php echo JUri::root().$item->icon; ?>" />
+                    <?php } else { ?>
+                    <img src="holder.js/48x48" />
+                    <?php } ?>
 				</td>
 				<td>
-
-					<?php echo $item->icon; ?>
-				</td>
+                    <?php echo $item->created_by; ?>
+                </td>
 
 
                 <?php if (isset($this->items[0]->id)): ?>

@@ -1,11 +1,11 @@
 <?php
 /**
- * @version     1.0.0
- * @package     com_dzproduct
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      DZ Team <dev@dezign.vn> - dezign.vn
- */
+* @version     1.0.0
+* @package     com_dzproduct
+* @copyright   Copyright (C) 2013. All rights reserved.
+* @license     GNU General Public License version 2 or later; see LICENSE.txt
+* @author      DZ Team <dev@dezign.vn> - dezign.vn
+*/
 // no direct access
 defined('_JEXEC') or die;
 
@@ -23,13 +23,13 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
     js = jQuery.noConflict();
     js(document).ready(function(){
         
-	js('input:hidden.fields').each(function(){
-		var name = js(this).attr('name');
-		if(name.indexOf('fieldshidden')){
-			js('#jform_fields option[value="'+js(this).val()+'"]').attr('selected',true);
-		}
-	});
-	js("#jform_fields").trigger("liszt:updated");
+    js('input:hidden.fields').each(function(){
+        var name = js(this).attr('name');
+        if(name.indexOf('fieldshidden')){
+            js('#jform_fields option[value="'+js(this).val()+'"]').attr('selected',true);
+        }
+    });
+    js("#jform_fields").trigger("liszt:updated");
     });
     
     Joomla.submitbutton = function(task)
@@ -41,9 +41,9 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
             
             if (task != 'group.cancel' && document.formvalidator.isValid(document.id('group-form'))) {
                 
-	if(js('#jform_fields option:selected').length == 0){
-		js("#jform_fields option[value=0]").attr('selected','selected');
-	}
+    if(js('#jform_fields option:selected').length == 0){
+        js("#jform_fields option[value=0]").attr('selected','selected');
+    }
                 Joomla.submitform(task, document.getElementById('group-form'));
             }
             else {
@@ -58,39 +58,38 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
         <div class="span10 form-horizontal">
             <fieldset class="adminform">
 
-                			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('name'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('name'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('fields'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('fields'); ?></div>
-			</div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('id'); ?></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('name'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('name'); ?></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('icon'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('icon'); ?></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('fields'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('fields'); ?></div>
+                </div>
 
-			<?php
-				foreach((array)$this->item->fields as $value): 
-					if(!is_array($value)):
-						echo '<input type="hidden" class="fields" name="jform[fieldshidden]['.$value.']" value="'.$value.'" />';
-					endif;
-				endforeach;
-			?>			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('icon'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('icon'); ?></div>
-			</div>
-				<input type="hidden" name="jform[params]" value="<?php echo $this->item->params; ?>" />
-
+                <?php
+                    foreach((array)$this->item->fields as $value): 
+                        if(!is_array($value)):
+                            echo '<input type="hidden" class="fields" name="jform[fieldshidden]['.$value.']" value="'.$value.'" />';
+                        endif;
+                    endforeach;
+                ?>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('state'); ?></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
+                </div>
 
             </fieldset>
         </div>
