@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_DZPRODUCT_FORM_LBL_ITEM_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="title" type="text"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_TITLE"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_TITLE" 
+                
+                
+                 required="true" 
+            filter="raw" /> 
+
+       <field name="alias" type="text"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_ALIAS"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_ALIAS" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="catid" type="category"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_CATID"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_CATID" 
+                
+                
+                 required="true" 
+            extension="com_dzproduct.catid"
+            filter="raw" /> 
+
+ 
+		<field name="filter_catid" type="category"
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_CATID"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_CATID"  extension="com_dzproduct.catid" show_root="1" onchange="this.form.submit();" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_CREATED_BY"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_CREATED_BY"  /> 
+
+       <field name="images" type="editor" buttons="true"
+        class="inputbox"
+        filter="safehtml"
+        
+        
+        
+        
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_IMAGES"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_IMAGES"  /> 
+
+       <field name="other_images" type="editor" buttons="true"
+        class="inputbox"
+        filter="safehtml"
+        
+        
+        
+        
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_OTHER_IMAGES"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_OTHER_IMAGES"  /> 
+
+       <field name="short_desc" type="textarea"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_SHORT_DESC"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_SHORT_DESC" 
+                
+                
+                 required="true" 
+            cols="100"
+            rows="8"
+            filter="raw" /> 
+
+       <field name="long_desc" type="editor"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_LONG_DESC"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_LONG_DESC" 
+                
+                
+                
+            buttons="article, image"
+            filter="raw" /> 
+
+       <field name="video" type="text"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_VIDEO"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_VIDEO" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="openurl" type="text"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_OPENURL"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_OPENURL" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="price" type="text"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_PRICE"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_PRICE" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="saleoff" type="text"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_SALEOFF"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_SALEOFF" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="metakey" type="textarea"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_METAKEY"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_METAKEY" 
+                
+                
+                
+            cols="100"
+            rows="8"
+            filter="string" /> 
+
+       <field name="metadesc" type="textarea"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_METADESC"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_METADESC" 
+                
+                
+                
+            cols="100"
+            rows="8"
+            filter="string" /> 
+
+       <field name="metadata" type="editor" buttons="true"
+        class="inputbox"
+        filter="safehtml"
+        
+        
+        
+        
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_METADATA"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_METADATA"  /> 
+
+       <field name="params" type="editor" buttons="true"
+        class="inputbox"
+        filter="safehtml"
+        
+        
+        
+        
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_PARAMS"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_PARAMS"  /> 
+
+       <field name="language" type="language"
+                
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_LANGUAGE"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_LANGUAGE" 
+                
+                
+                
+            filter="string"
+            client="false" /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" /> 
+
+ </fieldset> 
+
+ <fieldset 
+                        name="accesscontrol">
+                       <field name="asset_id" type="hidden" filter="unset" />
+                       <field name="rules"
+                            type="rules"
+                            label="JFIELD_RULES_LABEL"
+                            translate_label="false"
+                            filter="rules"
+                            validate="rules"
+                            class="inputbox"
+                            component="com_dzproduct"
+                            section="item"
+                        />
+
+	</fieldset>
+
+</form>

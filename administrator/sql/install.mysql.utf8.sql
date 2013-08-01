@@ -1,0 +1,86 @@
+CREATE TABLE IF NOT EXISTS `#__dzproduct_items` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`asset_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+
+`title` VARCHAR(255)  NOT NULL ,
+`alias` VARCHAR(255)  NOT NULL ,
+`catid` INT(11)  NOT NULL ,
+`ordering` INT(11)  NOT NULL ,
+`state` TINYINT(1)  NOT NULL DEFAULT '1',
+`checked_out` INT(11)  NOT NULL ,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created_by` INT(11)  NOT NULL ,
+`images` TEXT NOT NULL ,
+`other_images` TEXT NOT NULL ,
+`short_desc` TEXT NOT NULL ,
+`long_desc` TEXT NOT NULL ,
+`video` VARCHAR(255)  NOT NULL ,
+`openurl` VARCHAR(255)  NOT NULL ,
+`price` VARCHAR(255)  NOT NULL ,
+`saleoff` VARCHAR(255)  NOT NULL ,
+`metakey` TEXT NOT NULL ,
+`metadesc` TEXT NOT NULL ,
+`metadata` TEXT NOT NULL ,
+`params` TEXT NOT NULL ,
+`language` VARCHAR(255)  NOT NULL ,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__dzproduct_fields` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`name` VARCHAR(255)  NOT NULL ,
+`type` VARCHAR(255)  NOT NULL ,
+`ordering` INT(11)  NOT NULL ,
+`state` TINYINT(1)  NOT NULL DEFAULT '1',
+`checked_out` INT(11)  NOT NULL ,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created_by` INT(11)  NOT NULL ,
+`params` TEXT NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__dzproduct_groups` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`name` VARCHAR(255)  NOT NULL ,
+`fields` TEXT NOT NULL ,
+`ordering` INT(11)  NOT NULL ,
+`state` TINYINT(1)  NOT NULL DEFAULT '1',
+`checked_out` INT(11)  NOT NULL ,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created_by` INT(11)  NOT NULL ,
+`icon` VARCHAR(255)  NOT NULL ,
+`params` TEXT NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__dzproduct_groupcat_relations` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`ordering` INT(11)  NOT NULL ,
+`state` TINYINT(1)  NOT NULL DEFAULT '1',
+`checked_out` INT(11)  NOT NULL ,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created_by` INT(11)  NOT NULL ,
+`catid` TEXT NOT NULL ,
+`groupid` TEXT NOT NULL ,
+`params` TEXT NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__dzproduct_field_data` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`ordering` INT(11)  NOT NULL ,
+`state` TINYINT(1)  NOT NULL DEFAULT '1',
+`checked_out` INT(11)  NOT NULL ,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created_by` INT(11)  NOT NULL ,
+`itemid` INT NOT NULL ,
+`fieldid` INT NOT NULL ,
+`value` VARCHAR(255)  NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;
+

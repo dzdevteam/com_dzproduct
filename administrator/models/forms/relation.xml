@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_DZPRODUCT_FORM_LBL_RELATION_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_DZPRODUCT_FORM_LBL_RELATION_CREATED_BY"
+            description="COM_DZPRODUCT_FORM_DESC_RELATION_CREATED_BY"  /> 
+
+       <field name="catid" type="sql"
+                
+            label="COM_DZPRODUCT_FORM_LBL_RELATION_CATID"
+            description="COM_DZPRODUCT_FORM_DESC_RELATION_CATID" 
+                
+                
+                
+            filter="string"
+            query="SELECT id, title FROM #__categories WHERE extension = 'com_dzproduct';"
+            key_field="id"
+            value_field="title" /> 
+
+       <field name="groupid" type="sql"
+                
+            label="COM_DZPRODUCT_FORM_LBL_RELATION_GROUPID"
+            description="COM_DZPRODUCT_FORM_DESC_RELATION_GROUPID" 
+                
+                
+                 required="true" 
+            filter="raw"
+            query="Select id, name from #__dzproduct_group where state == 1"
+            key_field="id"
+            value_field="name" /> 
+
+       <field name="params" type="editor" buttons="true"
+        class="inputbox"
+        filter="safehtml"
+        
+        
+        
+        
+            label="COM_DZPRODUCT_FORM_LBL_RELATION_PARAMS"
+            description="COM_DZPRODUCT_FORM_DESC_RELATION_PARAMS"  /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+</form>
