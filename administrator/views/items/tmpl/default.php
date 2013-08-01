@@ -18,6 +18,7 @@ JHtml::_('formbehavior.chosen', 'select');
 // Import CSS
 $document = JFactory::getDocument();
 $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
+$document->addScript('//cdnjs.cloudflare.com/ajax/libs/holder/2.0/holder.min.js');
 
 $user	= JFactory::getUser();
 $userId	= $user->get('id');
@@ -122,7 +123,7 @@ if (!empty($this->extra_sidebar)) {
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_IMAGES', 'a.images', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left'>
+				<th class='left' width="40%">
 				<?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_SHORT_DESC', 'a.short_desc', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
@@ -211,8 +212,11 @@ if (!empty($this->extra_sidebar)) {
 					<?php echo $item->created_by; ?>
 				</td>
 				<td>
-
-					<?php echo $item->images; ?>
+                    <?php if ($item->images['intro']) { ?>
+					<img src="<?php echo JUri::root().$item->images['intro']; ?>" />
+					<?php } else { ?>
+					<img src="holder.js/100x50" />
+					<?php } ?>
 				</td>
 				<td>
 

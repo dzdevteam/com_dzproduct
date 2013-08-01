@@ -175,6 +175,11 @@ class DzproductModelitems extends JModelList {
     public function getItems() {
         $items = parent::getItems();
         
+        foreach ($items as &$item) {
+            $registry = new JRegistry();
+            $registry->loadString($item->images);
+            $item->images = $registry->toArray();
+        }
         return $items;
     }
 
