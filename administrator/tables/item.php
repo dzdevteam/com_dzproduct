@@ -22,6 +22,9 @@ class DzproductTableitem extends JTable {
      */
     public function __construct(&$db) {
         parent::__construct('#__dzproduct_items', 'id', $db);
+        
+        JTableObserverTags::createObserver($this, array('typeAlias' => 'com_dzproduct.item'));
+        JObserverMapper::addObserverClassToClass('JTableObserverTags', 'DZProductTableItem', array('typeAlias' => 'com_dzproduct.item'));
     }
 
     /**
@@ -52,6 +55,19 @@ class DzproductTableitem extends JTable {
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
+        
+        if (isset($array['images']) && is_array($array['images'])) {
+            $registry = new JRegistry();
+            $registry->loadArray($array['images']);
+            $array['images'] = (string) $registry;
+        }
+        
+        if (isset($array['other_images']) && is_array($array['other_images'])) {
+            $registry = new JRegistry();
+            $registry->loadArray($array['other_images']);
+            $array['other_images'] = (string) $registry;
+        }
+        
         if(!JFactory::getUser()->authorise('core.admin', 'com_dzproduct.item.'.$array['id'])){
             $actions = JFactory::getACL()->getActions('com_dzproduct','item');
             $default_actions = JFactory::getACL()->getAssetRules('com_dzproduct.item.'.$array['id'])->getData();
@@ -94,7 +110,33 @@ class DzproductTableitem extends JTable {
         if (property_exists($this, 'ordering') && $this->id == 0) {
             $this->ordering = self::getNextOrder();
         }
+                // Check for unique alias
+        // Checking valid title and alias
+        if (trim($this->title) == '')
+        {
+            $this->setError(JText::_('COM_DZPRODUCT_WARNING_PROVIDE_VALID_NAME'));
+            return false;
+        }
 
+        if (trim($this->alias) == '')
+        {
+            $this->alias = $this->title;
+        }
+
+        $this->alias = $this->_stringURLSafe($this->alias);
+
+        if (trim(str_replace('-', '', $this->alias)) == '')
+        {
+            $this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
+        }
+
+        // Verify that the alias is unique
+        $table = JTable::getInstance('Item', 'DZProductTable');
+        if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
+        {
+            $this->setError(JText::_('COM_DZPRODUCT_ERROR_UNIQUE_ALIAS'));
+            return false;
+        }
         return parent::check();
     }
 
@@ -203,6 +245,14 @@ class DzproductTableitem extends JTable {
         return $assetParentId;
     }
     
-    
+    protected function _stringURLSafe($url) {
+        setlocale(LC_ALL, 'en_US.UTF8');
+        $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $url);
+        $clean = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $clean);
+        $clean = strtolower(trim($clean, '-'));
+        $clean = preg_replace("/[\/_| -]+/", '-', $clean);
+
+        return $clean;
+    }
 
 }

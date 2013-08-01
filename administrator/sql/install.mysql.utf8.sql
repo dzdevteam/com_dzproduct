@@ -84,3 +84,4 @@ CREATE TABLE IF NOT EXISTS `#__dzproduct_field_data` (
 PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8_general_ci;
 
+INSERT INTO `#__content_types` (`type_id`, `type_title`, `type_alias`, `table`, `rules`, `field_mappings`, `router`) VALUES (NULL, 'Product Item', 'com_dzproduct.item', '{"special":{"dbtable":"#__dzproduct_items","key":"id","type":"Item","prefix":"DZProductTable","config":"array()"}}', '', '{"common":[{"core_content_item_id":"id","core_title":"title","core_state":"state","core_alias":"alias","core_body":"short_desc", "core_params":"params", "core_metadata":"metadata", "core_ordering":"ordering", "core_metakey":"metakey", "core_metadesc":"metadesc", "asset_id":"asset_id"}]}', 'DZProductHelperRoute::getItemRoute');

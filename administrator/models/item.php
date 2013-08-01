@@ -91,8 +91,21 @@ class DzproductModelitem extends JModelAdmin
 	{
 		if ($item = parent::getItem($pk)) {
 
-			//Do any procesing on fields here if needed
-
+            // Convert the images field to an array.
+            $registry = new JRegistry;
+            $registry->loadString($item->images);
+            $item->images = $registry->toArray();
+            
+            // Convert the other_images field to an array.
+            $registry = new JRegistry;
+            $registry->loadString($item->other_images);
+            $item->other_images = $registry->toArray();
+            
+            if (!empty($item->id))
+            {
+                $item->tags = new JHelperTags;
+                $item->tags->getTagIds($item->id, 'com_dzproduct.item');
+            }
 		}
 
 		return $item;
