@@ -11,10 +11,11 @@
 defined('_JEXEC') or die;
 
 /**
-* Dzproduct helper.
+* DZProduct helper.
 */
-class DzproductHelper
+class DZProductHelper
 {
+    protected static $_groupcatrelations = array();
     /**
     * Configure the Linkbar.
     */
@@ -31,8 +32,13 @@ class DzproductHelper
             $vName == 'categories.items'
         );
         
-        if ($vName=='categories.items.catid') {
+        if ($vName=='categories.items') {
             JToolBarHelper::title('DZ Products: Categories (Items - Item )');
+            
+            // A hack to use our categories template instead of built-in categories template
+            $controller = JControllerLegacy::getInstance('', 'CategoriesController');
+            $view       = $controller->getView();
+            $view->addTemplatePath(JPATH_ADMINISTRATOR.'/components/com_dzproduct/views/categories/tmpl');
         }
         
         JHtmlSidebar::addEntry(
@@ -75,5 +81,30 @@ class DzproductHelper
         }
 
         return $result;
+    }
+    
+    /**
+     * Get associated group for a given category
+     */
+    public static function getAssociatedGroup($catid)
+    {
+        if (empty(DZProductHelper::$_groupcatrelations)) {
+            $db = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select('r.catid, g.name')
+                  ->from('#__dzproduct_groupcat_relations as r')
+                  ->join('INNER', '#__dzproduct_groups as g ON r.groupid = g.id AND g.state = 1');
+            $db->setQuery($query);
+            $result = $db->loadAssocList();
+            foreach($result as $item) {
+                DZProductHelper::$_groupcatrelations[$item['catid']] = $item['name'];
+            }
+            
+        }
+
+        if (isset(DZProductHelper::$_groupcatrelations[$catid]))
+            return DZProductHelper::$_groupcatrelations[$catid];
+        
+        return JText::_('COM_DZPRODUCT_GROUPCATRELATION_N_A');
     }
 }
