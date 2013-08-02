@@ -22,7 +22,8 @@ class DzproductModelitem extends JModelAdmin
 	 * @since	1.6
 	 */
 	protected $text_prefix = 'COM_DZPRODUCT';
-
+    protected $event_after_save = 'onContentAfterSave';
+    protected $event_after_delete = 'onContentAfterDelete';
 
 	/**
 	 * Returns a reference to the a Table object, always creating it.

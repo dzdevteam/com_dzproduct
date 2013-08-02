@@ -134,6 +134,10 @@
             </fieldset>
         </fields>
 
+        <field name="fields" type="customfield" controller="catid"
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_FIELDS"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_FIELDS" />
+            
         <fields name="params"> 
         </fields>
 

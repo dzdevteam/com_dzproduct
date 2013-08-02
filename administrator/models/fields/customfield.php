@@ -15,7 +15,7 @@ jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldCustom_field extends JFormField
+class JFormFieldCustomField extends JFormField
 {
 	/**
 	 * The form field type.
@@ -23,7 +23,7 @@ class JFormFieldCustom_field extends JFormField
 	 * @var		string
 	 * @since	1.6
 	 */
-	protected $type = 'text';
+	protected $type = 'customfield';
 
 	/**
 	 * Method to get the field input markup.
@@ -33,9 +33,13 @@ class JFormFieldCustom_field extends JFormField
 	 */
 	protected function getInput()
 	{
-		// Initialize variables.
-		$html = array();
+        JHtml::_('jquery.framework');
+        $itemid = JFactory::getApplication()->input->getInt('id', 0);
+        $document = JFactory::getDocument();
+        $document->addScript(JUri::root().'administrator/components/com_dzproduct/assets/js/customfield.js');
+        $document->addScriptDeclaration("customFieldSetup('" . $this->fieldname . "','" . $this->element['controller'] . "', $itemid);");
+		$html = '<div id="' . $this->id . '" class="form-horizontal"></div>';
 
-		return implode($html);
+		return $html;
 	}
 }

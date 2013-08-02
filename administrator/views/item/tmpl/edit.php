@@ -59,10 +59,6 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
                         <div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
                         <div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
                     </div>
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
-                        <div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
-                    </div>
                 </div>
                 <div class="span6">
                     <div class="control-group">
@@ -125,6 +121,18 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php echo JHtml::_('bootstrap.endTab'); ?>
+            
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'fields', JText::_('COM_DZPRODUCT_CATEGORY_FIELDS', true)); ?>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('fields'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('fields'); ?></div>
+            </div>
+                
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('COM_DZPRODUCT_PUBLISHING', true)); ?>
