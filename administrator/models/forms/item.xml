@@ -9,19 +9,18 @@
             label="COM_DZPRODUCT_FORM_LBL_ITEM_TITLE"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_TITLE" 
             required="true" 
-            filter="raw" /> 
+            filter="string" /> 
 
         <field name="alias" type="text"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_ALIAS"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_ALIAS"
-            filter="raw" /> 
+            filter="string" /> 
 
         <field name="catid" type="category"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_CATID"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_CATID" 
             required="true" 
-            extension="com_dzproduct.items.catid"
-            filter="raw" /> 
+            extension="com_dzproduct.items.catid" /> 
             
         <field name="filter_catid" type="category"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_CATID"
@@ -82,7 +81,7 @@
         <field name="video" type="textarea" cols="100" rows="8"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_VIDEO"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_VIDEO"                
-            filter="safehtml" /> 
+            filter="JComponentHelper::filterText" /> 
 
         <field name="openurl" type="text"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_OPENURL"

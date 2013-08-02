@@ -101,6 +101,11 @@ class DzproductModelitem extends JModelAdmin
             $registry->loadString($item->other_images);
             $item->other_images = $registry->toArray();
             
+            // Convert the metadata field to an array.
+            $registry = new JRegistry;
+            $registry->loadString($item->metadata);
+            $item->metadata = $registry->toArray();
+            
             if (!empty($item->id))
             {
                 $item->tags = new JHelperTags;
