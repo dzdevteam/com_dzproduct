@@ -51,12 +51,6 @@ class DZProductHelper
             'index.php?option=com_dzproduct&view=groups',
             $vName == 'groups'
         );
-        JHtmlSidebar::addEntry(
-            JText::_('COM_DZPRODUCT_TITLE_FIELDDATAS'),
-            'index.php?option=com_dzproduct&view=fielddatas',
-            $vName == 'fielddatas'
-        );
-
     }
 
     /**

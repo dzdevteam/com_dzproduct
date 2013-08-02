@@ -54,8 +54,6 @@
 
 			<menu link="option=com_dzproduct&amp;view=groups" view="groups" img="components/com_dzproduct/assets/images/s_groups.png" alt="Dzproduct/Groups">COM_DZPRODUCT_TITLE_GROUPS</menu>
 
-			<menu link="option=com_dzproduct&amp;view=fielddatas" view="fielddatas" img="components/com_dzproduct/assets/images/s_fielddatas.png" alt="Dzproduct/Fielddatas">COM_DZPRODUCT_TITLE_FIELDDATAS</menu>
-
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>
