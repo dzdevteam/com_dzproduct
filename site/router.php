@@ -16,18 +16,119 @@ defined('_JEXEC') or die;
  */
 function DzproductBuildRoute(&$query)
 {
-	$segments = array();
-    
-	if (isset($query['task'])) {
-		$segments[] = implode('/',explode('.',$query['task']));
-		unset($query['task']);
-	}
-	if (isset($query['id'])) {
-		$segments[] = $query['id'];
-		unset($query['id']);
-	}
+    $segments = array();
 
-	return $segments;
+    // get a menu item based on Itemid or currently active
+    $app = JFactory::getApplication();
+    $menu = $app->getMenu();
+
+    // we need a menu item.  Either the one specified in the query, or the current active one if none specified
+    if (empty($query['Itemid']))
+    {
+        $menuItem = $menu->getActive();
+        $menuItemGiven = false;
+    }
+    else
+    {
+        $menuItem = $menu->getItem($query['Itemid']);
+        $menuItemGiven = true;
+    }
+
+    // check again
+    if ($menuItemGiven && isset($menuItem) && $menuItem->component != 'com_dzproduct')
+    {
+        $menuItemGiven = false;
+        unset($query['Itemid']);
+    }
+
+    if (isset($query['view']))
+    {
+        $view = $query['view'];
+    }
+    else
+    {
+        // we need to have a view in the query or it is an invalid URL
+        return $segments;
+    }
+    
+    if ($menuItem instanceof stdClass) { 
+        // are we dealing with an item that is attached to a menu item?
+        if($menuItem->query['view'] == $query['view'] && isset($query['id']) && $menuItem->query['id'] == (int) $query['id'])
+        {
+            unset($query['view']);
+
+            if (isset($query['layout']))
+            {
+                unset($query['layout']);
+            }
+
+            unset($query['id']);
+
+            return $segments;
+        }
+        
+        // We can imply a single view from its list view
+        // Thus we can remove view from the query in some cases
+        if ($menuItem->query['view'] == 'items' && $query['view'] == 'item')
+            unset($query['view']);
+    }
+    
+
+    if ($view == 'item')
+    {
+        if (!$menuItemGiven)
+        {
+            $segments[] = $view;
+        }
+
+        
+        if (isset($query['id']))
+        {
+            // Make sure we have the id and the alias
+            if (strpos($query['id'], ':') === false)
+            {
+                $db = JFactory::getDbo();
+                $dbQuery = $db->getQuery(true)
+                    ->select('alias')
+                    ->from('#__dzproduct_items')
+                    ->where('id=' . (int) $query['id']);
+                $db->setQuery($dbQuery);
+                $alias = $db->loadResult();
+                $query['id'] = $query['id'] . ':' . $alias;
+            }
+        }
+        else
+        {
+            // we should have id set for this view.  If we don't, it is an error
+            return $segments;
+        }
+        
+        $segments[] = $query['id'];
+        
+        unset($query['id']);
+    }
+
+    // if the layout is specified and it is the same as the layout in the menu item, we
+    // unset it so it doesn't go into the query string.
+    if (isset($query['layout']))
+    {
+        if ($menuItemGiven && isset($menuItem->query['layout']))
+        {
+            if ($query['layout'] == $menuItem->query['layout'])
+            {
+                unset($query['layout']);
+            }
+        }
+        else
+        {
+            if ($query['layout'] == 'default')
+            {
+                unset($query['layout']);
+            }
+        }
+    }
+
+    return $segments;
 }
 
 /**
@@ -44,25 +145,30 @@ function DzproductParseRoute($segments)
 {
 	$vars = array();
     
-	// view is always the first element of the array
-	$count = count($segments);
+    $app = JFactory::getApplication();
+    $menu = $app->getMenu();
+    $menuItem = $menu->getActive();
     
-    if ($count)
-	{
-		$count--;
-		$segment = array_pop($segments) ;
-		if (is_numeric($segment)) {
-			$vars['id'] = $segment;
-		}
-        else{
-            $count--;
-            $vars['task'] = array_pop($segments) . '.' . $segment;
+    // view is always the first element of the array
+    $count = count($segments);
+    
+    if ($count >= 2) {
+        $vars['id'] = $segments[$count - 1];
+        $vars['view'] = $segments[$count - 2];
+    } elseif ($count == 1) {
+        if ($menuItem) {
+            switch ($menuItem->query['view']) {
+                case 'items':
+                    $vars['view'] = 'item';
+                    break;
+                default:
+                    break;
+            }
+            $vars['id'] = $segments[0];
+        } else {
+            $vars['view'] = $segments[0];
         }
-	}
-
-	if ($count)
-	{   
-        $vars['task'] = implode('.',$segments);
-	}
-	return $vars;
+    }
+    
+    return $vars;
 }
