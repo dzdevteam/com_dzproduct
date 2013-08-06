@@ -56,6 +56,10 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
 				<div class="control-label"><?php echo $this->form->getLabel('name'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('name'); ?></div>
 			</div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('dname'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('dname'); ?></div>
+            </div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('type'); ?></div>
@@ -68,9 +72,6 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
 				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
 			</div>
-				<input type="hidden" name="jform[params]" value="<?php echo $this->item->params; ?>" />
-
-
             </fieldset>
         </div>
 

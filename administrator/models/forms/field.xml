@@ -11,7 +11,11 @@
             description="COM_DZPRODUCT_FORM_DESC_FIELD_NAME" 
             required="true" 
             filter="string" /> 
-
+        
+        <field name="dname" type="multilang"
+            label="COM_DZPRODUCT_FORM_LBL_FIELD_DNAME"
+            description="COM_DZPRODUCT_FORM_DESC_FIELD_DNAME" />
+            
         <field name="type" type="hidden" default="generic"
             label="COM_DZPRODUCT_FORM_LBL_FIELD_TYPE"
             description="COM_DZPRODUCT_FORM_DESC_FIELD_TYPE" 

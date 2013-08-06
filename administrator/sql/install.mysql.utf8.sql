@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `#__dzproduct_fields` (
 `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 
 `name` VARCHAR(255)  NOT NULL ,
+`dname` MEDIUMTEXT NOT NULL,
 `type` VARCHAR(255)  NOT NULL ,
 `ordering` INT(11)  NOT NULL ,
 `state` TINYINT(1)  NOT NULL DEFAULT '1',
