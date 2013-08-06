@@ -39,6 +39,7 @@ class JFormFieldCustomField extends JFormField
         $document->addScript(JUri::root().'administrator/components/com_dzproduct/assets/js/customfield.js');
         $document->addScriptDeclaration("customFieldSetup('" . $this->fieldname . "','" . $this->element['controller'] . "', $itemid);");
 		$html = '<div id="' . $this->id . '" class="form-horizontal"></div>';
+		$html .= '<img id="' . $this->id . '-loader" src="' . JUri::root().'administrator/components/com_dzproduct/assets/images/loading.gif' . '" />';
 
 		return $html;
 	}
