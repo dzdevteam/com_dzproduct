@@ -24,7 +24,10 @@ jQuery(document).ready(function(){
                 
                 // Put data into root field
                 $root.val(JSON.stringify(data));
-            })
+            });
+            
+            // Trigger first change
+            $child.trigger('change');
         })
     });
 });
