@@ -86,6 +86,40 @@ class DzproductModelItem extends JModelForm
 				// Convert the JTable to a clean JObject.
 				$properties = $table->getProperties(1);
 				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+				
+				// Convert metadata field to JRegistry
+				$registry = new JRegistry();
+                $registry->loadString($this->_item->metadata);
+                $this->_item->metadata = $registry;
+                
+                // Convert images field to array
+                $registry = new JRegistry();
+                $registry->loadString($this->_item->images);
+                $this->_item->images = $registry->toArray();
+                
+                // Convert other_images field to array
+                $registry = new JRegistry();
+                $registry->loadString($this->_item->other_images);
+                $this->_item->other_images = $registry->toArray();
+                
+				// Load the field data for this item
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select('f.name, f.dname, fd.value');
+				$query->from('#__dzproduct_fields as f, #__dzproduct_field_data as fd, #__dzproduct_groupcat_relations as gr, #__dzproduct_groups as g');
+				$query->where('f.id = fd.fieldid');
+				$query->where('gr.groupid = g.id');
+				$query->where('gr.catid = ' . (int) $this->_item->catid);
+				$query->where('FIND_IN_SET(fd.fieldid, g.fields)');
+				$query->where('fd.itemid = ' . (int) $this->_item->id);
+				$db->setQuery($query);
+				$this->_item->fielddata = $db->loadAssocList();
+				foreach ($this->_item->fielddata as &$data) {
+                    $data['dname'] = json_decode($data['dname'], true);
+                    foreach ($data['dname'] as &$value) {
+                        $value = urldecode($value);
+                    }
+				}
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}

@@ -22,28 +22,26 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzproduct'
     <div class="item_fields">
 
         <ul class="fields_list">
-
-            			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_ID'); ?>:
-			<?php echo $this->item->id; ?></li>
 			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_TITLE'); ?>:
 			<?php echo $this->item->title; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_ALIAS'); ?>:
-			<?php echo $this->item->alias; ?></li>
 			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_CATID'); ?>:
 			<?php echo $this->item->catid_title; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_ORDERING'); ?>:
-			<?php echo $this->item->ordering; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_STATE'); ?>:
-			<?php echo $this->item->state; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_CHECKED_OUT'); ?>:
-			<?php echo $this->item->checked_out; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_CHECKED_OUT_TIME'); ?>:
-			<?php echo $this->item->checked_out_time; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_CREATED_BY'); ?>:
-			<?php echo $this->item->created_by; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_IMAGES'); ?>:
-			<?php echo $this->item->images; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_OTHER_IMAGES'); ?>:
+			<li>Images:
+                <ul>
+                    <li>Icon: <?php echo $this->item->images['icon']; ?></li>
+                    <li>Intro: <?php echo $this->item->images['intro']; ?></li>
+                    <li>Full: <?php echo $this->item->images['full']; ?></li>
+                </ul>
+            </li>
+			<li>Other images:
+                <ul>
+                    <li>0: <?php echo $this->item->other_images['i0']; ?></li>
+                    <li>1: <?php echo $this->item->other_images['i1']; ?></li>
+                    <li>2: <?php echo $this->item->other_images['i2']; ?></li>
+                    <li>3: <?php echo $this->item->other_images['i3']; ?></li>
+                    <li>4: <?php echo $this->item->other_images['i4']; ?></li>
+                </ul>
+            </li>
 			<?php echo $this->item->other_images; ?></li>
 			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_SHORT_DESC'); ?>:
 			<?php echo $this->item->short_desc; ?></li>
@@ -57,17 +55,21 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzproduct'
 			<?php echo $this->item->price; ?></li>
 			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_SALEOFF'); ?>:
 			<?php echo $this->item->saleoff; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_METAKEY'); ?>:
-			<?php echo $this->item->metakey; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_METADESC'); ?>:
-			<?php echo $this->item->metadesc; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_METADATA'); ?>:
-			<?php echo $this->item->metadata; ?></li>
-			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_PARAMS'); ?>:
-			<?php echo $this->item->params; ?></li>
 			<li><?php echo JText::_('COM_DZPRODUCT_FORM_LBL_ITEM_LANGUAGE'); ?>:
 			<?php echo $this->item->language; ?></li>
-
+            <li>Field data:
+                <ul>
+                <?php foreach ($this->item->fielddata as $data) { ?>
+                <li>
+                    <ul>
+                        <li>Name: <?php echo $data['name']; ?></li>
+                        <li>Display name: <?php echo $data['dname'][JFactory::getLanguage()->getTag()]; ?></li>
+                        <li>Value: <?php echo $data['value']; ?></li>
+                    </ul>
+                </li>
+                <?php } ?>
+                </ul>
+            </li>
 
         </ul>
 

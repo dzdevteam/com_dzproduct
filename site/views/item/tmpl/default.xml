@@ -5,16 +5,16 @@
                         <![CDATA[COM_DZPRODUCT_TITLE_ITEM_VIEW_ITEM_DESC]]>
         </message>
     </layout>
-    <fields name="params">
+    <fields name="request">
         <fieldset 
-            name="basic"
+            name="request"
             label="COM_DZPRODUCT_FIELDSET_ITEM_ID_SELECT_LABEL">
             <field
-                name="item_id"
-                query="SELECT `id` FROM #__dzproduct_items ORDER BY `id`"
+                name="id"
+                query="SELECT `id`, `title` FROM #__dzproduct_items WHERE `state` = 1 ORDER BY `title`"
                 type="sql"
                 key_field="id" 
-                value_field="id"
+                value_field="title"
                 label="COM_DZPRODUCT_ITEM_ID_SELECT_LABEL"
                 require="true"
                 description="JGLOBAL_SHOW_TITLE_DESC">

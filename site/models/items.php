@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
+require_once JPATH_SITE.'/components/com_dzproduct/helpers/route.php';
 
 /**
  * Methods supporting a list of Dzproduct records.
@@ -46,6 +47,10 @@ class DzproductModelItems extends JModelList {
         $limitstart = JFactory::getApplication()->input->getInt('limitstart', 0);
         $this->setState('list.start', $limitstart);
 
+        $catid = $app->input->getInt('catid', 0);
+        if ($catid) {
+            $this->setState('filter.catid', $catid);
+        }
         
 		if(empty($ordering)) {
 			$ordering = 'a.ordering';
@@ -111,7 +116,13 @@ class DzproductModelItems extends JModelList {
     }
 
     public function getItems() {
-        return parent::getItems();
+        $items = parent::getItems();
+        
+        foreach ($items as &$item) {
+            $item->link = JRoute::_(DZProductHelperRoute::getItemRoute($item->id));
+        }
+        
+        return $items;
     }
 
 }
