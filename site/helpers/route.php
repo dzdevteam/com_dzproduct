@@ -27,7 +27,7 @@ abstract class DZProductHelperRoute
         //Create the link
         $link = 'index.php?option=com_dzproduct&view=item&id='. $id;
 
-        if ($itemId = self::_findItemid(array('list' => 'items', 'single' => 'item')));
+        if ($itemId = self::_findItemid(array('item', 'items')));
             $link .= '&Itemid='.$itemId;
         
         return $link;
@@ -57,10 +57,10 @@ abstract class DZProductHelperRoute
             }
         }
         
-        if (isset(self::$lookup[$needle['single']]))
-            return self::$lookup[$needle['single']];
-        elseif (isset(self::$lookup[$needle['list']]))
-            return self::$lookup[$needle['list']];
+        foreach ($needle as $view) {
+            if (isset(self::$lookup[$view]))
+                return self::$lookup[$view];
+        }
             
         return null;
     }
