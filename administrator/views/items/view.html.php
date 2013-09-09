@@ -136,15 +136,15 @@ class DzproductViewItems extends JViewLegacy
         return array(
         'a.id' => JText::_('JGRID_HEADING_ID'),
         'a.title' => JText::_('COM_DZPRODUCT_ITEMS_TITLE'),
-        'a.catid' => JText::_('COM_DZPRODUCT_ITEMS_CATID'),
+        'c.title' => JText::_('COM_DZPRODUCT_ITEMS_CATID'),
         'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
         'a.state' => JText::_('JSTATUS'),
-        'a.checked_out' => JText::_('COM_DZPRODUCT_ITEMS_CHECKED_OUT'),
-        'a.checked_out_time' => JText::_('COM_DZPRODUCT_ITEMS_CHECKED_OUT_TIME'),
         'a.created_by' => JText::_('COM_DZPRODUCT_ITEMS_CREATED_BY'),
-        'a.images' => JText::_('COM_DZPRODUCT_ITEMS_IMAGES'),
-        'a.short_desc' => JText::_('COM_DZPRODUCT_ITEMS_SHORT_DESC'),
         'a.price' => JText::_('COM_DZPRODUCT_ITEMS_PRICE'),
+        'a.saleoff' => JText::_('COM_DZPRODUCT_ITEMS_SALEOFF'),
+        'a.featured' => JText::_('COM_DZPRODUCT_ITEMS_FEATURED'),
+        'a.new_arrival' => JText::_('COM_DZPRODUCT_ITEMS_NEW_ARRIVAL'),
+        'a.availability' => JText::_('COM_DZPRODUCT_ITEMS_AVAILABILITY'),
         );
     }
 

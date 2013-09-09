@@ -29,24 +29,19 @@ class DzproductModelitems extends JModelList {
                                 'id', 'a.id',
                 'title', 'a.title',
                 'alias', 'a.alias',
-                'catid', 'a.catid',
+                'catid', 'a.catid', 'cattitle', 'c.title',
                 'ordering', 'a.ordering',
                 'state', 'a.state',
+                'created', 'a.created',
                 'created_by', 'a.created_by',
-                'images', 'a.images',
-                'other_images', 'a.other_images',
-                'short_desc', 'a.short_desc',
-                'long_desc', 'a.long_desc',
                 'video', 'a.video',
                 'openurl', 'a.openurl',
                 'price', 'a.price',
                 'saleoff', 'a.saleoff',
-                'metakey', 'a.metakey',
-                'metadesc', 'a.metadesc',
-                'metadata', 'a.metadata',
-                'params', 'a.params',
                 'language', 'a.language',
-
+                'featured', 'a.featured',
+                'new_arrival', 'a.new_arrival',
+                'availability', 'a.availability',
             );
         }
 
@@ -126,8 +121,8 @@ class DzproductModelitems extends JModelList {
     $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
         // Join over the category 'catid'
-        $query->select('catid.title AS catid');
-        $query->join('LEFT', '#__categories AS catid ON catid.id = a.catid');
+        $query->select('c.title AS cattitle');
+        $query->join('LEFT', '#__categories AS c ON c.id = a.catid');
         // Join over the user field 'created_by'
         $query->select('created_by.name AS created_by');
         $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -179,6 +174,17 @@ class DzproductModelitems extends JModelList {
             $registry = new JRegistry();
             $registry->loadString($item->images);
             $item->images = $registry->toArray();
+            
+            $db = JFactory::getDbo();
+            $query = $db->getQuery(true);
+            
+            $query->select("f.id, f.name, f.type, d.value")
+                ->from("#__dzproduct_fields as f")
+                ->join("INNER", "#__dzproduct_groups as g ON FIND_IN_SET(f.id, g.fields)")
+                ->join("INNER", "#__dzproduct_groupcat_relations as r ON g.id = r.groupid AND r.catid = ".$item->catid)
+                ->join("LEFT", "#__dzproduct_field_data as d ON f.id = d.fieldid AND d.itemid = ".$item->id);
+            $db->setQuery($query);
+            $item->fields = $db->loadAssocList();            
         }
         return $items;
     }

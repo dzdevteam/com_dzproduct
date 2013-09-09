@@ -110,26 +110,30 @@ if (!empty($this->extra_sidebar)) {
                         <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
                     </th>
                 <?php endif; ?>
-                    
                 <th class='left'>
+                <?php echo JText::_('COM_DZPRODUCT_ITEMS_IMAGES'); ?>
+                </th>
+                <th class='left' width="20%">
                 <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_TITLE', 'a.title', $listDirn, $listOrder); ?>
                 </th>
                 <th class='left'>
-                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_CATID', 'a.catid', $listDirn, $listOrder); ?>
+                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_CATID', 'c.title', $listDirn, $listOrder); ?>
                 </th>
-                <th class='left'>
-                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
-                </th>
-                <th class='left'>
-                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_IMAGES', 'a.images', $listDirn, $listOrder); ?>
-                </th>
-                <th class='left' width="40%">
-                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_SHORT_DESC', 'a.short_desc', $listDirn, $listOrder); ?>
+                <th class="left">
+                <?php echo JText::_('COM_DZPRODUCT_ITEMS_FIELDS'); ?>
                 </th>
                 <th class='left'>
                 <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_PRICE', 'a.price', $listDirn, $listOrder); ?>
                 </th>
-                    
+                <th class='left'>
+                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_FEATURED', 'a.featured', $listDirn, $listOrder); ?>
+                </th>
+                <th class='left'>
+                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_NEW_ARRIVAL', 'a.new_arrival', $listDirn, $listOrder); ?>
+                </th>
+                <th class='left'>
+                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ITEMS_AVAILABILITY', 'a.availability', $listDirn, $listOrder); ?>
+                </th>
                     
                 <?php if (isset($this->items[0]->id)): ?>
                     <th width="1%" class="nowrap center hidden-phone">
@@ -191,7 +195,13 @@ if (!empty($this->extra_sidebar)) {
                         <?php echo JHtml::_('jgrid.published', $item->state, $i, 'items.', $canChange, 'cb'); ?>
                     </td>
                 <?php endif; ?>
-                    
+                <td>
+                    <?php if ($item->images['intro']) { ?>
+                    <img src="<?php echo JUri::root().$item->images['intro']; ?>" />
+                    <?php } else { ?>
+                    <img src="holder.js/300x200" style="max-width: 120px; max-height: 80px;" />
+                    <?php } ?>
+                </td>
                 <td>
                 <?php if (isset($item->checked_out) && $item->checked_out) : ?>
                     <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'items.', $canCheckin); ?>
@@ -204,30 +214,28 @@ if (!empty($this->extra_sidebar)) {
                 <?php endif; ?>
                 </td>
                 <td>
-
-                    <?php echo $item->catid; ?>
+                    <?php echo $item->cattitle; ?>
                 </td>
                 <td>
-
-                    <?php echo $item->created_by; ?>
-                </td>
-                <td>
-                    <?php if ($item->images['intro']) { ?>
-                    <img src="<?php echo JUri::root().$item->images['intro']; ?>" />
-                    <?php } else { ?>
-                    <img src="holder.js/100x50" />
+                    <?php foreach ($item->fields as $field) { ?>
+                    <?php echo $field['name'].': '.$field['value'].'<br />'; ?>
                     <?php } ?>
                 </td>
                 <td>
-
-                    <?php echo $item->short_desc; ?>
+                    <?php echo JText::_('COM_DZPRODUCT_ITEMS_PRICE'); ?>: <?php echo $item->price; ?><br />
+                    <?php echo JText::_('COM_DZPRODUCT_ITEMS_SALEOFF'); ?>: <?php echo $item->saleoff; ?>
+                </td>
+                <?php $array = array(JText::_('JNO'), JText::_('JYES')); ?>
+                <td>
+                    <?php echo $array[$item->featured]; ?>
                 </td>
                 <td>
-
-                    <?php echo $item->price; ?>
+                    <?php echo $array[$item->new_arrival]; ?>
                 </td>
-
-
+                <?php $array = array(JText::_('COM_DZPRODUCT_OPTION_COMING_SOON'), JText::_('COM_DZPRODUCT_OPTION_INSTOCK'), JText::_('COM_DZPRODUCT_OPTION_OUT_OF_STOCK')); ?>
+                <td>
+                    <?php echo $array[$item->availability]; ?>
+                </td>
                 <?php if (isset($this->items[0]->id)): ?>
                     <td class="center hidden-phone">
                         <?php echo (int) $item->id; ?>
