@@ -4,16 +4,6 @@
         label="COM_DZPRODUCT_COMPONENT_LABEL"
         description="COM_DZPRODUCT_COMPONENT_DESC"
     >
-
-        <field name="test"
-             type="radio"
-             default="1"
-             label="COM_DZPRODUCT_TEST_LABEL"
-             description="COM_DZPRODUCT_TEST_DESC">
-                 <option value="0">JHIDE</option>
-                 <option value="1">JSHOW</option>
-         </field>
-
     </fieldset>
 
     <fieldset name="permissions"

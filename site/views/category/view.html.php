@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
 /**
  * View class for a list of Dzproduct.
  */
-class DzproductViewItems extends JViewLegacy
+class DzproductViewCategory extends JViewLegacy
 {
     protected $items;
     protected $pagination;
@@ -31,6 +31,7 @@ class DzproductViewItems extends JViewLegacy
         
         $this->state        = $this->get('State');
         $this->items        = $this->get('Items');
+        $this->category     = $this->get('Category');
         $this->pagination   = $this->get('Pagination');
         $this->params       = $app->getParams('com_dzproduct');
         

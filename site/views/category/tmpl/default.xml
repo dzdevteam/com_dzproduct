@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_DZPRODUCT_TITLE_LIST_VIEW_ITEMS" option="View">
+    <layout title="COM_DZPRODUCT_TITLE_LIST_VIEW_CATEGORY" option="View">
         <message>
-                        <![CDATA[COM_DZPRODUCT_TITLE_LIST_VIEW_ITEMS_DESC]]>
+                        <![CDATA[COM_DZPRODUCT_TITLE_LIST_VIEW_CATEGORY_DESC]]>
         </message>
     </layout>
     <fields name="request">
@@ -10,8 +10,8 @@
             <field name="catid" type="category"
                 description="JGLOBAL_CHOOSE_CATEGORY_DESC"
                 extension="com_dzproduct.items.catid"
+                required="true"
                 label="JGLOBAL_CHOOSE_CATEGORY_LABEL">
-                <option value="">JOPTION_SELECT_CATEGORY</option>
             </field>
         </fieldset>
     </fields>
