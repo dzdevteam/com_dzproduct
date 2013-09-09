@@ -130,13 +130,9 @@ class DzproductTableitem extends JTable {
             $this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
         }
 
-        // Verify that the alias is unique
-        $table = JTable::getInstance('Item', 'DZProductTable');
-        if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
-        {
-            $this->setError(JText::_('COM_DZPRODUCT_ERROR_UNIQUE_ALIAS'));
-            return false;
-        }
+        // Auto increment alias if duplicated
+        $this->_generateNewAlias();
+        
         return parent::check();
     }
 
@@ -255,4 +251,19 @@ class DzproductTableitem extends JTable {
         return $clean;
     }
 
+        /**
+     * Generate new alias for item to prevent duplication
+     * @param string $alias
+     * 
+     * @return string $newalias
+     */
+    protected function _generateNewAlias()
+    {
+        $table = JTable::getInstance('Item', 'DZProductTable');
+        
+        while ($table->load(array('alias' => $this->alias)) && $table->id != $this->id)
+        {
+            $this->alias = JString::increment($this->alias, 'dash');
+        }
+    }
 }

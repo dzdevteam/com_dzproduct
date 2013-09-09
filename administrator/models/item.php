@@ -138,5 +138,4 @@ class DzproductModelitem extends JModelAdmin
 
         }
     }
-
 }
