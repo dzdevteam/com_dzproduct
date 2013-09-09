@@ -27,7 +27,7 @@ class DZProductHelper
             $vName == 'items'
         );
         JHtmlSidebar::addEntry(
-            'Categories (Items - Item )',
+            JText::_('COM_DZPRODUCT_TITLE_CATEGORIES'),
             "index.php?option=com_categories&extension=com_dzproduct.items.catid",
             $vName == 'categories.items'
         );
