@@ -1,0 +1,1 @@
+ALTER TABLE `#__dzproduct_items`  ADD `new_arrival` TINYINT NOT NULL AFTER `saleoff`,  ADD `featured` TINYINT NOT NULL AFTER `new_arrival`,  ADD `availability` TINYINT NOT NULL AFTER `featured`
