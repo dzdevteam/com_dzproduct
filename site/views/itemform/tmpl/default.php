@@ -106,93 +106,93 @@ $lang->load('com_dzproduct', JPATH_ADMINISTRATOR);
 
     <form id="form-item" action="<?php echo JRoute::_('index.php?option=com_dzproduct&task=item.save'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
         <ul>
-            			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('title'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
-			</div>
+                        <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('id'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('title'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
+            </div>
 
-			<div class="control-group">
-				<?php $canState = false; ?>
-				<?php if($this->item->id): ?>
-					<?php $canState = $canState = JFactory::getUser()->authorise('core.edit.state','com_dzproduct.item'); ?>
-				<?php else: ?>
-					<?php $canState = JFactory::getUser()->authorise('core.edit.state','com_dzproduct.item.'.$this->item->id); ?>
-				<?php endif; ?>				<?php if(!$canState): ?>
-				<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-					<?php
-						$state_string = 'Unpublish';
-						$state_value = 0;
-						if($this->item->state == 1):
-							$state_string = 'Publish';
-							$state_value = 1;
-						endif;
-					?>
-					<div class="controls"><?php echo $state_string; ?></div>
-					<input type="hidden" name="jform[state]" value="<?php echo $state_value; ?>" />
-				<?php else: ?>
-					<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('state'); ?></div>					<?php endif; ?>
-				</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
-			</div>
-				<input type="hidden" name="jform[images]" value="<?php echo $this->item->images; ?>" />
-				<input type="hidden" name="jform[other_images]" value="<?php echo $this->item->other_images; ?>" />
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('short_desc'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('short_desc'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('long_desc'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('long_desc'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('video'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('video'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('openurl'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('openurl'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('price'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('price'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('saleoff'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('saleoff'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('metakey'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('metakey'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('metadesc'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('metadesc'); ?></div>
-			</div>
-				<input type="hidden" name="jform[metadata]" value="<?php echo $this->item->metadata; ?>" />
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('params'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('params'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('language'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('language'); ?></div>
-			</div>
-				<div class="fltlft" <?php if (!JFactory::getUser()->authorise('core.admin','dzproduct')): ?> style="display:none;" <?php endif; ?> >
+            <div class="control-group">
+                <?php $canState = false; ?>
+                <?php if($this->item->id): ?>
+                    <?php $canState = $canState = JFactory::getUser()->authorise('core.edit.state','com_dzproduct.item'); ?>
+                <?php else: ?>
+                    <?php $canState = JFactory::getUser()->authorise('core.edit.state','com_dzproduct.item.'.$this->item->id); ?>
+                <?php endif; ?>             <?php if(!$canState): ?>
+                <div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
+                    <?php
+                        $state_string = 'Unpublish';
+                        $state_value = 0;
+                        if($this->item->state == 1):
+                            $state_string = 'Publish';
+                            $state_value = 1;
+                        endif;
+                    ?>
+                    <div class="controls"><?php echo $state_string; ?></div>
+                    <input type="hidden" name="jform[state]" value="<?php echo $state_value; ?>" />
+                <?php else: ?>
+                    <div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('state'); ?></div>                   <?php endif; ?>
+                </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
+            </div>
+                <input type="hidden" name="jform[images]" value="<?php echo $this->item->images; ?>" />
+                <input type="hidden" name="jform[other_images]" value="<?php echo $this->item->other_images; ?>" />
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('short_desc'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('short_desc'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('long_desc'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('long_desc'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('video'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('video'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('openurl'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('openurl'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('price'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('price'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('saleoff'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('saleoff'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('metakey'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('metakey'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('metadesc'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('metadesc'); ?></div>
+            </div>
+                <input type="hidden" name="jform[metadata]" value="<?php echo $this->item->metadata; ?>" />
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('params'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('params'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('language'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('language'); ?></div>
+            </div>
+                <div class="fltlft" <?php if (!JFactory::getUser()->authorise('core.admin','dzproduct')): ?> style="display:none;" <?php endif; ?> >
                 <?php echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
                 <?php echo JHtml::_('sliders.panel', JText::_('ACL Configuration'), 'access-rules'); ?>
                 <fieldset class="panelform">
@@ -201,7 +201,7 @@ $lang->load('com_dzproduct', JPATH_ADMINISTRATOR);
                 </fieldset>
                 <?php echo JHtml::_('sliders.end'); ?>
             </div>
-				<?php if (!JFactory::getUser()->authorise('core.admin','dzproduct')): ?>
+                <?php if (!JFactory::getUser()->authorise('core.admin','dzproduct')): ?>
                 <script type="text/javascript">
                     jQuery.noConflict();
                     jQuery('.tab-pane select').each(function(){

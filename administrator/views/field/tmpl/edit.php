@@ -48,30 +48,30 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
         <div class="span10 form-horizontal">
             <fieldset class="adminform">
 
-                			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('name'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('name'); ?></div>
-			</div>
+                            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('id'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('name'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('name'); ?></div>
+            </div>
             <div class="control-group">
                 <div class="control-label"><?php echo $this->form->getLabel('dname'); ?></div>
                 <div class="controls"><?php echo $this->form->getInput('dname'); ?></div>
             </div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('type'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
-			</div>
-			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
-			</div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('type'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('state'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
+            </div>
             </fieldset>
         </div>
 

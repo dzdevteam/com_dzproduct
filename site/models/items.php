@@ -33,7 +33,7 @@ class DzproductModelItems extends JModelList {
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @since	1.6
+     * @since   1.6
      */
     protected function populateState($ordering = null, $direction = null) {
 
@@ -52,9 +52,9 @@ class DzproductModelItems extends JModelList {
             $this->setState('filter.catid', $catid);
         }
         
-		if(empty($ordering)) {
-			$ordering = 'a.ordering';
-		}
+        if(empty($ordering)) {
+            $ordering = 'a.ordering';
+        }
 
         // List state information.
         parent::populateState($ordering, $direction);
@@ -63,8 +63,8 @@ class DzproductModelItems extends JModelList {
     /**
      * Build an SQL query to load the list data.
      *
-     * @return	JDatabaseQuery
-     * @since	1.6
+     * @return  JDatabaseQuery
+     * @since   1.6
      */
     protected function getListQuery() {
         // Create a new query object.
@@ -85,12 +85,12 @@ class DzproductModelItems extends JModelList {
     $query->select('uc.name AS editor');
     $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
-		// Join over the category 'catid'
-		$query->select('catid.title AS catid_title');
-		$query->join('LEFT', '#__categories AS catid ON catid.id = a.catid');
-		// Join over the created by field 'created_by'
-		$query->select('created_by.name AS created_by');
-		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
+        // Join over the category 'catid'
+        $query->select('catid.title AS catid_title');
+        $query->join('LEFT', '#__categories AS catid ON catid.id = a.catid');
+        // Join over the created by field 'created_by'
+        $query->select('created_by.name AS created_by');
+        $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
         
 
         // Filter by search in title
@@ -106,11 +106,11 @@ class DzproductModelItems extends JModelList {
 
         
 
-		//Filtering catid
-		$filter_catid = $this->state->get("filter.catid");
-		if ($filter_catid) {
-			$query->where("a.catid = '".$filter_catid."'");
-		}
+        //Filtering catid
+        $filter_catid = $this->state->get("filter.catid");
+        if ($filter_catid) {
+            $query->where("a.catid = '".$filter_catid."'");
+        }
 
         return $query;
     }

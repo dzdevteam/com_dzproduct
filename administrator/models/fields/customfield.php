@@ -17,30 +17,30 @@ jimport('joomla.form.formfield');
  */
 class JFormFieldCustomField extends JFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since	1.6
-	 */
-	protected $type = 'customfield';
+    /**
+     * The form field type.
+     *
+     * @var     string
+     * @since   1.6
+     */
+    protected $type = 'customfield';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return	string	The field input markup.
-	 * @since	1.6
-	 */
-	protected function getInput()
-	{
+    /**
+     * Method to get the field input markup.
+     *
+     * @return  string  The field input markup.
+     * @since   1.6
+     */
+    protected function getInput()
+    {
         JHtml::_('jquery.framework');
         $itemid = JFactory::getApplication()->input->getInt('id', 0);
         $document = JFactory::getDocument();
         $document->addScript(JUri::root().'administrator/components/com_dzproduct/assets/js/customfield.js');
         $document->addScriptDeclaration("customFieldSetup('" . $this->fieldname . "','" . $this->element['controller'] . "', $itemid);");
-		$html = '<div id="' . $this->id . '" class="form-horizontal"></div>';
-		$html .= '<img id="' . $this->id . '-loader" src="' . JUri::root().'administrator/components/com_dzproduct/assets/images/loading.gif' . '" />';
+        $html = '<div id="' . $this->id . '" class="form-horizontal"></div>';
+        $html .= '<img id="' . $this->id . '-loader" src="' . JUri::root().'administrator/components/com_dzproduct/assets/images/loading.gif' . '" />';
 
-		return $html;
-	}
+        return $html;
+    }
 }

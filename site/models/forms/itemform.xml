@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset>
+    <fieldset>
 
               <field name="id" type="text" default="0" label="COM_DZPRODUCT_FORM_LBL_ITEM_ID"
             readonly="true" class="readonly"
@@ -35,7 +35,7 @@
             filter="raw" /> 
 
  
-		<field name="filter_catid" type="category"
+        <field name="filter_catid" type="category"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_CATID"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_CATID"  extension="com_dzproduct.catid" show_root="1" onchange="this.form.submit();" /> 
 
@@ -203,6 +203,6 @@
                             section="item"
                         />
 
-	</fieldset>
+    </fieldset>
 
 </form>

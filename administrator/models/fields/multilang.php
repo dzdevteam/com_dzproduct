@@ -17,22 +17,22 @@ jimport('joomla.form.formfield');
  */
 class JFormFieldMultilang extends JFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since	1.6
-	 */
-	protected $type = 'multilang';
+    /**
+     * The form field type.
+     *
+     * @var     string
+     * @since   1.6
+     */
+    protected $type = 'multilang';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return	string	The field input markup.
-	 * @since	1.6
-	 */
-	protected function getInput()
-	{
+    /**
+     * Method to get the field input markup.
+     *
+     * @return  string  The field input markup.
+     * @since   1.6
+     */
+    protected function getInput()
+    {
         $html = '';
         $langs = JLanguage::getKnownLanguages(JPATH_SITE);
         JFactory::getDocument()->addScript(JUri::root().'administrator/components/com_dzproduct/assets/js/multilang.js');
@@ -49,6 +49,6 @@ class JFormFieldMultilang extends JFormField
         }
         $html .= '<input type="hidden" name="'.$this->name.'" class="field_root" value=\''.$this->value.'\'/>';
         $html .= '</div>';
-		return $html;
-	}
+        return $html;
+    }
 }

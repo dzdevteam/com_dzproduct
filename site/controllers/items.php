@@ -17,13 +17,13 @@ require_once JPATH_COMPONENT.'/controller.php';
  */
 class DzproductControllerItems extends DzproductController
 {
-	/**
-	 * Proxy for getModel.
-	 * @since	1.6
-	 */
-	public function &getModel($name = 'Items', $prefix = 'DzproductModel')
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
-	}
+    /**
+     * Proxy for getModel.
+     * @since   1.6
+     */
+    public function &getModel($name = 'Items', $prefix = 'DzproductModel')
+    {
+        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
+        return $model;
+    }
 }

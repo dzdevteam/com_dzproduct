@@ -11,8 +11,8 @@
 defined('_JEXEC') or die;
 
 /**
- * @param	array	A named array
- * @return	array
+ * @param   array   A named array
+ * @return  array
  */
 function DzproductBuildRoute(&$query)
 {
@@ -132,8 +132,8 @@ function DzproductBuildRoute(&$query)
 }
 
 /**
- * @param	array	A named array
- * @param	array
+ * @param   array   A named array
+ * @param   array
  *
  * Formats:
  *
@@ -143,7 +143,7 @@ function DzproductBuildRoute(&$query)
  */
 function DzproductParseRoute($segments)
 {
-	$vars = array();
+    $vars = array();
     
     $app = JFactory::getApplication();
     $menu = $app->getMenu();

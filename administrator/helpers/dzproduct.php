@@ -56,13 +56,13 @@ class DZProductHelper
     /**
     * Gets a list of the actions that can be performed.
     *
-    * @return	JObject
-    * @since	1.6
+    * @return   JObject
+    * @since    1.6
     */
     public static function getActions()
     {
-        $user	= JFactory::getUser();
-        $result	= new JObject;
+        $user   = JFactory::getUser();
+        $result = new JObject;
 
         $assetName = 'com_dzproduct';
 

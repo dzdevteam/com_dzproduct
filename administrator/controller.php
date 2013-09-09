@@ -20,32 +20,32 @@ class DzproductController extends JControllerLegacy
         // Register our tasks
         $this->registerTask('getFieldsJSON', 'getFieldsJSON');
     }
-	/**
-	 * Method to display a view.
-	 *
-	 * @param	boolean			$cachable	If true, the view output will be cached
-	 * @param	array			$urlparams	An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
-	 *
-	 * @return	JController		This object to support chaining.
-	 * @since	1.5
-	 */
-	public function display($cachable = false, $urlparams = false)
-	{
-		require_once JPATH_COMPONENT.'/helpers/dzproduct.php';
+    /**
+     * Method to display a view.
+     *
+     * @param   boolean         $cachable   If true, the view output will be cached
+     * @param   array           $urlparams  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+     *
+     * @return  JController     This object to support chaining.
+     * @since   1.5
+     */
+    public function display($cachable = false, $urlparams = false)
+    {
+        require_once JPATH_COMPONENT.'/helpers/dzproduct.php';
 
-		$view		= JFactory::getApplication()->input->getCmd('view', 'items');
+        $view       = JFactory::getApplication()->input->getCmd('view', 'items');
         JFactory::getApplication()->input->set('view', $view);
 
-		parent::display($cachable, $urlparams);
+        parent::display($cachable, $urlparams);
 
-		return $this;
-	}
-	
-	/**
-	 * Get Custom Fields for a category
-	 */
-	public function getFieldsJSON()
-	{
+        return $this;
+    }
+    
+    /**
+     * Get Custom Fields for a category
+     */
+    public function getFieldsJSON()
+    {
         $catid = JFactory::getApplication()->input->getInt('catid', 0);
         $itemid = JFactory::getApplication()->input->getInt('itemid', 0);
         $db = JFactory::getDBO();
@@ -61,5 +61,5 @@ class DzproductController extends JControllerLegacy
         
         // Close the application
         JFactory::getApplication()->close();
-	}
+    }
 }

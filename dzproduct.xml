@@ -38,21 +38,21 @@
     </files>
     <languages folder="site">
         
-			<language tag="en-GB">language/en-GB.com_dzproduct.ini</language>
-			<language tag="ru-RU">language/ru-RU.com_dzproduct.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_dzproduct.ini</language>
+            <language tag="en-GB">language/en-GB.com_dzproduct.ini</language>
+            <language tag="ru-RU">language/ru-RU.com_dzproduct.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_dzproduct.ini</language>
     </languages>
     <administration>
         <menu img="components/com_dzproduct/assets/images/s_com_dzproduct.png" >COM_DZPRODUCT</menu>
         <submenu>
             
-			<menu link="option=com_dzproduct&amp;view=items" view="items" img="components/com_dzproduct/assets/images/s_items.png" alt="Dzproduct/Items">COM_DZPRODUCT_TITLE_ITEMS</menu>
+            <menu link="option=com_dzproduct&amp;view=items" view="items" img="components/com_dzproduct/assets/images/s_items.png" alt="Dzproduct/Items">COM_DZPRODUCT_TITLE_ITEMS</menu>
 
-			<menu link="option=com_categories&amp;extension=com_dzproduct.items.catid" view="categories" img="components/com_dzproduct/assets/images/s_items.png" alt="Dzproduct/Categories">COM_DZPRODUCT_ITEMS_CATID</menu>
+            <menu link="option=com_categories&amp;extension=com_dzproduct.items.catid" view="categories" img="components/com_dzproduct/assets/images/s_items.png" alt="Dzproduct/Categories">COM_DZPRODUCT_ITEMS_CATID</menu>
 
-			<menu link="option=com_dzproduct&amp;view=fields" view="fields" img="components/com_dzproduct/assets/images/s_fields.png" alt="Dzproduct/Fields">COM_DZPRODUCT_TITLE_FIELDS</menu>
+            <menu link="option=com_dzproduct&amp;view=fields" view="fields" img="components/com_dzproduct/assets/images/s_fields.png" alt="Dzproduct/Fields">COM_DZPRODUCT_TITLE_FIELDS</menu>
 
-			<menu link="option=com_dzproduct&amp;view=groups" view="groups" img="components/com_dzproduct/assets/images/s_groups.png" alt="Dzproduct/Groups">COM_DZPRODUCT_TITLE_GROUPS</menu>
+            <menu link="option=com_dzproduct&amp;view=groups" view="groups" img="components/com_dzproduct/assets/images/s_groups.png" alt="Dzproduct/Groups">COM_DZPRODUCT_TITLE_GROUPS</menu>
 
         </submenu>
         <files folder="administrator">
@@ -71,12 +71,12 @@
         </files>
         <languages folder="administrator">
             
-			<language tag="en-GB">language/en-GB.com_dzproduct.ini</language>
-			<language tag="en-GB">language/en-GB.com_dzproduct.sys.ini</language>
-			<language tag="ru-RU">language/ru-RU.com_dzproduct.ini</language>
-			<language tag="ru-RU">language/ru-RU.com_dzproduct.sys.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_dzproduct.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_dzproduct.sys.ini</language>
+            <language tag="en-GB">language/en-GB.com_dzproduct.ini</language>
+            <language tag="en-GB">language/en-GB.com_dzproduct.sys.ini</language>
+            <language tag="ru-RU">language/ru-RU.com_dzproduct.ini</language>
+            <language tag="ru-RU">language/ru-RU.com_dzproduct.sys.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_dzproduct.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_dzproduct.sys.ini</language>
         </languages>
     </administration>
 </extension>

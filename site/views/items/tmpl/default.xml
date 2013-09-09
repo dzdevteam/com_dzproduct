@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_DZPRODUCT_TITLE_LIST_VIEW_ITEMS" option="View">
+    <layout title="COM_DZPRODUCT_TITLE_LIST_VIEW_ITEMS" option="View">
         <message>
                         <![CDATA[COM_DZPRODUCT_TITLE_LIST_VIEW_ITEMS_DESC]]>
         </message>
-	</layout>
+    </layout>
     <fields name="request">
         <fieldset name="request">
             <field name="catid" type="category"

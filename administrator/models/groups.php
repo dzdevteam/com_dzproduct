@@ -74,9 +74,9 @@ class DzproductModelgroups extends JModelList {
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param	string		$id	A prefix for the store id.
-     * @return	string		A store id.
-     * @since	1.6
+     * @param   string      $id A prefix for the store id.
+     * @return  string      A store id.
+     * @since   1.6
      */
     protected function getStoreId($id = '') {
         // Compile the store id.
@@ -89,8 +89,8 @@ class DzproductModelgroups extends JModelList {
     /**
      * Build an SQL query to load the list data.
      *
-     * @return	JDatabaseQuery
-     * @since	1.6
+     * @return  JDatabaseQuery
+     * @since   1.6
      */
     protected function getListQuery() {
         // Create a new query object.
@@ -110,12 +110,12 @@ class DzproductModelgroups extends JModelList {
     $query->select('uc.name AS editor');
     $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
-		// Join over the foreign key 'fields'
-		$query->select('#__dzproduct_fields_695262.name AS fields_name_695262');
-		$query->join('LEFT', '#__dzproduct_fields AS #__dzproduct_fields_695262 ON #__dzproduct_fields_695262.id = a.fields');
-		// Join over the user field 'created_by'
-		$query->select('created_by.name AS created_by');
-		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
+        // Join over the foreign key 'fields'
+        $query->select('#__dzproduct_fields_695262.name AS fields_name_695262');
+        $query->join('LEFT', '#__dzproduct_fields AS #__dzproduct_fields_695262 ON #__dzproduct_fields_695262.id = a.fields');
+        // Join over the user field 'created_by'
+        $query->select('created_by.name AS created_by');
+        $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
         
     // Filter by published state
@@ -154,30 +154,30 @@ class DzproductModelgroups extends JModelList {
     public function getItems() {
         $items = parent::getItems();
         
-		foreach ($items as $oneItem) {
+        foreach ($items as $oneItem) {
 
-			if (isset($oneItem->fields)) {
-				$values = explode(',', $oneItem->fields);
+            if (isset($oneItem->fields)) {
+                $values = explode(',', $oneItem->fields);
 
-				$textValue = array();
-				foreach ($values as $value){
-					$db = JFactory::getDbo();
-					$query = $db->getQuery(true);
-					$query
-							->select('name')
-							->from('`#__dzproduct_fields`')
-							->where('id = ' .$value);
-					$db->setQuery($query);
-					$results = $db->loadObject();
-					if ($results) {
-						$textValue[] = $results->name;
-					}
-				}
+                $textValue = array();
+                foreach ($values as $value){
+                    $db = JFactory::getDbo();
+                    $query = $db->getQuery(true);
+                    $query
+                            ->select('name')
+                            ->from('`#__dzproduct_fields`')
+                            ->where('id = ' .$value);
+                    $db->setQuery($query);
+                    $results = $db->loadObject();
+                    if ($results) {
+                        $textValue[] = $results->name;
+                    }
+                }
 
-			$oneItem->fields = !empty($textValue) ? implode(', ', $textValue) : $oneItem->fields;
+            $oneItem->fields = !empty($textValue) ? implode(', ', $textValue) : $oneItem->fields;
 
-			}
-		}
+            }
+        }
         return $items;
     }
 

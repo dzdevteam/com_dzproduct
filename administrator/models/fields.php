@@ -73,9 +73,9 @@ class DzproductModelfields extends JModelList {
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param	string		$id	A prefix for the store id.
-     * @return	string		A store id.
-     * @since	1.6
+     * @param   string      $id A prefix for the store id.
+     * @return  string      A store id.
+     * @since   1.6
      */
     protected function getStoreId($id = '') {
         // Compile the store id.
@@ -88,8 +88,8 @@ class DzproductModelfields extends JModelList {
     /**
      * Build an SQL query to load the list data.
      *
-     * @return	JDatabaseQuery
-     * @since	1.6
+     * @return  JDatabaseQuery
+     * @since   1.6
      */
     protected function getListQuery() {
         // Create a new query object.
@@ -109,9 +109,9 @@ class DzproductModelfields extends JModelList {
     $query->select('uc.name AS editor');
     $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
-		// Join over the user field 'created_by'
-		$query->select('created_by.name AS created_by');
-		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
+        // Join over the user field 'created_by'
+        $query->select('created_by.name AS created_by');
+        $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
         
     // Filter by published state

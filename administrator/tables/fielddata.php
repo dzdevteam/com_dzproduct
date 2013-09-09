@@ -27,45 +27,45 @@ class DzproductTablefielddata extends JTable {
     /**
      * Overloaded bind function to pre-process the params.
      *
-     * @param	array		Named array
-     * @return	null|string	null is operation was satisfactory, otherwise returns an error
-     * @see		JTable:bind
-     * @since	1.5
+     * @param   array       Named array
+     * @return  null|string null is operation was satisfactory, otherwise returns an error
+     * @see     JTable:bind
+     * @since   1.5
      */
     public function bind($array, $ignore = '') {
 
         
-		$input = JFactory::getApplication()->input;
-		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_dzproduct') && $array['state'] == 1)){
-			$array['state'] = 0;
-		}
+        $input = JFactory::getApplication()->input;
+        $task = $input->getString('task', '');
+        if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_dzproduct') && $array['state'] == 1)){
+            $array['state'] = 0;
+        }
 
-		//Support for multiple or not foreign key field: itemid
-			if(isset($array['itemid'])){
-				if(is_array($array['itemid'])){
-					$array['itemid'] = implode(',',$array['itemid']);
-				}
-				else if(strrpos($array['itemid'], ',') != false){
-					$array['itemid'] = explode(',',$array['itemid']);
-				}
-				else if(empty($array['itemid'])) {
-					$array['itemid'] = '';
-				}
-			}
+        //Support for multiple or not foreign key field: itemid
+            if(isset($array['itemid'])){
+                if(is_array($array['itemid'])){
+                    $array['itemid'] = implode(',',$array['itemid']);
+                }
+                else if(strrpos($array['itemid'], ',') != false){
+                    $array['itemid'] = explode(',',$array['itemid']);
+                }
+                else if(empty($array['itemid'])) {
+                    $array['itemid'] = '';
+                }
+            }
 
-		//Support for multiple or not foreign key field: fieldid
-			if(isset($array['fieldid'])){
-				if(is_array($array['fieldid'])){
-					$array['fieldid'] = implode(',',$array['fieldid']);
-				}
-				else if(strrpos($array['fieldid'], ',') != false){
-					$array['fieldid'] = explode(',',$array['fieldid']);
-				}
-				else if(empty($array['fieldid'])) {
-					$array['fieldid'] = '';
-				}
-			}
+        //Support for multiple or not foreign key field: fieldid
+            if(isset($array['fieldid'])){
+                if(is_array($array['fieldid'])){
+                    $array['fieldid'] = implode(',',$array['fieldid']);
+                }
+                else if(strrpos($array['fieldid'], ',') != false){
+                    $array['fieldid'] = explode(',',$array['fieldid']);
+                }
+                else if(empty($array['fieldid'])) {
+                    $array['fieldid'] = '';
+                }
+            }
 
         if (isset($array['params']) && is_array($array['params'])) {
             $registry = new JRegistry();
@@ -88,9 +88,9 @@ class DzproductTablefielddata extends JTable {
             $array['rules'] = $this->JAccessRulestoArray($array_jaccess);
         }
         //Bind the rules for ACL where supported.
-		if (isset($array['rules']) && is_array($array['rules'])) {
-			$this->setRules($array['rules']);
-		}
+        if (isset($array['rules']) && is_array($array['rules'])) {
+            $this->setRules($array['rules']);
+        }
 
         return parent::bind($array, $ignore);
     }
