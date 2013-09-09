@@ -212,6 +212,38 @@ class DzproductTableitem extends JTable {
     }
     
     /**
+     * Overrides JTable::store to set created time and user id
+     *
+     * @param   boolean  $updateNulls  True to update fields even if they are null.
+     *
+     * @return  boolean  True on success.
+     */
+    public function store($updateNulls = false)
+    {
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+        
+        if (!$this->id) {
+            // Newly created item
+            if (!(int) $this->created) {
+                $this->created = $date->toSql();
+            }
+
+            if (empty($this->created_by)) {
+                $this->created_by = $user->get('id');
+            }
+        }
+        
+        $oldRules = $this->getRules();
+        if (empty($oldRules))
+        {
+            $this->setRules('{}');
+        }
+
+        return parent::store($updateNulls);
+    }
+    
+    /**
       * Define a namespaced asset name for inclusion in the #__assets table
       * @return string The asset name 
       *

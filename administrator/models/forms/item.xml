@@ -25,7 +25,12 @@
         <field name="filter_catid" type="category"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_CATID"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_CATID"  extension="com_dzproduct.items.catid" show_root="1" onchange="this.form.submit();" /> 
-
+        
+        <field name="created" type="calendar"
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_CREATED"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_CREATED"
+            format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+        
         <field name="created_by" type="createdby" default="" 
             label="COM_DZPRODUCT_FORM_LBL_ITEM_CREATED_BY"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_CREATED_BY"  /> 
