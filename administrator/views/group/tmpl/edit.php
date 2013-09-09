@@ -74,7 +74,14 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
                     <div class="control-label"><?php echo $this->form->getLabel('fields'); ?></div>
                     <div class="controls"><?php echo $this->form->getInput('fields'); ?></div>
                 </div>
-
+                <div class="control-group">
+                    <div class="controls">
+                        <a class="btn btn-primary btn-add-field" href="index.php?option=com_dzproduct&amp;task=field.edit" target="_blank" >
+                            <span class="icon-file-add"></span>&nbsp;<?php echo JText::_('COM_DZPRODUCT_FIELD_CUSTOM_FIELD_BTN_CREATE_FIELD'); ?>
+                        </a>
+                        <span class="help-inline"><?php echo JText::_('COM_DZPRODUCT_FIELD_CUSTOM_FIELD_BTN_CREATE_FIELD_HELP'); ?></span>
+                    </div>
+                </div>
                 <?php
                     foreach((array)$this->item->fields as $value): 
                         if(!is_array($value)):

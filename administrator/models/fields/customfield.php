@@ -37,10 +37,25 @@ class JFormFieldCustomField extends JFormField
         $itemid = JFactory::getApplication()->input->getInt('id', 0);
         $document = JFactory::getDocument();
         $document->addScript(JUri::root().'administrator/components/com_dzproduct/assets/js/customfield.js');
-        $document->addScriptDeclaration("customFieldSetup('" . $this->fieldname . "','" . $this->element['controller'] . "', $itemid);");
-        $html = '<div id="' . $this->id . '" class="form-horizontal"></div>';
-        $html .= '<img id="' . $this->id . '-loader" src="' . JUri::root().'administrator/components/com_dzproduct/assets/images/loading.gif' . '" />';
-
+        
+        JText::script('COM_DZPRODUCT_FIELD_CUSTOM_FIELD_ERROR_NO_FIELDS');
+        JText::script('COM_DZPRODUCT_FIELD_CUSTOM_FIELD_ERROR_LOAD_FIELDS');
+        JText::script('COM_DZPRODUCT_FIELD_CUSTOM_FIELD_BTN_EDIT_GROUP');
+        
+        $html = '<div 
+                    id="' . $this->id . '" 
+                    class="form-horizontal customfield" 
+                    data-fieldname="'. $this->fieldname .'" 
+                    data-controller="'. $this->element['controller'] .'" 
+                    data-itemid="'. $itemid .'">
+                    <div class="form-container"></div>
+                    <img class="img-loading" src="'.JUri::root().'/media/system/images/modal/spinner.gif" />
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-primary btn-reload"><span class="icon-refresh"></span>&nbsp;'.JText::_('COM_DZPRODUCT_RELOAD_FIELDS').'</button>
+                        </div>
+                    </div>
+                </div>';
         return $html;
     }
 }

@@ -46,8 +46,11 @@ class DzproductController extends JControllerLegacy
      */
     public function getFieldsJSON()
     {
+        header('Content-Type:application/json');
         $catid = JFactory::getApplication()->input->getInt('catid', 0);
         $itemid = JFactory::getApplication()->input->getInt('itemid', 0);
+        
+        // Get the fields
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
         $query->select("f.id, f.name, f.type, d.value")
@@ -56,8 +59,16 @@ class DzproductController extends JControllerLegacy
               ->join("INNER", "#__dzproduct_groupcat_relations as r ON g.id = r.groupid AND r.catid = $catid")
               ->join("LEFT", "#__dzproduct_field_data as d ON f.id = d.fieldid AND d.itemid = $itemid");
         $db->setQuery($query);
-        $result = $db->loadAssocList();
-        echo json_encode($result);
+        $fields = $db->loadAssocList();
+        
+        // Get the group 
+        $query = $db->getQuery(true);
+        $query->select("g.id, g.name")
+              ->from("#__dzproduct_groups as g")
+              ->join("INNER", "#__dzproduct_groupcat_relations as r ON g.id = r.groupid AND r.catid = $catid");
+        $db->setQuery($query);
+        $group = $db->loadAssoc();
+        echo json_encode(array('fields' => $fields, 'group' => $group));
         
         // Close the application
         JFactory::getApplication()->close();

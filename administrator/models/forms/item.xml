@@ -8,10 +8,10 @@
         <field name="title" type="text"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_TITLE"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_TITLE" 
-            required="true" 
+            required="true" class="span6"
             filter="string" /> 
 
-        <field name="alias" type="text"
+        <field name="alias" type="text" class="span6"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_ALIAS"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_ALIAS"
             filter="string" /> 
@@ -32,15 +32,15 @@
 
         <fields name="images"> 
             <fieldset name="images">
-                <field name="icon" type="media" folder="images"
-                    label="COM_DZPRODUCT_FORM_LBL_ITEM_IMAGES_ICON"
-                    description="COM_DZPRODUCT_FORM_DESC_ITEM_IMAGES_ICON" />
                 <field name="intro" type="media" folder="images"
                     label="COM_DZPRODUCT_FORM_LBL_ITEM_IMAGES_INTRO"
                     description="COM_DZPRODUCT_FORM_DESC_ITEM_IMAGES_INTRO" />
                 <field name="full" type="media" folder="images"
                     label="COM_DZPRODUCT_FORM_LBL_ITEM_IMAGES_FULL"
                     description="COM_DZPRODUCT_FORM_DESC_ITEM_IMAGES_FULL" />
+                <field name="icon" type="media" folder="images"
+                    label="COM_DZPRODUCT_FORM_LBL_ITEM_IMAGES_ICON"
+                    description="COM_DZPRODUCT_FORM_DESC_ITEM_IMAGES_ICON" />
             </fieldset>
         </fields>
 
@@ -67,23 +67,22 @@
         <field name="short_desc" type="textarea"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_SHORT_DESC"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_SHORT_DESC" 
-            required="true" 
-            cols="100"
+            required="true" class="span6"
             rows="8"
             filter="safehtml" /> 
 
         <field name="long_desc" type="editor"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_LONG_DESC"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_LONG_DESC" 
-            buttons="article, image"
+            buttons="article, image" class="span6"
             filter="safehtml" /> 
 
-        <field name="video" type="textarea" cols="100" rows="8"
+        <field name="video" type="textarea" class="span6" rows="8"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_VIDEO"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_VIDEO"                
             filter="JComponentHelper::filterText" /> 
 
-        <field name="openurl" type="text"
+        <field name="openurl" type="text" class="span6"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_OPENURL"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_OPENURL" 
             filter="string" /> 
@@ -97,7 +96,32 @@
             label="COM_DZPRODUCT_FORM_LBL_ITEM_SALEOFF"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_SALEOFF" 
             filter="string" /> 
-
+        
+        <field 
+            name="new_arrival" type="radio" class="btn-group"
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_NEW_ARRIVAL"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_NEW_ARRIVAL">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        
+        <field 
+            name="featured" type="radio" class="btn-group"
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_FEATURED"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_FEATURED">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        
+        <field 
+            name="availability" type="radio" class="btn-group"
+            label="COM_DZPRODUCT_FORM_LBL_ITEM_AVAILABILITY"
+            description="COM_DZPRODUCT_FORM_DESC_ITEM_AVAILABILITY">
+            <option value="0">COM_DZPRODUCT_OPTION_COMING_SOON</option>
+            <option value="1">COM_DZPRODUCT_OPTION_INSTOCK</option>
+            <option value="2">COM_DZPRODUCT_OPTION_OUT_OF_STOCK</option>
+        </field>
+        
         <field name="metakey" type="textarea"
             label="COM_DZPRODUCT_FORM_LBL_ITEM_METAKEY"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_METAKEY" 

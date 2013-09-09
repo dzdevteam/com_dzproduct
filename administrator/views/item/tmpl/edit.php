@@ -48,79 +48,73 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
         <div class="span10 form-horizontal">
             <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
 
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_DZPRODUCT_DETAILS', true)); ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_DZPRODUCT_DETAILS', true)); ?>                
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('title'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('short_desc'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('short_desc'); ?></div>
+            </div>
             <div class="row-fluid">
                 <div class="span6">
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
-                        <div class="controls"><?php echo $this->form->getInput('title'); ?></div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
-                        <div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
-                    </div>
-                </div>
-                <div class="span6">
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $this->form->getLabel('openurl'); ?></div>
-                        <div class="controls"><?php echo $this->form->getInput('openurl'); ?></div>
-                    </div>
                     <div class="control-group">
                         <div class="control-label"><?php echo $this->form->getLabel('price'); ?></div>
                         <div class="controls"><?php echo $this->form->getInput('price'); ?></div>
                     </div>
+                </div>
+                <div class="span6">
                     <div class="control-group">
                         <div class="control-label"><?php echo $this->form->getLabel('saleoff'); ?></div>
                         <div class="controls"><?php echo $this->form->getInput('saleoff'); ?></div>
                     </div>
                 </div>
             </div>
-            
-            <div class="row-fluid">
-                <div class="span6">
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $this->form->getLabel('short_desc'); ?></div>
-                        <div class="controls"><?php echo $this->form->getInput('short_desc'); ?></div>
-                    </div>
-                </div>
-                <div class="span6">
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $this->form->getLabel('video'); ?></div>
-                        <div class="controls"><?php echo $this->form->getInput('video'); ?></div>
-                    </div>
-                </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('availability'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('availability'); ?></div>
             </div>
-            
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('new_arrival'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('new_arrival'); ?></div>
+            </div>
+            <hr />
             <div class="control-group">
                 <div class="control-label"><?php echo $this->form->getLabel('long_desc'); ?></div>
-                <div class="controls"><?php echo $this->form->getInput('long_desc'); ?></div>
+                <div class="controls"><div class="span6"><?php echo $this->form->getInput('long_desc'); ?></div></div>
             </div>
-            
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('video'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('video'); ?></div>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><?php echo $this->form->getLabel('openurl'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('openurl'); ?></div>
+            </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'images', JText::_('COM_DZPRODUCT_IMAGES', true)); ?>
-            <div class="row-fluid">
-                <?php $images_fieldset = $this->form->getFieldset('images'); ?>
-                <div class="span6">
-                    <h2><?php echo JText::_('COM_DZPRODUCT_IMAGES'); ?></h2>
-                    <?php foreach ($images_fieldset as $field) : ?>
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $field->label; ?></div>
-                        <div class="controls"><?php echo $field->input; ?></div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php $other_images_fieldset = $this->form->getFieldset('other_images'); ?>
-                <div class="span6">
-                    <h2><?php echo JText::_('COM_DZPRODUCT_OTHER_IMAGES'); ?></h2>
-                    <?php foreach ($other_images_fieldset as $field) : ?>
-                    <div class="control-group">
-                        <div class="control-label"><?php echo $field->label; ?></div>
-                        <div class="controls"><?php echo $field->input; ?></div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
+            <?php $images_fieldset = $this->form->getFieldset('images'); ?>            
+            <?php foreach ($images_fieldset as $field) : ?>
+            <div class="control-group">
+                <div class="control-label"><?php echo $field->label; ?></div>
+                <div class="controls"><?php echo $field->input; ?></div>
             </div>
+            <?php endforeach; ?>
+            
+            <hr />
+            <?php $other_images_fieldset = $this->form->getFieldset('other_images'); ?>
+            <?php foreach ($other_images_fieldset as $field) : ?>
+            <div class="control-group">
+                <div class="control-label"><?php echo $field->label; ?></div>
+                <div class="controls"><?php echo $field->input; ?></div>
+            </div>
+            <?php endforeach; ?>            
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'fields', JText::_('COM_DZPRODUCT_CATEGORY_FIELDS', true)); ?>
@@ -128,10 +122,9 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
                 <div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
                 <div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
             </div>
-            <div class="control-group">
-                <div class="control-label"><?php echo $this->form->getLabel('fields'); ?></div>
-                <div class="controls"><?php echo $this->form->getInput('fields'); ?></div>
-            </div>
+            <hr />
+            <?php echo $this->form->getInput('fields'); ?>
+            
                 
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
