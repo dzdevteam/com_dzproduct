@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
+require_once JPATH_COMPONENT.'/helpers/dzproduct.php';
 
 /**
  * View to edit
@@ -36,7 +37,11 @@ class DzproductViewItem extends JViewLegacy {
         
         $this->item->catid_title = $this->getModel()->getCategoryName($this->item->catid)->title;
         $this->form     = $this->get('Form');
-
+        
+        $this->item->tags = new JHelperTags;
+        $this->item->tags->getItemTags('com_dzproduct.item' , $this->item->id);
+        
+        
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));

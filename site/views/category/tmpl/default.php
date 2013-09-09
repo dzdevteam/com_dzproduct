@@ -7,9 +7,10 @@
  */
 // no direct access
 defined('_JEXEC') or die;
-$itemid = JRequest::getVar('Itemid');
+$productid = JRequest::getVar('Itemid');
+$app = JFactory::getApplication();
 $menu = &JSite::getMenu();
-$active = $menu->getItem($itemid);
+$active = $menu->getItem($productid);
 $params = $menu->getParams( $active->id );
 $pageclass_sfx = $params->get( 'pageclass_sfx' );
 ?>
@@ -23,30 +24,31 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <?php endif; ?>
     
     <!-- CATEGORY TITLE -->
-    <h2 class="category-heading">Category Title Goes here</h2>
+    <h2 class="category-heading"><?php echo $this->category->title; ?></h2>
     <!-- CATEGORY IMAGE -->
     <div class="category-image">
-        <img src="http://placehold.it/800x120" alt="Category title"/>
+        <img src="<?php echo $this->category->params['image']; ?>" alt="Category title"/>
     </div>
     <!-- CATEGORY DESC -->
     <div class="category-desc">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        <?php echo $this->category->description; ?>
     </div>
     <!-- CATEGORY CHILD -->
     <div class="category-child">
         <ul>
-            <li><a href="#">Sub category 1</a></li>
-            <li><a href="#">Sub category 2</a></li>
-            <li><a href="#">Sub category 3</a></li>
-            <li><a href="#">Sub category 4</a></li>
+            <?php foreach ($this->children as $child) { ?>
+            <li><a href="#"><?php echo $child->title; ?></li>
+            <?php } ?>
         </ul>
     </div>
     <!-- CATEGORY FILTER -->
+    
     <div class="category-filter">
         <select class="filter-dropdown">
-        <option>Sub category 1</option>
-        <option>Sub category 2</option>
-        <option>Sub category 3</option>
+        <option value=""><?php echo JText::_('JGLOBAL_CHOOSE_CATEGORY_LABEL'); ?>
+        <?php foreach ($this->children as $child) { ?>
+        <option value="<?php echo $child->id; ?>"><?php echo $child->title; ?></option>
+        <?php } ?>
        </select>
         <div class="filter-text input-append">
           <input class="input-medium" id="appendedInputButtons" type="text">
@@ -63,50 +65,50 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
             $column = 3 ;
             $length = 120;
         ?>        
-        <?php foreach(array_chunk($this->items,$column) as $row) :?>
+        <?php foreach(array_chunk($this->products,$column) as $row) :?>
         <div class="row-fluid">
-            <?php foreach ($row as $item) : ?>    
+            <?php foreach ($row as $product) : ?>    
             <div class="span<?php echo 12/$column;?>">
                 <div class="product-item">
-                <?php $images = json_decode($item->images);?>
-                <a href="<?php echo $item->link; ?>" class="product-link">
-                    <div class="product-image"><img src="<?php echo $images->intro;?>" alt="<?php echo $item->title;?>"/></div>
-                    <h3 class="product-title"><?php echo $item->title;?></h3>
+                <a href="<?php echo $product->link; ?>" class="product-link">
+                    <div class="product-image"><img src="<?php echo JUri::root().'/'.$product->images['intro'];?>" alt="<?php echo $product->title;?>"/></div>
+                    <h3 class="product-title"><?php echo $product->title;?></h3>
                 </a>
-                    <div class="product-category"><?php echo $item->catid_title;?></div>
+                    <div class="product-category"><?php echo $product->catid_title;?></div>
                     <div class="product-info">
                         <ul>
-                            <li><span>Field 1: </span>123456</li>
-                            <li><span>Field 2: </span>ABCZYZ</li>
-                            <li><span>Field 3: </span>87381</li>
+                            <?php foreach ($product->fields as $field) { ?>
+                            <?php $tag = JFactory::getLanguage()->getTag(); ?>
+                            <li><span><?php echo $field['dname'][$tag]; ?>: <?php echo $field['value']; ?>
+                            <?php } ?>
                         </ul>
                     </div>
                     <div class="product-intro">
-                        <?php echo mb_substr(strip_tags($item->short_desc),0,$length, "UTF-8");?>...
+                        <?php echo mb_substr(strip_tags($product->short_desc),0,$length, "UTF-8");?>...
                     </div>
                     <div class="product-price">
-                        <?php if($item->saleoff) :?>
-                            <span><?php echo $item->saleoff;?></span><em><?php echo $item->price;?></em>
+                        <?php if($product->saleoff) :?>
+                            <span><?php echo $product->saleoff;?></span><em><?php echo $product->price;?></em>
                         <?php else :?>
-                            <span><?php echo $item->price;?></span>
+                            <span><?php echo $product->price;?></span>
                         <?php endif;?>                            
                     </div>
-                    <a href="<?php echo $item->link; ?>">View more</a>
+                    <a href="<?php echo $product->link; ?>">View more</a>
                     
                     <div class="product-labels">
-                    <?php if($item->saleoff) :?>
+                    <?php if($product->saleoff) :?>
                     <span class="product-saleoff">
-                        -<?php echo (100*($item->price - $item->saleoff)/$item->price) ;?>%
+                        -<?php echo (100*($product->price - $product->saleoff)/$product->price) ;?>%
                     </span>
                     <?php endif;?>
                     <span class="product-featured">
-                        featured
+                        <?php echo $product->featured; ?>
                     </span>
                     <span class="product-new">
-                        new arrival
+                        <?php echo $product->new_arrival; ?>
                     </span>
                     <span class="product-avail">
-                        out of stock
+                        <?php echo DZProductHelper::availabilityText($product->availability); ?>
                     </span>
                     </div>
                 

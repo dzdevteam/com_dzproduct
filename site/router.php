@@ -69,7 +69,7 @@ function DzproductBuildRoute(&$query)
         
         // We can imply a single view from its list view
         // Thus we can remove view from the query in some cases
-        if ($menuItem->query['view'] == 'items' && $query['view'] == 'item')
+        if ($menuItem->query['view'] == 'category' && $query['view'] == 'item')
             unset($query['view']);
     }
     
@@ -158,7 +158,7 @@ function DzproductParseRoute($segments)
     } elseif ($count == 1) {
         if ($menuItem) {
             switch ($menuItem->query['view']) {
-                case 'items':
+                case 'category':
                     $vars['view'] = 'item';
                     break;
                 default:

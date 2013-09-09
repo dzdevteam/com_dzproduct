@@ -11,11 +11,14 @@ defined('_JEXEC') or die;
 
 abstract class DzproductHelper
 {
-    public static function myFunction()
+    public static function availabilityText($availability)
     {
-        $result = 'Something';
-        return $result;
+        $texts = array(
+            JText::_('COM_DZPRODUCT_OPTION_COMING_SOON'),
+            JText::_('COM_DZPRODUCT_OPTION_IN_STOCK'),
+            JText::_('COM_DZPRODUCT_OPTION_OUT_OF_STOCK'),
+        );
+        return $texts[(int) $availability];
     }
-
 }
 

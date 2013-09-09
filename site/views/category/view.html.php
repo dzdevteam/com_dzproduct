@@ -11,16 +11,19 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
+require_once JPATH_COMPONENT.'/helpers/dzproduct.php';
 
 /**
  * View class for a list of Dzproduct.
  */
 class DzproductViewCategory extends JViewLegacy
 {
-    protected $items;
+    protected $products;
     protected $pagination;
     protected $state;
     protected $params;
+    protected $category;
+    protected $children;
 
     /**
      * Display the view
@@ -30,8 +33,9 @@ class DzproductViewCategory extends JViewLegacy
         $app                = JFactory::getApplication();
         
         $this->state        = $this->get('State');
-        $this->items        = $this->get('Items');
+        $this->products     = $this->get('Items');
         $this->category     = $this->get('Category');
+        $this->children     = $this->get('Children');
         $this->pagination   = $this->get('Pagination');
         $this->params       = $app->getParams('com_dzproduct');
         

@@ -64,10 +64,8 @@ class DzproductModelitems extends JModelList {
         $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
         $this->setState('filter.state', $published);
 
-        
         //Filtering catid
         $this->setState('filter.catid', $app->getUserStateFromRequest($this->context.'.filter.catid', 'filter_catid', '', 'string'));
-
 
         // Load the parameters.
         $params = JComponentHelper::getParams('com_dzproduct');
@@ -116,9 +114,9 @@ class DzproductModelitems extends JModelList {
         $query->from('`#__dzproduct_items` AS a');
 
         
-    // Join over the users for the checked out user.
-    $query->select('uc.name AS editor');
-    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+        // Join over the users for the checked out user.
+        $query->select('uc.name AS editor');
+        $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
         // Join over the category 'catid'
         $query->select('c.title AS cattitle');
@@ -128,13 +126,13 @@ class DzproductModelitems extends JModelList {
         $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
         
-    // Filter by published state
-    $published = $this->getState('filter.state');
-    if (is_numeric($published)) {
-        $query->where('a.state = '.(int) $published);
-    } else if ($published === '') {
-        $query->where('(a.state IN (0, 1))');
-    }
+        // Filter by published state
+        $published = $this->getState('filter.state');
+        if (is_numeric($published)) {
+            $query->where('a.state = '.(int) $published);
+        } else if ($published === '') {
+            $query->where('(a.state IN (0, 1))');
+        }
     
 
         // Filter by search in title

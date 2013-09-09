@@ -27,7 +27,7 @@ abstract class DZProductHelperRoute
         //Create the link
         $link = 'index.php?option=com_dzproduct&view=item&id='. $id;
 
-        if ($itemId = self::_findItemid(array('item', 'items')));
+        if ($itemId = self::_findItemid(array('item', 'category')));
             $link .= '&Itemid='.$itemId;
         
         return $link;
