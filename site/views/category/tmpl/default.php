@@ -16,23 +16,33 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
 ?>
 
 <div class="component-inner products-category<?php if($pageclass_sfx) echo $pageclass_sfx?>">
-    <!-- PAGE HEADING -->
     <?php if ($this->params->get('show_page_heading')) : ?>
+    <!-- PAGE HEADING -->
     <h1 class="page-heading">
         <?php echo $this->escape($this->params->get('page_heading')); ?>
     </h1>
     <?php endif; ?>
     
-    <!-- CATEGORY TITLE -->
+    <?php if ($this->params->get('category_show_title', 1)) : ?>
+    <!-- CATEGORY TITLE -->    
     <h2 class="category-heading"><?php echo $this->category->title; ?></h2>
+    <?php endif; ?>
+    
+    <?php if ($this->params->get('category_show_image', 1)) : ?>
     <!-- CATEGORY IMAGE -->
     <div class="category-image">
         <img src="<?php echo $this->category->params['image']; ?>" alt="Category title"/>
     </div>
+    <?php endif; ?>
+    
+    <?php if ($this->params->get('category_show_description', 1)) : ?>
     <!-- CATEGORY DESC -->
     <div class="category-desc">
         <?php echo $this->category->description; ?>
     </div>
+    <?php endif; ?>
+    
+    <?php if ($this->params->get('category_show_subcats', 1)) : ?>
     <!-- CATEGORY CHILD -->
     <div class="category-child">
         <ul>
@@ -41,29 +51,33 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
             <?php } ?>
         </ul>
     </div>
-    <!-- CATEGORY FILTER -->
+    <?php endif; ?>
     
+    <!-- CATEGORY FILTER -->
     <div class="category-filter">
+        <?php if ($this->params->get('category_show_subcats_filter', 1)) : ?>
         <select class="filter-dropdown">
         <option value=""><?php echo JText::_('JGLOBAL_CHOOSE_CATEGORY_LABEL'); ?>
         <?php foreach ($this->children as $child) { ?>
         <option value="<?php echo $child->id; ?>"><?php echo $child->title; ?></option>
         <?php } ?>
-       </select>
+        </select>
+        <?php endif; ?>
+        <?php if ($this->params->get('category_show_text_filter', 1)) : ?>
         <div class="filter-text input-append">
           <input class="input-medium" id="appendedInputButtons" type="text">
           <button class="btn" type="button">Search</button>
           <button class="btn" type="button">Reset</button>
         </div>
-       
+       <?php endif; ?>
     </div>
     
     <!-- CATEGORY PRODUCTS -->
 
     <div class="product-grid">    
         <?php
-            $column = 3 ;
-            $length = 120;
+            $column = $this->params->get('category_number_of_columns', 3) ;
+            $length = $this->params->get('category_item_intro_text_length', 180);
         ?>        
         <?php foreach(array_chunk($this->products,$column) as $row) :?>
         <div class="row-fluid">
@@ -71,10 +85,19 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
             <div class="span<?php echo 12/$column;?>">
                 <div class="product-item">
                 <a href="<?php echo $product->link; ?>" class="product-link">
+                    <?php if ($this->params->get('category_show_item_intro_image')) : ?>
                     <div class="product-image"><img src="<?php echo JUri::root().'/'.$product->images['intro'];?>" alt="<?php echo $product->title;?>"/></div>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_title', 1)) : ?>
                     <h3 class="product-title"><?php echo $product->title;?></h3>
+                    <?php endif; ?>
                 </a>
+                    <?php if ($this->params->get('category_show_item_category', 1)) : ?>
                     <div class="product-category"><?php echo $product->catid_title;?></div>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_fields', 1)) : ?>
                     <div class="product-info">
                         <ul>
                             <?php foreach ($product->fields as $field) { ?>
@@ -83,9 +106,15 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
                             <?php } ?>
                         </ul>
                     </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_intro_text', 1)) : ?>
                     <div class="product-intro">
                         <?php echo mb_substr(strip_tags($product->short_desc),0,$length, "UTF-8");?>...
                     </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_price', 1)) : ?>
                     <div class="product-price">
                         <?php if($product->saleoff) :?>
                             <span><?php echo $product->saleoff;?></span><em><?php echo $product->price;?></em>
@@ -93,23 +122,38 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
                             <span><?php echo $product->price;?></span>
                         <?php endif;?>                            
                     </div>
-                    <a href="<?php echo $product->link; ?>">View more</a>
+                    <?php endif; ?>
                     
+                    <?php if ($this->params->get('category_show_item_readmore_btn', 1)) : ?>
+                    <a href="<?php echo $product->link; ?>">View more</a>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_saleoff_label', 1)) : ?>
                     <div class="product-labels">
                     <?php if($product->saleoff) :?>
                     <span class="product-saleoff">
                         -<?php echo (100*($product->price - $product->saleoff)/$product->price) ;?>%
                     </span>
                     <?php endif;?>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_featured_label', 1)) : ?>
                     <span class="product-featured">
                         <?php echo $product->featured; ?>
                     </span>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_new_arrival_label', 1)) : ?>
                     <span class="product-new">
                         <?php echo $product->new_arrival; ?>
                     </span>
+                    <?php endif; ?>
+                    
+                    <?php if ($this->params->get('category_show_item_availability_label', 1)) : ?>
                     <span class="product-avail">
                         <?php echo DZProductHelper::availabilityText($product->availability); ?>
                     </span>
+                    <?php endif; ?>
                     </div>
                 
                 </div>                

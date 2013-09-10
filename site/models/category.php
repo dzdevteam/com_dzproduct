@@ -21,6 +21,7 @@ class DzproductModelCategory extends JModelList {
     protected $_siblings = null;
     protected $_children = null;
     protected $_parent = null;
+    protected $context = 'com_dzproduct.category';
     
     /**
      * Constructor.
@@ -30,6 +31,26 @@ class DzproductModelCategory extends JModelList {
      * @since    1.6
      */
     public function __construct($config = array()) {
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = array(
+                                'id', 'a.id',
+                'title', 'a.title',
+                'alias', 'a.alias',
+                'catid', 'a.catid', 'cattitle', 'c.title',
+                'ordering', 'a.ordering',
+                'state', 'a.state',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
+                'video', 'a.video',
+                'openurl', 'a.openurl',
+                'price', 'a.price',
+                'saleoff', 'a.saleoff',
+                'language', 'a.language',
+                'featured', 'a.featured',
+                'new_arrival', 'a.new_arrival',
+                'availability', 'a.availability',
+            );
+        }
         parent::__construct($config);
     }
 
@@ -60,23 +81,35 @@ class DzproductModelCategory extends JModelList {
         $this->setState('params', $mergedParams);
         
         // List state information
-        $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
+        $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $mergedParams->get('category_number_of_items', 12));
         $this->setState('list.limit', $limit);
-
-        $limitstart = JFactory::getApplication()->input->getInt('limitstart', 0);
+        
+        $value = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
+        $limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
         $this->setState('list.start', $limitstart);
 
+        // Check if the ordering field is in the white list, otherwise use the incoming value.
+        $value = $mergedParams->get('category_order_by', 'created');
+        if (!in_array($value, $this->filter_fields))
+        {
+            $value = $ordering;
+            $app->setUserState($this->context . '.ordercol', $value);
+        }
+        $this->setState('list.ordering', $value);
+
+        // Check if the ordering direction is valid, otherwise use the incoming value.
+        $value = $app->getUserStateFromRequest($this->context . '.orderdirn', 'filter_order_Dir', $mergedParams->get('category_order_direction', 'DESC'));
+        if (!in_array(strtoupper($value), array('ASC', 'DESC', '')))
+        {
+            $value = $direction;
+            $app->setUserState($this->context . '.orderdirn', $value);
+        }
+        $this->setState('list.direction', $value);
+            
         $catid = $app->input->getInt('catid', 0);
         if ($catid) {
             $this->setState('filter.catid', $catid);
         }
-        
-        if(empty($ordering)) {
-            $ordering = 'a.ordering';
-        }
-
-        // List state information.
-        parent::populateState($ordering, $direction);
     }
 
     /**
@@ -100,9 +133,9 @@ class DzproductModelCategory extends JModelList {
         $query->from('`#__dzproduct_items` AS a');
 
         
-    // Join over the users for the checked out user.
-    $query->select('uc.name AS editor');
-    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+        // Join over the users for the checked out user.
+        $query->select('uc.name AS editor');
+        $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
         // Join over the category 'catid'
         $query->select('catid.title AS catid_title');
@@ -130,7 +163,10 @@ class DzproductModelCategory extends JModelList {
         if ($filter_catid) {
             $query->where("a.catid = '".$filter_catid."'");
         }
-
+        
+        // Add the list ordering clause.
+        $query->order($this->getState('list.ordering', 'created') . ' ' . $this->getState('list.direction', 'DESC'));
+        
         return $query;
     }
 
@@ -283,10 +319,10 @@ class DzproductModelCategory extends JModelList {
         if (count($this->_children))
         {
             $params = $this->getState()->get('params');
-            if ($params->get('orderby_pri') == 'alpha' || $params->get('orderby_pri') == 'ralpha')
+            if ($params->get('category_subcats_order') == 'title')
             {
                 jimport('joomla.utilities.arrayhelper');
-                JArrayHelper::sortObjects($this->_children, 'title', ($params->get('orderby_pri') == 'alpha') ? 1 : -1);
+                JArrayHelper::sortObjects($this->_children, 'title', 1);
             }
         }
 

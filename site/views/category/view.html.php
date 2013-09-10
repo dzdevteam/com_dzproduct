@@ -37,7 +37,7 @@ class DzproductViewCategory extends JViewLegacy
         $this->category     = $this->get('Category');
         $this->children     = $this->get('Children');
         $this->pagination   = $this->get('Pagination');
-        $this->params       = $app->getParams('com_dzproduct');
+        $this->params       = $this->state->params;
         
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {;

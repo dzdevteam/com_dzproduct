@@ -142,7 +142,16 @@ $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
                 <div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
-
+            
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'itemview', JText::_('COM_DZPRODUCT_ITEM_VIEW_LABEL', true)); ?>
+            <?php foreach ($this->form->getFieldset('itemview') as $field) : ?>
+            <div class="control-group">
+                <div class="control-label"><?php echo $field->label; ?></div>
+                <div class="controls"><?php echo $field->input; ?></div>
+            </div>
+            <?php endforeach; ?>
+            <?php echo JHtml::_('bootstrap.endTab'); ?>
+            
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'metadata', JText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS', true)); ?>
                 <?php echo JLayoutHelper::render('joomla.edit.metadata', $this); ?>
             <?php echo JHtml::_('bootstrap.endTab'); ?>

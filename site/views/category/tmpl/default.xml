@@ -15,4 +15,232 @@
             </field>
         </fieldset>
     </fields>
+    <fields name="params">
+        <fieldset name="basic" label="COM_DZPRODUCT_CATEGORY_VIEW_LABEL">
+            <field type="spacer" label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_DISPLAY" />
+            <field
+                name="category_show_title"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_TITLE"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SHOW_TITLE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field
+                name="category_show_description"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_DESCRIPTION"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SHOW_DESCRIPTION">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field
+                name="category_show_image"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_IMAGE"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SHOW_IMAGE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field
+                name="category_show_subcats"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_SUBCATS"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SHOW_SUBCATS">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field
+                name="category_subcats_order"
+                type="list"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SUBCATS_ORDER"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SUBCATS_ORDER">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="ordering">COM_DZPRODUCT_CONFIG_OPTION_ORDERING</option>
+                <option value="title">COM_DZPRODUCT_CONFIG_OPTION_TITLE</option>            
+            </field>
+            <field
+                name="category_show_text_filter"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_TEXT_FILTER"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_TEXT_FILTER">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field
+                name="category_show_subcats_filter"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_SUBCATS_FILTER"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SHOW_SUBCATS_FILTER">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            
+            <field type="spacer" />
+            <field
+                name="category_number_of_items"
+                type="text" class="validate-numeric"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_N_OF_ITEMS"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_N_OT_ITEMS" />
+            <field
+                name="category_number_of_columns"
+                type="text" class="validate-numeric"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_N_OF_COLUMNS"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_N_OT_COLUMNS" />
+            <field
+                name="category_show_subcats_items"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_SHOW_SUBCATS_ITEM"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_SHOW_SUBCATS_ITEM">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_order_by"
+                type="list" 
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_ORDER_BY"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_ORDER_BY">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="created">COM_DZPRODUCT_CONFIG_OPTION_CREATED</option>
+                <option value="title">COM_DZPRODUCT_CONFIG_OPTION_TITLE</option>
+                <option value="ordering">COM_DZPRODUCT_CONFIG_OPTION_ORDERING</option>
+            </field>
+            <field
+                name="category_order_direction"
+                type="list"
+                label="COM_DZPRODUCT_CONFIG_LBL_CATEGORY_ORDER_DIRECTION"
+                description="COM_DZPRODUCT_CONFIG_DESC_CATEGORY_ORDER_DIRECTION">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="ASC">COM_DZPRODUCT_CONFIG_OPTION_ASC</option>
+                <option value="DESC">COM_DZPRODUCT_CONFIG_OPTION_DESC</option>
+            </field>
+            
+            <field type="spacer" />
+            <field type="spacer" label="COM_DZPRODUCT_CONFIG_LBL_ITEM_DISPLAY" />
+            <field
+                name="category_show_item_title"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_TITLE"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_TITLE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_intro_image"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_INTRO_IMAGE"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_INTRO_IMAGE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_category"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_CATEGORY"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_CATEGORY">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_date"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_DATE"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_DATE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_intro_text"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_INTRO_TEXT"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_INTRO_TEXT">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_price"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_PRICE"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_PRICE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_saleoff_label"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_SALEOFF_LABEL"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_SALEOFF_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_new_arrival_label"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_NEW_ARRIVAL_LABEL"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_NEW_ARRIVAL_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_availability_label"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_AVAILABILITY_LABEL"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_AVAILABILITY_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_featured_label"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_FEATURED_LABEL"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_FEATURED_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_readmore_btn"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_READMORE_BTN"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_READMORE_BTN">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_show_item_fields"
+                type="radio" class="btn-group"
+                label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_FIELDS"
+                description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_FIELDS">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="category_item_intro_text_length"
+                type="text" class="validate-numeric"
+                label="COM_DZPRODUCT_CONFIG_LBL_ITEM_INTRO_TEXT_LENGTH"
+                description="COM_DZPRODUCT_CONFIG_DESC_ITEM_INTRO_TEXT_LENGTH">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+    </fields>
 </metadata>

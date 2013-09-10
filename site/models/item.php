@@ -102,6 +102,42 @@ class DzproductModelItem extends JModelForm
                 $registry->loadString($this->_item->other_images);
                 $this->_item->other_images = $registry->toArray();
                 
+                // Convert params field to registry
+                $globalParams = JComponentHelper::getParams('com_dzproduct', true);
+                $itemParams = new JRegistry();
+                $itemParams->loadString($this->_item->params);
+                $this->_item->params = $this->getState('params');
+                
+                // create an array of just the params set to 'use_item'
+                $menuParamsArray = $this->getState('params')->toArray();
+                $itemArray = array();
+
+                foreach ($menuParamsArray as $key => $value)
+                {
+                    if ($value === 'use_item')
+                    {
+                        // if the item has a value, use it
+                        if ($itemParams->get($key) != '')
+                        {
+                            // get the value from the item
+                            $itemArray[$key] = $itemParams->get($key);
+                        }
+                        else
+                        {
+                            // otherwise, use the global value
+                            $itemArray[$key] = $globalParams->get($key);
+                        }
+                    }
+                }
+
+                // merge the selected article params
+                if (count($itemArray) > 0)
+                {
+                    $itemParams = new JRegistry;
+                    $itemParams->loadArray($itemArray);
+                    $this->_item->params->merge($itemParams);
+                }
+                
                 // Load the field data for this item
                 $db = JFactory::getDbo();
                 $query = $db->getQuery(true);

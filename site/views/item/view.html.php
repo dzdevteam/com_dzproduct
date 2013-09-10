@@ -33,7 +33,31 @@ class DzproductViewItem extends JViewLegacy {
         
         $this->state = $this->get('State');
         $this->item = $this->get('Data');
-        $this->params = $app->getParams('com_dzproduct');
+        
+        // Merge item params. If this is single-item view, menu params override item params
+        // Otherwise, item params override menu item params
+        $this->params = $this->state->get('params');
+        $active = $app->getMenu()->getActive();
+        $temp = clone ($this->params);
+        if ($active) {
+            $currentLink = $active->link;
+            // If the current view is the active item and an item view for this item, then the menu item params take priority
+            if (strpos($currentLink, 'view=item') && (strpos($currentLink, '&id='.(string) $this->item->id)))
+            {
+                // $item->params are the item params, $temp are the menu item params
+                // Merge so that the menu item params take priority
+                $this->item->params->merge($temp);
+            }
+            else
+            {
+                $temp->merge($this->item->params);
+                $this->item->params = $temp;
+            }
+        } else {
+            // Merge so that item params take priority
+            $temp->merge($this->item->params);
+            $this->item->params = $temp;
+        }
         
         $this->item->catid_title = $this->getModel()->getCategoryName($this->item->catid)->title;
         $this->form     = $this->get('Form');

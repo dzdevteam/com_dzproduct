@@ -17,9 +17,7 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzproduct'
 }
 defined('_JEXEC') or die;
 $itemid = JRequest::getVar('Itemid');
-$menu = &JSite::getMenu();
-$active = $menu->getItem($itemid);
-$params = $menu->getParams( $active->id );
+$params = $this->item->params;
 $pageclass_sfx = $params->get( 'pageclass_sfx' );
 ?>
 <style>
@@ -42,7 +40,9 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
             </div>
         </div>
         <div class="span7">
+            <?php if ($params->get('item_show_item_title', 1)) : ?>
             <h2 class="product-title"><?php echo $this->item->title; ?></h2>
+            <?php endif; ?>
             <div class="product-info">
                 <ul>
                     <li><span>Category: </span><a href="#"><?php echo $this->item->catid_title;?></a></li>
@@ -52,9 +52,13 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
                     <?php } ?>
                 </ul>
             </div>
+            <?php if ($params->get('item_show_item_intro_text', 1)) : ?>
             <div class="product-intro">
                 <?php echo $this->item->short_desc;?>
             </div>
+            <?php endif; ?>
+            
+            <?php if ($params->get('item_show_item_price', 1)) : ?>
             <div class="product-price">
                 <?php if($this->item->saleoff) :?>
                             <span><?php echo $this->item->saleoff;?></span><em><?php echo $this->item->price;?></em>
@@ -62,43 +66,68 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
                             <span><?php echo $this->item->price;?></span>
                         <?php endif;?>                            
             </div>
+            <?php endif; ?>
+            
+            
             <div class="product-labels">
-                    <?php if($this->item->saleoff) :?>
-                    <span class="product-saleoff">
-                        -<?php echo (100*($this->item->price - $this->item->saleoff)/$this->item->price) ;?>%
-                    </span>
-                    <?php endif;?>
-                    <span class="product-featured">
-                        <?php echo $this->item->featured; ?>
-                    </span>
-                    <span class="product-new">
-                        <?php echo $this->item->new_arrival; ?>
-                    </span>
-                    <span class="product-avail">
-                        <?php echo DzproductHelper::availabilityText($this->item->availability); ?>
-                    </span>
-                    </div>
+                <?php if ($params->get('item_show_item_saleoff_label', 1)) : ?>
+                <?php if($this->item->saleoff) :?>
+                <span class="product-saleoff">
+                    -<?php echo (100*($this->item->price - $this->item->saleoff)/$this->item->price) ;?>%
+                </span>
+                <?php endif;?>
+                <?php endif; ?>
+                
+                <?php if ($params->get('item_show_item_featured_label', 1)) : ?>
+                <span class="product-featured">
+                    <?php echo $this->item->featured; ?>
+                </span>
+                <?php endif; ?>
+                
+                <?php if ($params->get('item_show_item_new_arrival_label', 1)) : ?>
+                <span class="product-new">
+                    <?php echo $this->item->new_arrival; ?>
+                </span>
+                <?php endif; ?>
+                
+                <?php if ($params->get('item_show_item_availability_label', 1)) : ?>
+                <span class="product-avail">
+                    <?php echo DzproductHelper::availabilityText($this->item->availability); ?>
+                </span>
+                <?php endif; ?>
+            </div>
+            
+            <?php if ($params->get('item_show_item_open_url', 1)) : ?>
             <div class="product-url">
-        <a href="<?php echo $this->item->openurl; ?>">Call to action</a>
-    </div>        
+                <a href="<?php echo $this->item->openurl; ?>">Call to action</a>
+            </div>        
+            <?php endif; ?>
         </div>
     </div>
     
+    <?php if ($params->get('item_show_item_long_desc', 1)) : ?>
     <!-- PRODUCT DESC -->
     <div class="product-desc">
         <h3>Description</h3>
         <?php echo $this->item->long_desc; ?>
     </div>
+    <?php endif; ?>
+    
+    <?php if ($params->get('item_show_item_video', 1)) : ?>
     <!-- PRODUCT VIDEO -->
     <div class="product-video">
         <h3>Video</h3>
         <?php echo $this->item->video; ?>
     </div>
+    <?php endif; ?>
+    
+    <?php if ($params->get('item_show_item_tags', 1)) : ?>
     <!-- PRODUCT TAGS -->
     <div class="product-tags">
      <?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
     <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
     </div>
+    <?php endif; ?>
     <!-- PRODUCT FOOTER -->
     <div class="product-footer">
         

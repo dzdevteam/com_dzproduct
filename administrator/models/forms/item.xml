@@ -167,7 +167,124 @@
             label="COM_DZPRODUCT_FORM_LBL_ITEM_FIELDS"
             description="COM_DZPRODUCT_FORM_DESC_ITEM_FIELDS" />
             
-        <fields name="params"> 
+        <fields name="params">
+            <fieldset 
+                name="itemview" 
+                label="COM_DZPRODUCT_ITEM_VIEW_LABEL" 
+                description="COM_DZPRODUCT_ITEM_VIEW_DESC">
+                <field
+                    name="item_show_item_title"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_TITLE"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_TITLE">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_intro_image"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_INTRO_IMAGE"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_INTRO_IMAGE">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_category"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_CATEGORY"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_CATEGORY">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_date"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_DATE"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_DATE">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_intro_text"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_INTRO_TEXT"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_INTRO_TEXT">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_long_desc"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_LONG_DESC"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_LONG_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_video"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_VIDEO"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_VIDEO">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_open_url"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_OPEN_URL"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_OPEN_URL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_price"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_PRICE"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_PRICE">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_saleoff_label"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_SALEOFF_LABEL"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_SALEOFF_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_new_arrival_label"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_NEW_ARRIVAL_LABEL"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_NEW_ARRIVAL_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_availability_label"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_AVAILABILITY_LABEL"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_AVAILABLILITY_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_featured_label"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_FEATURED_LABEL"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_FEATURED_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="item_show_item_tags"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_TAGS"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_TAGS">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
         </fields>
 
         <field name="language" type="language"
