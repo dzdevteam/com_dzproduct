@@ -89,12 +89,15 @@ function DzproductBuildRoute(&$query)
             {
                 $db = JFactory::getDbo();
                 $dbQuery = $db->getQuery(true)
-                    ->select('alias')
-                    ->from('#__dzproduct_items')
-                    ->where('id=' . (int) $query['id']);
+                    ->select('i.alias, c.id as catid, c.alias as catalias')
+                    ->from('#__dzproduct_items as i')
+                    ->join('LEFT', '#__categories as c ON c.id = i.catid')
+                    ->where('i.id=' . (int) $query['id']);
                 $db->setQuery($dbQuery);
-                $alias = $db->loadResult();
-                $query['id'] = $query['id'] . ':' . $alias;
+                $result = $db->loadAssoc();
+                if (!empty($result['catid']))
+                    $category = $result['catid'] . ':' . $result['catalias'];
+                $query['id'] = $query['id'] . ':' . $result['alias'];
             }
         }
         else
@@ -103,6 +106,8 @@ function DzproductBuildRoute(&$query)
             return $segments;
         }
         
+        if (isset($category))
+            $segments[] = $category;
         $segments[] = $query['id'];
         
         unset($query['id']);
@@ -153,8 +158,13 @@ function DzproductParseRoute($segments)
     $count = count($segments);
     
     if ($count >= 2) {
-        $vars['id'] = $segments[$count - 1];
-        $vars['view'] = $segments[$count - 2];
+        if ( (int) $segments[$count - 2]) { // This is an item with category alias
+            $vars['view'] = 'item';
+            $vars['id'] = $segments[$count-1];
+        } else {
+            $vars['id'] = $segments[$count - 1];
+            $vars['view'] = $segments[$count - 2];
+        }
     } elseif ($count == 1) {
         if ($menuItem) {
             switch ($menuItem->query['view']) {
