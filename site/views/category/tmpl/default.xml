@@ -10,7 +10,7 @@
             <field name="catid" type="category"
                 description="JGLOBAL_CHOOSE_CATEGORY_DESC"
                 extension="com_dzproduct.items.catid"
-                required="true"
+                required="true" show_root="true"
                 label="JGLOBAL_CHOOSE_CATEGORY_LABEL">
             </field>
         </fieldset>

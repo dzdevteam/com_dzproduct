@@ -23,6 +23,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     </h1>
     <?php endif; ?>
     
+    <?php if ($this->category->id != 0) : // Do not show root information ?>
     <?php if ($this->params->get('category_show_title', 1)) : ?>
     <!-- CATEGORY TITLE -->    
     <h2 class="category-heading"><?php echo $this->category->title; ?></h2>
@@ -71,6 +72,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
         </div>
        <?php endif; ?>
     </div>
+    <?php endif; // End Root Category check?>
     
     <!-- CATEGORY PRODUCTS -->
 
