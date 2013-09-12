@@ -106,10 +106,9 @@ class DzproductModelCategory extends JModelList {
         }
         $this->setState('list.direction', $value);
             
-        $catid = $app->input->getInt('catid', 0);
-        if ($catid) {
-            $this->setState('filter.catid', $catid);
-        }
+        $catid = $app->input->get('catid', 'root');
+        $this->setState('filter.catid', $catid);
+        
     }
 
     /**
@@ -159,9 +158,21 @@ class DzproductModelCategory extends JModelList {
         
 
         //Filtering catid
-        $filter_catid = $this->state->get("filter.catid");
-        if ($filter_catid) {
-            $query->where("a.catid = '".$filter_catid."'");
+        $filter_catid = $this->getState('filter.catid', 'root');
+        if (is_numeric($filter_catid)) {
+            // Add subcategories check
+            $includeSubcategories = $this->getState('filter.subcategories', true);
+            
+            if ($includeSubcategories) {
+                $subQuery = $db->getQuery(true)
+                               ->select('sub.id')
+                               ->from('#__categories as sub')
+                               ->join('INNER', '#__categories as this ON sub.lft > this.lft AND sub.rgt < this.rgt')
+                               ->where('this.id = ' . (int) $filter_catid);
+                $query->where("( a.catid = ". (int) $filter_catid . " OR a.catid IN (" . (string) $subQuery . ") )");
+            } else {
+                $query->where("a.catid = ". (int) $filter_catid);
+            }
         }
         
         // Add the list ordering clause.
@@ -221,7 +232,7 @@ class DzproductModelCategory extends JModelList {
         {
             $categories = JCategories::getInstance('dzproduct.items');
             $this->_item = $categories->get($this->getState('filter.catid', 'root'));
-
+            
             // Compute selected asset permissions.
             if (is_object($this->_item))
             {
@@ -246,7 +257,7 @@ class DzproductModelCategory extends JModelList {
             $registry->loadString($this->_item->params);
             $this->_item->params = $registry->toArray();
         }    
-
+        
         return $this->_item;
     }
     
