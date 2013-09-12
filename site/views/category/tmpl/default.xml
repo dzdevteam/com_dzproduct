@@ -14,6 +14,20 @@
                 label="JGLOBAL_CHOOSE_CATEGORY_LABEL">
                 <option value="root">Root</option>
             </field>
+            <field name="display_items" type="radio" class="btn-group"
+                label="COM_DZPRODUCT_REQUEST_LBL_DISPLAY_ITEMS" default="all"
+                description="COM_DZPRODUCT_REQUEST_DESC_DISPLAY_ITEMS">
+                <option value="all">COM_DZPRODUCT_OPTION_ALL_PRODUCTS</option>
+                <option value="special">COM_DZPRODUCT_OPTION_SPECIAL_PRODUCTS</option>
+            </field>
+            <field name="special_types" type="list"
+                multiple="true" default="featured"
+                label="COM_DZPRODUCT_REQUEST_LBL_SPECIAL_TYPES"
+                description="COM_DZPRODUCT_REQUEST_DESC_SPECIAL_TYPES">
+                <option value="featured">COM_DZPRODUCT_OPTION_FEATURED</option>
+                <option value="saleoff">COM_DZPRODUCT_OPTION_SALEOFF</option>
+                <option value="new_arrival">COM_DZPRODUCT_OPTION_NEW_ARRIVAL</option>
+            </field>
         </fieldset>
     </fields>
     <fields name="params">

@@ -109,6 +109,12 @@ class DzproductModelCategory extends JModelList {
         $catid = $app->input->get('catid', 'root');
         $this->setState('filter.catid', $catid);
         
+        $display_items = $app->input->get('display_items', 'all');
+        $this->setState('filter.display_items', $display_items);
+        
+        $types = $app->input->get('special_types', array(), 'array');
+        foreach($types as $type)
+            $this->setState('filter.' . $type, true);        
     }
 
     /**
@@ -175,6 +181,18 @@ class DzproductModelCategory extends JModelList {
             }
         }
         
+        // Filter by type
+        if ($this->getState('filter.display_items', 'all') == 'special') {
+            $special = array();
+            if ($this->getState('filter.featured', false))
+                $special[] = 'featured = 1';
+            if ($this->getState('filter.saleoff', false))
+                $special[] = 'saleoff != NULL';
+            if ($this->getState('filter.new_arrival', false))
+                $special[] = 'new_arrival = 1';
+            if (!empty($special))
+                $query->where('(' . implode(' OR ', $special) . ')');
+        }
         // Add the list ordering clause.
         $query->order($this->getState('list.ordering', 'created') . ' ' . $this->getState('list.direction', 'DESC'));
         
