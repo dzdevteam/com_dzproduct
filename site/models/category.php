@@ -106,7 +106,7 @@ class DzproductModelCategory extends JModelList {
         }
         $this->setState('list.direction', $value);
             
-        $catid = $app->input->get('catid', 'root');
+        $catid = $app->input->get('id', 'root');
         $this->setState('filter.catid', $catid);
         
         $display_items = $app->input->get('display_items', 'all');
