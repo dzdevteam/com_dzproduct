@@ -203,7 +203,7 @@ class DzproductModelCategory extends JModelList {
         $items = parent::getItems();
         
         foreach ($items as &$item) {
-            $item->link = JRoute::_(DZProductHelperRoute::getItemRoute($item->id));
+            $item->link = JRoute::_(DZProductHelperRoute::getItemRoute($item->id, $item->catid));
             
             $registry = new JRegistry();
             $registry->loadString($item->images);

@@ -36,6 +36,7 @@ abstract class DZProductHelperRoute
             $category = $categories->get((int) $catid);
             if ($category) {
                 $needles['category'] = array_reverse($category->getPath());
+                $link .= '&catid='.$catid;
             }
         }
         if ($itemId = self::_findItemid($needles))

@@ -61,7 +61,12 @@ function DzproductBuildRoute(&$query)
             {
                 unset($query['layout']);
             }
-
+            
+            if (isset($query['catid']))
+            {
+                unset($query['catid']);
+            }
+            
             unset($query['id']);
 
             return $segments;
@@ -69,48 +74,92 @@ function DzproductBuildRoute(&$query)
         
         // We can imply a single view from its list view
         // Thus we can remove view from the query in some cases
-        if ($menuItem->query['view'] == 'category' && $query['view'] == 'item')
-            unset($query['view']);
+//         if ($menuItem->query['view'] == 'category' && $query['view'] == 'item')
+//             unset($query['view']);
     }
     
 
-    if ($view == 'item')
+    if ($view == 'item' || $view == 'category')
     {
         if (!$menuItemGiven)
         {
             $segments[] = $view;
         }
 
+        unset($query['view']);
         
-        if (isset($query['id']))
-        {
-            // Make sure we have the id and the alias
-            if (strpos($query['id'], ':') === false)
+        if ($view == 'item') {
+            if (isset($query['id']) && isset($query['catid']) && $query['catid'])
             {
-                $db = JFactory::getDbo();
-                $dbQuery = $db->getQuery(true)
-                    ->select('i.alias, c.id as catid, c.alias as catalias')
-                    ->from('#__dzproduct_items as i')
-                    ->join('LEFT', '#__categories as c ON c.id = i.catid')
-                    ->where('i.id=' . (int) $query['id']);
-                $db->setQuery($dbQuery);
-                $result = $db->loadAssoc();
-                if (!empty($result['catid']))
-                    $category = $result['catid'] . ':' . $result['catalias'];
-                $query['id'] = $query['id'] . ':' . $result['alias'];
+                $catid = $query['catid'];
+                
+                // Make sure we have the id and the alias
+                if (strpos($query['id'], ':') === false)
+                {
+                    $db = JFactory::getDbo();
+                    $dbQuery = $db->getQuery(true)
+                        ->select('alias')
+                        ->from('#__dzproduct_items')
+                        ->where('id=' . (int) $query['id']);
+                    $db->setQuery($dbQuery);
+                    $alias = $db->loadResult();
+                    $query['id'] = $query['id'] . ':' . $alias;
+                }
+            } else {
+                // we should have id set for this view.  If we don't, it is an error
+                return $segments;
+            }
+        } else {
+            if (isset($query['id'])) {
+                $catid = $query['id'];
+            } else {
+                // we should have id set for this view.  If we don't, it is an error
+                return $segments;
             }
         }
-        else
-        {
-            // we should have id set for this view.  If we don't, it is an error
+        
+        if ($menuItemGiven && isset($menuItem->query['id'])) {
+            $mCatid = $menuItem->query['id'];
+        } else {
+            $mCatid = 0;
+        }
+        
+        $categories = JCategories::getInstance('dzproduct.items');
+        $category = $categories->get($catid);
+
+        if (!$category) {
+            // we couldn't find the category we were given.  Bail.
             return $segments;
         }
         
-        if (isset($category))
-            $segments[] = $category;
-        $segments[] = $query['id'];
+        $path = array_reverse($category->getPath());
+
+        $array = array();
+
+        foreach ($path as $id) {
+            if ((int) $id == (int) $mCatid) {
+                break;
+            }
+
+            list($tmp, $id) = explode(':', $id, 2);
+
+            $array[] = $id;
+        }
+
+        $array = array_reverse($array);
+
+        if (count($array)) {
+            $array[0] = (int) $catid . ':' . $array[0];
+        }
+
+        $segments = array_merge($segments, $array);
+
+        if ($view == 'item') {
+            $segments[] = $query['id'];
+        }
         
         unset($query['id']);
+        unset($query['catid']);
     }
 
     // if the layout is specified and it is the same as the layout in the menu item, we
@@ -132,7 +181,7 @@ function DzproductBuildRoute(&$query)
             }
         }
     }
-
+    
     return $segments;
 }
 
