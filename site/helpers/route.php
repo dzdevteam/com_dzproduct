@@ -26,15 +26,26 @@ abstract class DZProductHelperRoute
     {
         //Create the link
         $link = 'index.php?option=com_dzproduct&view=item&id='. $id;
-
-        if ($itemId = self::_findItemid(array('item', 'category')));
+        
+        $needles = array(
+            'item' => array((int) $id)
+        );
+        
+        if ((int) $catid > 1) {
+            $categories = JCategories::getInstance('dzproduct.items');
+            $category = $categories->get((int) $catid);
+            if ($category) {
+                $needles['category'] = array_reverse($category->getPath());
+            }
+        }
+        if ($itemId = self::_findItemid($needles))
             $link .= '&Itemid='.$itemId;
         
         return $link;
     }
 
 
-    protected  static function _findItemid($needle)
+    protected  static function _findItemid(array $needles)
     {
         $app        = JFactory::getApplication();
         $menus      = $app->getMenu('site');
@@ -52,14 +63,24 @@ abstract class DZProductHelperRoute
                 if (isset($item->query) && isset($item->query['view']))
                 {
                     $view = $item->query['view'];
-                    self::$lookup[$view] = $item->id;
+                    
+                    if (!isset(self::$lookup[$view]))
+                        self::$lookup[$view] = array();
+                    
+                    if (isset($item->query['id'])) {
+                        self::$lookup[$view][$item->query['id']] = $item->id;
+                    }
                 }
             }
         }
         
-        foreach ($needle as $view) {
-            if (isset(self::$lookup[$view]))
-                return self::$lookup[$view];
+        foreach ($needles as $view => $ids) {
+            if (isset(self::$lookup[$view])) {
+                foreach ($ids as $id) {
+                    if (isset(self::$lookup[$view][$id]))
+                        return self::$lookup[$view][$id];
+                }
+            }
         }
             
         return null;
