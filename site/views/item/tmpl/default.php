@@ -45,7 +45,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
             <?php endif; ?>
             <div class="product-info">
                 <ul>
-                    <li><span>Category: </span><a href="#"><?php echo $this->item->catid_title;?></a></li>
+                    <li><span>Category: </span><a href="<?php echo $this->item->category->link; ?>"><?php echo $this->item->category->title;?></a></li>
                     <?php foreach ($this->item->fielddata as $data) { ?>                   
                     <li><span><?php echo $data['dname'][JFactory::getLanguage()->getTag()]; ?>: </span><?php echo $data['value']; ?></li>
   

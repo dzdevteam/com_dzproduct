@@ -48,7 +48,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <div class="category-child">
         <ul>
             <?php foreach ($this->children as $child) { ?>
-            <li><a href="#"><?php echo $child->title; ?></li>
+            <li><a href="<?php echo $child->link; ?>"><?php echo $child->title; ?></li>
             <?php } ?>
         </ul>
     </div>

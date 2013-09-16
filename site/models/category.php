@@ -256,6 +256,7 @@ class DzproductModelCategory extends JModelList {
             {
                 // TODO: Why aren't we lazy loading the children and siblings?
                 $this->_children = $this->_item->getChildren();
+                
                 $this->_parent = false;
 
                 if ($this->_item->getParent())
@@ -265,6 +266,14 @@ class DzproductModelCategory extends JModelList {
 
                 $this->_rightsibling = $this->_item->getSibling();
                 $this->_leftsibling = $this->_item->getSibling(false);
+                
+                // Compute links
+                $this->_item->link = DZProductHelperRoute::getCategoryRoute($this->_item, $this->_item->language);
+                if (is_object($this->_parent))
+                    $this->_parent->link = DzproductHelperRoute::getCategoryRoute($this->_parent, $this->_parent->language);
+                if (count($this->_children))
+                    foreach($this->_children as &$child)
+                        $child->link = DZProductHelperRoute::getCategoryRoute($child, $child->language);
             }
             else {
                 $this->_children = false;

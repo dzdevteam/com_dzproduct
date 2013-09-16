@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modelitem');
 jimport('joomla.event.dispatcher');
+require_once JPATH_SITE.'/components/com_dzproduct/helpers/route.php';
 
 /**
  * Dzproduct model.
@@ -156,6 +157,12 @@ class DzproductModelItem extends JModelItem
                         $value = urldecode($value);
                     }
                 }
+                
+                // Load the category for this item
+                $categories = JCategories::getInstance('dzproduct.items');
+                $category = $categories->get($this->_item->catid);
+                $category->link = DZProductHelperRoute::getCategoryRoute($category, $category->language);
+                $this->_item->category = $category;                
             } elseif ($error = $table->getError()) {
                 $this->setError($error);
             }
