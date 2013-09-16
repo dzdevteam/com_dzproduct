@@ -10,13 +10,13 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.modelform');
+jimport('joomla.application.component.modelitem');
 jimport('joomla.event.dispatcher');
 
 /**
  * Dzproduct model.
  */
-class DzproductModelItem extends JModelForm
+class DzproductModelItem extends JModelItem
 {
     
     var $_item = null;
@@ -231,98 +231,6 @@ class DzproductModelItem extends JModelForm
 
         return true;
     }    
-    
-    /**
-     * Method to get the profile form.
-     *
-     * The base form is loaded from XML 
-     * 
-     * @param   array   $data       An optional array of data for the form to interogate.
-     * @param   boolean $loadData   True if the form is to load its own data (default case), false if not.
-     * @return  JForm   A JForm object on success, false on failure
-     * @since   1.6
-     */
-    public function getForm($data = array(), $loadData = true)
-    {
-        // Get the form.
-        $form = $this->loadForm('com_dzproduct.item', 'item', array('control' => 'jform', 'load_data' => $loadData));
-        if (empty($form)) {
-            return false;
-        }
-
-        return $form;
-    }
-
-    /**
-     * Method to get the data that should be injected in the form.
-     *
-     * @return  mixed   The data for the form.
-     * @since   1.6
-     */
-    protected function loadFormData()
-    {
-        $data = $this->getData(); 
-        
-        return $data;
-    }
-
-    /**
-     * Method to save the form data.
-     *
-     * @param   array       The form data.
-     * @return  mixed       The user id on success, false on failure.
-     * @since   1.6
-     */
-    public function save($data)
-    {
-        $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('item.id');
-        $state = (!empty($data['state'])) ? 1 : 0;
-        $user = JFactory::getUser();
-
-        if($id) {
-            //Check the user can edit this item
-            $authorised = $user->authorise('core.edit', 'com_dzproduct.item.'.$id) || $authorised = $user->authorise('core.edit.own', 'com_dzproduct.item.'.$id);
-            if($user->authorise('core.edit.state', 'com_dzproduct.item.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
-                $data['state'] = 0;
-            }
-        } else {
-            //Check the user can create new items in this section
-            $authorised = $user->authorise('core.create', 'com_dzproduct');
-            if($user->authorise('core.edit.state', 'com_dzproduct.item.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
-                $data['state'] = 0;
-            }
-        }
-
-        if ($authorised !== true) {
-            JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
-            return false;
-        }
-        
-        $table = $this->getTable();
-        if ($table->save($data) === true) {
-            return $id;
-        } else {
-            return false;
-        }
-        
-    }
-    
-     function delete($data)
-    {
-        $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('item.id');
-        if(JFactory::getUser()->authorise('core.delete', 'com_dzproduct.item.'.$id) !== true){
-            JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
-            return false;
-        }
-        $table = $this->getTable();
-        if ($table->delete($data['id']) === true) {
-            return $id;
-        } else {
-            return false;
-        }
-        
-        return true;
-    }
     
     function getCategoryName($id){
         $db = JFactory::getDbo();
