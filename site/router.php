@@ -203,30 +203,72 @@ function DzproductParseRoute($segments)
     $menu = $app->getMenu();
     $menuItem = $menu->getActive();
     
-    // view is always the first element of the array
+    // Count route segments
     $count = count($segments);
     
-    if ($count >= 2) {
-        if ( (int) $segments[$count - 2]) { // This is an item with category alias
+    // Standard routing for items
+    if (!isset($item)) {
+        $vars['view'] = $segments[0];
+        $vars['id'] = $segments[$count - 1];
+    }
+    
+    // If there is only one segment, this may be either a category or an item
+    // Test whether the category exists, if not it would be an item instead
+    if ($count == 1) {
+        // we check to see if an alias is given.  If not, we assume it is an item
+        if (strpos($segments[0], ':') === false)
+        {
             $vars['view'] = 'item';
-            $vars['id'] = $segments[$count-1];
-        } else {
-            $vars['id'] = $segments[$count - 1];
-            $vars['view'] = $segments[$count - 2];
+            $vars['id'] = (int) $segments[0];
+            return $vars;
         }
-    } elseif ($count == 1) {
-        if ($menuItem) {
-            switch ($menuItem->query['view']) {
-                case 'category':
+        
+        list($id, $alias) = explode(':', $segments[0], 2);
+        
+        // first we check if it is a category
+        $category = JCategories::getInstance('dzproduct.items')->get($id);
+        
+        if ($category && $category->alias == $alias) {
+            $vars['view'] = 'category';
+            $vars['id'] = $id;
+
+            return $vars;
+        } else {
+            $query = 'SELECT alias, catid FROM #__dzproduct_items WHERE id = ' . (int) $id;
+            $db->setQuery($query);
+            $item = $db->loadObject();
+
+            if ($item)
+            {
+                if ($item->alias == $alias)
+                {
                     $vars['view'] = 'item';
-                    break;
-                default:
-                    break;
+                    $vars['catid'] = (int) $item->catid;
+                    $vars['id'] = (int) $id;
+
+                    return $vars;
+                }
             }
-            $vars['id'] = $segments[0];
-        } else {
-            $vars['view'] = $segments[0];
         }
+    }
+    
+    // if there was more than one segment, then we can determine where the URL points to
+    // because the first segment will have the target category id prepended to it.  If the
+    // last segment has a number prepended, it is an item, otherwise, it is a category.
+    $cat_id = (int) $segments[0];
+
+    $item_id = (int) $segments[$count - 1];
+
+    if ($item_id > 0)
+    {
+        $vars['view'] = 'item';
+        $vars['catid'] = $cat_id;
+        $vars['id'] = $item_id;
+    }
+    else
+    {
+        $vars['view'] = 'category';
+        $vars['id'] = $cat_id;
     }
     
     return $vars;
