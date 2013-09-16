@@ -66,7 +66,7 @@ abstract class DZProductHelperRoute
         
         if ($itemId = self::_findItemid($needles)) {
             $link .= '&Itemid='.$itemId;
-        } elseif ($item = self::_findItem()) { // Find without language specific
+        } elseif ($item = self::_findItemid()) { // Find without language specific
             $link .= '&Itemid='.$item;
         }
         
@@ -186,8 +186,9 @@ abstract class DZProductHelperRoute
             foreach ($needles as $view => $ids) {
                 if (isset(self::$lookup[$language][$view])) {
                     foreach ($ids as $id) {
-                        if (isset(self::$lookup[$language][$view][$id]))
-                            return self::$lookup[$language][$view][$id];
+                        if (isset(self::$lookup[$language][$view][(int) $id])) {
+                            return self::$lookup[$language][$view][(int) $id];
+                        }
                     }
                 }
             }
