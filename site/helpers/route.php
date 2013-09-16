@@ -191,17 +191,19 @@ abstract class DZProductHelperRoute
                     }
                 }
             }
+        } else {
+            // In case we do not use the needles, 
+            // We just take the active menu item instead
+            $active = $menus->getActive();
+            if ($active && $active->component == 'com_dzproduct' && ($active->language == '*' || !JLanguageMultilang::isEnabled())) {
+                return $active->id;
+            }
+
+            // if not found, return language specific home link
+            $default = $menus->getDefault($language);
+            return !empty($default->id) ? $default->id : null;
         }
         
-        // In case we do not find anything using the needles, 
-        // We just take the active menu item instead
-       $active = $menus->getActive();
-        if ($active && $active->component == 'com_dzproduct' && ($active->language == '*' || !JLanguageMultilang::isEnabled())) {
-            return $active->id;
-        }
-
-        // if not found, return language specific home link
-        $default = $menus->getDefault($language);
-        return !empty($default->id) ? $default->id : null;
+        return null;
     }
 }
