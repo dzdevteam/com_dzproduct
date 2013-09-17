@@ -105,7 +105,9 @@ class DzproductModelCategory extends JModelList {
             $app->setUserState($this->context . '.orderdirn', $value);
         }
         $this->setState('list.direction', $value);
-            
+        
+        $this->setState('filter.language', JLanguageMultilang::isEnabled());
+        
         $catid = $app->input->get('id', 'root');
         $this->setState('filter.catid', $catid);
         
@@ -161,7 +163,10 @@ class DzproductModelCategory extends JModelList {
             }
         }
 
-        
+        // Filter by language
+        if ($this->getState('filter.language')) {
+            $query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+        }
 
         //Filtering catid
         $filter_catid = $this->getState('filter.catid', 'root');
