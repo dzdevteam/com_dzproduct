@@ -51,6 +51,11 @@ class DZProductHelper
             'index.php?option=com_dzproduct&view=groups',
             $vName == 'groups'
         );
+        JHtmlSidebar::addEntry(
+            JText::_('COM_DZPRODUCT_TITLE_ORDERS'),
+            'index.php?option=com_dzproduct&view=orders',
+            $vName == 'orders'
+        );
     }
 
     /**
