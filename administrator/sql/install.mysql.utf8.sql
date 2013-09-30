@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `#__dzproduct_items` (
 `long_desc` TEXT NOT NULL ,
 `video` VARCHAR(255)  NOT NULL ,
 `openurl` VARCHAR(255)  NOT NULL ,
-`price` VARCHAR(255)  NOT NULL ,
+`price` INT  NOT NULL ,
 `saleoff` VARCHAR(255)  NOT NULL ,
 `new_arrival` TINYINT NOT NULL,
 `featured` TINYINT NOT NULL,
@@ -86,6 +86,34 @@ CREATE TABLE IF NOT EXISTS `#__dzproduct_field_data` (
 `itemid` INT NOT NULL ,
 `fieldid` INT NOT NULL ,
 `value` VARCHAR(255)  NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__dzproduct_orders` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+`state` TINYINT(1) NOT NULL DEFAULT '0',
+`checked_out` INT(11) NOT NULL,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created` DATETIME NOT NULL ,
+`modified` DATETIME NOT NULL ,
+`modified_by` INT(11)  NOT NULL ,
+`name` VARCHAR(255)  NOT NULL ,
+`phone` VARCHAR(255)  NOT NULL ,
+`address` TEXT NOT NULL ,
+`email` VARCHAR(255)  NOT NULL ,
+`comment` TEXT NOT NULL ,
+`params` TEXT NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__dzproduct_order_items` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+`order_id` int(11),
+`title` VARCHAR(255)  NOT NULL ,
+`image` TEXT NOT NULL ,
+`description` TEXT NOT NULL ,
+`price` INT  NOT NULL ,
+`quantity` INT NOT NULL,
 PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8_general_ci;
 
