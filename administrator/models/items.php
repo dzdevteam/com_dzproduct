@@ -145,7 +145,13 @@ class DzproductModelitems extends JModelList {
                 $query->where('( a.title LIKE '.$search.'  OR  a.alias LIKE '.$search.'  OR  a.short_desc LIKE '.$search.'  OR  a.long_desc LIKE '.$search.' )');
             }
         }
-
+        
+        // Filter by ids
+        $ids = $this->getState('filter.ids');
+        if (is_array($ids) && !empty($ids)) {
+            JArrayHelper::toInteger($ids);
+            $query->where('a.id IN (' . implode(',', $ids) . ')');
+        }
         
 
         //Filtering catid

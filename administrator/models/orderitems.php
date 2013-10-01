@@ -14,8 +14,10 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Dzproduct records.
  */
-class DZProductModelOrders extends JModelList {
+class DZProductModelOrderItems extends JModelList {
 
+    protected $context = 'com_dzproduct.orderitems';
+    
     /**
      * Constructor.
      *
@@ -27,12 +29,12 @@ class DZProductModelOrders extends JModelList {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                 'id', 'a.id',                
-                'state', 'a.state',
-                'created', 'a.created',
-                'modified', 'a.modified',
-                'name', 'a.name',
-                'email', 'a.email',
-                'total_price', 'code',
+                'order_id', 'a.order_id',
+                'title', 'a.title',
+                'image', 'a.image',
+                'description', 'a.description',
+                'price', 'a.price',
+                'quantity', 'a.quantity',
             );
         }
 
@@ -52,15 +54,12 @@ class DZProductModelOrders extends JModelList {
         $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
 
-        $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
-        $this->setState('filter.state', $published);
-
         // Load the parameters.
         $params = JComponentHelper::getParams('com_dzproduct');
         $this->setState('params', $params);
 
         // List state information.
-        parent::populateState('a.created', 'DESC');
+        parent::populateState('a.title', 'ASC');
     }
     
     /**
@@ -80,26 +79,12 @@ class DZProductModelOrders extends JModelList {
                         'list.select', 'a.*'
                 )
         );
-        $query->from('`#__dzproduct_orders` AS a');
+        $query->from('`#__dzproduct_order_items` AS a');
         
-        // Generate code from id and created time
-        $query->select('CONCAT(a.id, "O", DATE_FORMAT(a.created, "%d%m" ), "T") as code');
-        
-        // Calculate price
-        $query->select('SUM(i.price) as total_price');
-        $query->join('LEFT', '#__dzproduct_order_items as i ON i.order_id = a.id');
-        $query->group('a.id');
-        
-        // Join over the users for the checked out user.
-        $query->select('uc.name AS editor');
-        $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
-        
-        // Filter by published state
-        $published = $this->getState('filter.state');
-        if (is_numeric($published)) {
-            $query->where('a.state = '.(int) $published);
-        } else if ($published === '') {
-            $query->where('(a.state IN (0, 1))');
+        // Filter by order id
+        $order_id = $this->getState('filter.order_id');
+        if (is_numeric($order_id)) {
+            $query->where('a.order_id = '.(int) $order_id);
         }
 
         // Filter by search in title
@@ -109,7 +94,7 @@ class DZProductModelOrders extends JModelList {
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                $query->where('( a.name LIKE '.$search.'  OR a.email LIKE '.$search.' OR CONCAT(a.id, "O", FORMAT(a.created, "DDMM"), "T") LIKE '.$search.' )');
+                $query->where('( a.title LIKE '.$search.'  OR a.description LIKE '.$search.' )');
             }
         }
 

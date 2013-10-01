@@ -97,7 +97,7 @@ if (!empty($this->extra_sidebar)) {
                         <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
                     </th>
                 <?php endif; ?>
-                <th class='left' width="20%">
+                <th class='left' width="10%">
                 <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ORDERS_CODE', 'code', $listDirn, $listOrder); ?>
                 </th>
                 <th class='left' width="20%">
@@ -185,7 +185,9 @@ if (!empty($this->extra_sidebar)) {
                     <?php echo $item->name; ?>
                 </td>
                 <td>
-                    
+                    <span aria-hidden="true" class="icon-home"></span>&nbsp;<?php echo $item->address; ?><br />
+                    <span aria-hidden="true" class="icon-mobile"></span>&nbsp;<?php echo $item->phone; ?><br />
+                    <span aria-hidden="true" class="icon-mail"></span>&nbsp;<?php echo $item->email; ?><br />
                 </td>
                 <td>
                     <?php echo $item->total_price; ?>

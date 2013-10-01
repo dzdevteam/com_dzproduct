@@ -22,5 +22,30 @@ class DZProductControllerOrder extends JControllerForm
         $this->view_list = 'orders';
         parent::__construct();
     }
-
+    
+    /**
+     * Update the ordered items in post save hook
+     */
+    protected function postSaveHook(JModelLegacy $model, $validData = array()) { 
+        $order_id = $model->getState($model->getName().'.id');
+        $data = JFactory::getApplication()->input->post->getArray(array('jform' => array('ordered' => 'array')));
+        foreach ($data['jform']['ordered'] as $item) {
+            $item['order_id'] = $order_id;
+            $model = JModelLegacy::getInstance('OrderItem', 'DZProductModel');
+            
+            $form = $model->getForm($item, false);
+            if (!$form) {
+                continue;
+            }
+            
+            $validItem = $model->validate($form, $item);
+            if ($validItem === false) {
+                continue;
+            }
+            
+            if (!$model->save($validItem)) {
+                continue;
+            }
+        }
+    }
 }
