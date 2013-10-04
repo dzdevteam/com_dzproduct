@@ -34,9 +34,13 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <!-- PRODUCT IMAGES & INFO -->
     <div class="row-fluid">
         <div class="span5">
-            <div class="product-image"><a href="<?php echo $this->item->images['full']; ?>"><img src="<?php echo $this->item->images['intro']; ?>" alt="<?php echo $this->item->title;?>"/></a></div>
+            <div class="product-image"><a href="<?php echo JUri::root().$this->item->images['full']; ?>"><img src="<?php echo JUri::root().$this->item->images['intro']; ?>" alt="<?php echo $this->item->title;?>"/></a></div>
             <div class="product-images">
-                <img src="<?php echo $this->item->other_images['i0']; ?>"/><img src="<?php echo $this->item->other_images['i1']; ?>"/><img src="<?php echo $this->item->other_images['i2']; ?>"/><img src="<?php echo $this->item->other_images['i3']; ?>"/><img src="<?php echo $this->item->other_images['i4']; ?>"/>
+                <?php foreach ($this->item->other_images as $image) : ?>
+                <?php if (!empty($image)) : ?>
+                <img src="<?php echo JUri::root().$image; ?>" />
+                <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="span7">
