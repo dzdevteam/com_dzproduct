@@ -15,6 +15,9 @@ defined('_JEXEC') or die;
 */
 class DZProductHelper
 {
+    const EMAIL_ADMIN = 'admin';
+    const EMAIL_CUSTOMER = 'customer';
+    
     protected static $_groupcatrelations = array();
     /**
     * Configure the Linkbar.
@@ -105,5 +108,141 @@ class DZProductHelper
             return DZProductHelper::$_groupcatrelations[$catid];
         
         return JText::_('COM_DZPRODUCT_GROUPCATRELATION_N_A');
+    }
+    
+    /**
+     * Function to send order emails to admin list defined in component config
+     *
+     * @param integer $orderid The order id
+     * @param string 
+     * @return boolean True on success
+     */
+    public static function sendOrder($orderid, $mode = self::EMAIL_ADMIN)
+    {
+        $model = JModelLegacy::getInstance('Order');
+        $params = JComponentHelper::getParams('com_dzproduct');
+        $order = $model->get((int) $orderid);
+        if ($order == null) {
+            return false;
+        }
+        
+        /* --- BUILD EMAIL TEMPLATE --- */
+        // Basic information
+        switch ($mode) {
+            case self::EMAIL_ADMIN:
+                $data['subject']    = $params->get('order_email_admin_subject', '');
+                $data['body']       = $params->get('order_email_admin_body', '');
+                break;
+            case self::EMAIL_CUSTOMER:
+                $data['subject']    = $params->get('order_email_customer_subject', '');
+                $data['body']       = $params->get('order_email_customer_body', '');
+                break;
+            default:
+                $data['subject']    = '';
+                $data['body']       = '';
+                break;
+        }
+        $data['code']       = $order->id . 'O' . date_format(new DateTime($order->created), 'dm') . 'T';
+        
+        // Customer contact
+        $data['comment']    = $order->comment;
+        $data['name']       = $order->name;
+        $data['email']      = $order->email;
+        $data['phone']      = $order->phone;
+        $data['address']    = $order->address;
+        
+        // Ordered products
+        $data['ordertable']  = '<table>';
+        $data['ordertable'] .= '<thead><tr>';
+        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_TITLE').'</th>';
+        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_IMAGE').'</th>';
+        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_DESCRIPTION').'</th>';
+        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_PRICE').'</th>';
+        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_QUANTITY').'</th>';
+        $data['ordertable'] .= '</tr></thead>';
+        $data['ordertable'] .= '<tbody>';
+        $products            = $model->getProducts();
+        $total_price         = 0;
+        foreach ($product as $product) {
+            $data['ordertable'] .= '<tr>';
+            $data['ordertable'] .= '<td>'.$product->title.'</td>';
+            $data['ordertable'] .= '<td>'.JUri::root().$product->image.'</td>';
+            $data['ordertable'] .= '<td>'.$product->description.'</td>';
+            $data['ordertable'] .= '<td>'.$product->price.'</td>';
+            $data['ordertable'] .= '<td>'.$product->quantity.'</td>';
+            $data['ordertable'] .= '</tr>';
+            $total_price        += $product->price * $product->quantity;
+        }
+        $data['ordertable'] .= '</tbody>';
+        $data['ordertable'] .= '<tfoot><tr>';
+        $data['ordertable'] .= '<td colspan="3">'.JText::_('COM_DZPRODUCT_ORDERS_TOTAL_PRICE').'</td>';
+        $data['ordertable'] .= '</tr></tfoot>';
+        $data['ordertable'] .= '</table>';
+        
+        /**
+         * Build the body
+         * Supported tags are
+         * %subject$s, %code$s,
+         * %comment$s, %name$s, %email$s, %phone$s, %address$s,
+         * %ordertable$s
+         */
+        $data['body']       = self::sprintf($data['body'], $data);
+        
+        /* BUILD THE MAILER */
+        $mailer = JFactory::getMailer();
+        
+        // Do basic setup
+        $mailer->setSender(array($app->getCfg('mailfrom'), $app->getCfg('fromname')));
+        $mailer->isHtml(true);
+        switch ($mode) {
+        case self::EMAIL_ADMIN:
+            $list = explode(',', $params->get('order_email_admin_list', ''));
+            break;
+        case self::EMAIL_CUSTOMER:
+            if ($order->email)
+                $list = array($order->email);
+            else 
+                $list = array();
+            break;
+        }
+        
+        if (empty($list)) {
+            return false; // There's no one to send
+        }
+        $mailer->addRecipient($list);
+        $mailer->setSubject($data['subject']);
+        $mailer->setBody($data['body']);
+        
+        // Now send
+        $response = $mailer->send();
+        if ($response instanceof Exception)
+            return false;
+        
+        return true;
+    }
+    
+    /**
+     * Helper function to mimic sprintf with expressive identifiers rather than just numbers
+     * 
+     * @param string $format
+     * @param array $data
+     * 
+     * @return string formatted string
+     */
+    public static function sprintf($format, $data)
+    {
+        preg_match_all( '/ (?<!%) % ( (?: [[:alpha:]_-][[:alnum:]_-]* | ([-+])? [0-9]+ (?(2) (?:\.[0-9]+)? | \.[0-9]+ ) ) ) \$ [-+]? \'? .? -? [0-9]* (\.[0-9]+)? \w/x', $format, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+        $offset = 0;
+        $keys = array_keys($data);
+        foreach( $match as &$value )
+        {
+            if ( ( $key = array_search( $value[1][0], $keys, TRUE) ) !== FALSE || ( is_numeric( $value[1][0] ) && ( $key = array_search( (int)$value[1][0], $keys, TRUE) ) !== FALSE) )
+            {
+                $len = strlen( $value[1][0]);
+                $format = substr_replace( $format, 1 + $key, $offset + $value[1][1], $len);
+                $offset -= $len - strlen( 1 + $key);
+            }
+        }
+        return vsprintf( $format, $data);
     }
 }
