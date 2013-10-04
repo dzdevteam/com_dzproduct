@@ -116,7 +116,12 @@ class DzproductModelCategory extends JModelList {
         
         $types = $app->input->get('special_types', array(), 'array');
         foreach($types as $type)
-            $this->setState('filter.' . $type, true);        
+            $this->setState('filter.' . $type, true);
+            
+        // Filter by search keywords
+        $filter_search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+        if (!empty($filter_search))
+            $this->setState('filter.search', $filter_search);
     }
 
     /**
@@ -273,12 +278,12 @@ class DzproductModelCategory extends JModelList {
                 $this->_leftsibling = $this->_item->getSibling(false);
                 
                 // Compute links
-                $this->_item->link = DZProductHelperRoute::getCategoryRoute($this->_item, $this->_item->language);
+                $this->_item->link = JRoute::_(DZProductHelperRoute::getCategoryRoute($this->_item, $this->_item->language));
                 if (is_object($this->_parent))
-                    $this->_parent->link = DzproductHelperRoute::getCategoryRoute($this->_parent, $this->_parent->language);
+                    $this->_parent->link = JRoute::_(DzproductHelperRoute::getCategoryRoute($this->_parent, $this->_parent->language));
                 if (count($this->_children))
                     foreach($this->_children as &$child)
-                        $child->link = DZProductHelperRoute::getCategoryRoute($child, $child->language);
+                        $child->link = JRoute::_(DZProductHelperRoute::getCategoryRoute($child, $child->language));
             }
             else {
                 $this->_children = false;

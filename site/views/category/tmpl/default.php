@@ -32,7 +32,9 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <?php if ($this->params->get('category_show_image', 1)) : ?>
     <!-- CATEGORY IMAGE -->
     <div class="category-image">
+        <?php if (!empty($this->category->params['image'])) : ?>
         <img src="<?php echo $this->category->params['image']; ?>" alt="Category title"/>
+        <?php endif; ?>
     </div>
     <?php endif; ?>
     
@@ -48,7 +50,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <div class="category-child">
         <ul>
             <?php foreach ($this->children as $child) { ?>
-            <li><a href="<?php echo $child->link; ?>"><?php echo $child->title; ?></li>
+            <li><a href="<?php echo $child->link; ?>"><?php echo $child->title; ?></a></li>
             <?php } ?>
         </ul>
     </div>
@@ -56,21 +58,23 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     
     <!-- CATEGORY FILTER -->
     <div class="category-filter">
+        <form method="POST">
         <?php if ($this->params->get('category_show_subcats_filter', 1)) : ?>
-        <select class="filter-dropdown">
+        <select class="filter-dropdown" onchange="window.location.href = this.value; return false;">
         <option value=""><?php echo JText::_('JGLOBAL_CHOOSE_CATEGORY_LABEL'); ?>
         <?php foreach ($this->children as $child) { ?>
-        <option value="<?php echo $child->id; ?>"><?php echo $child->title; ?></option>
+        <option value="<?php echo $child->link; ?>"><?php echo $child->title; ?></option>
         <?php } ?>
         </select>
         <?php endif; ?>
         <?php if ($this->params->get('category_show_text_filter', 1)) : ?>
         <div class="filter-text input-append">
-          <input class="input-medium" id="appendedInputButtons" type="text">
-          <button class="btn" type="button">Search</button>
-          <button class="btn" type="button">Reset</button>
+          <input class="input-medium" name="filter_search" id="filter-search" type="text" value='<?php echo $this->state->get('filter.search'); ?>'>
+          <button class="btn" type="submit">Search</button>
+          <button class="btn" type="submit" onclick="document.getElementById('filter-search').value = ''">Reset</button>
         </div>
        <?php endif; ?>
+       </form>
     </div>
     <?php endif; // End Root Category check?>
     
