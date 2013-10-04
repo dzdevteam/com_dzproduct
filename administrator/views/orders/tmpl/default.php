@@ -97,19 +97,18 @@ if (!empty($this->extra_sidebar)) {
                         <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
                     </th>
                 <?php endif; ?>
-                <th class='left' width="10%">
+                <th width="10%">
                 <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ORDERS_CODE', 'code', $listDirn, $listOrder); ?>
                 </th>
-                <th class='left' width="20%">
-                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ORDERS_NAME', 'a.name', $listDirn, $listOrder); ?>
-                </th>
-                <th class='left'>
-                <?php echo JText::_('COM_DZPRODUCT_ORDERS_CONTACT'); ?>
-                </th>
-                <th class='left'>
+                <th class="text-right" width="10%">
                 <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ORDERS_TOTAL_PRICE', 'total_price', $listDirn, $listOrder); ?>
                 </th>
-                    
+                <th width="20%">
+                <?php echo JHtml::_('grid.sort',  'COM_DZPRODUCT_ORDERS_NAME', 'a.name', $listDirn, $listOrder); ?>
+                </th>
+                <th>
+                <?php echo JText::_('COM_DZPRODUCT_ORDERS_CONTACT'); ?>
+                </th>
                 <?php if (isset($this->items[0]->id)): ?>
                     <th width="1%" class="nowrap center hidden-phone">
                         <?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
@@ -181,6 +180,9 @@ if (!empty($this->extra_sidebar)) {
                     <?php echo $this->escape($item->code); ?>
                 <?php endif; ?>
                 </td>
+                <td class="item-price">
+                    <?php echo ($item->total_price) ? $item->total_price : 0; ?>
+                </td>
                 <td>
                     <?php echo $item->name; ?>
                 </td>
@@ -188,9 +190,6 @@ if (!empty($this->extra_sidebar)) {
                     <span aria-hidden="true" class="icon-home"></span>&nbsp;<?php echo $item->address; ?><br />
                     <span aria-hidden="true" class="icon-mobile"></span>&nbsp;<?php echo $item->phone; ?><br />
                     <span aria-hidden="true" class="icon-mail"></span>&nbsp;<?php echo $item->email; ?><br />
-                </td>
-                <td>
-                    <?php echo $item->total_price; ?>
                 </td>
                 <?php if (isset($this->items[0]->id)): ?>
                     <td class="center hidden-phone">

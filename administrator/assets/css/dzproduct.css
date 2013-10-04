@@ -38,3 +38,6 @@
       padding-left:60px!important;
 }
 
+.item-quantity, .item-price, .text-right {
+    text-align: right !important;
+}

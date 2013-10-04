@@ -20,6 +20,8 @@ $document = JFactory::getDocument();
 $document->addStyleSheet('components/com_dzproduct/assets/css/dzproduct.css');
 $document->addScript('components/com_dzproduct/assets/js/order.js');
 $document->addScriptDeclaration('Joomla.rootUrl = "' . JUri::root().'";');
+
+JText::script('COM_DZPRODUCT_ITEMS_REMOVE');
 ?>
 <script type="text/javascript">
     js = jQuery.noConflict();
@@ -116,6 +118,7 @@ $document->addScriptDeclaration('Joomla.rootUrl = "' . JUri::root().'";');
                         <th><?php echo JText::_('COM_DZPRODUCT_ITEMS_DESCRIPTION'); ?></th>
                         <th><?php echo JText::_('COM_DZPRODUCT_ITEMS_PRICE'); ?></th>
                         <th><?php echo JText::_('COM_DZPRODUCT_ITEMS_QUANTITY'); ?></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,13 +136,18 @@ $document->addScriptDeclaration('Joomla.rootUrl = "' . JUri::root().'";');
                             <?php echo $this->escape($product->description); ?>
                             <input type="hidden" name="jform[ordered][<?php echo $product->id; ?>][description]" value='<?php echo $this->escape($product->description); ?>' />
                         </td>
-                        <td class="item-price" contenteditable="true">
-                            <?php echo $product->price; ?>
+                        <td class="item-price">
+                            <span contenteditable="true"><?php echo $product->price; ?></span>
                             <input type="hidden" name="jform[ordered][<?php echo $product->id; ?>][price]" value='<?php echo (int) $product->price; ?>' />
                         </td>
-                        <td class="item-quantity" contenteditable="true">
-                            <?php echo $product->quantity; ?>
+                        <td class="item-quantity">
+                            <span contenteditable="true"><?php echo $product->quantity; ?></span>
                             <input type="hidden" name="jform[ordered][<?php echo $product->id; ?>][quantity]" value='<?php echo (int) $product->quantity; ?>' />
+                        </td>
+                        <td class="item-delete">
+                            <button type="button" class="btn btn-link" data-id="<?php echo $product->id; ?>">
+                            <?php echo JText::_('COM_DZPRODUCT_ITEMS_REMOVE'); ?>
+                            </button>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -147,7 +155,7 @@ $document->addScriptDeclaration('Joomla.rootUrl = "' . JUri::root().'";');
                 <tfoot>
                     <tr>
                         <td colspan="3"><span class="pull-right"><strong>Total Price</strong></span></td>
-                        <td colspan="2" id="total-price"></td>
+                        <td colspan="4" id="total-price"></td>
                     </tr>
                 </tfoot>
             </table>

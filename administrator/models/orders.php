@@ -86,7 +86,7 @@ class DZProductModelOrders extends JModelList {
         $query->select('CONCAT(a.id, "O", DATE_FORMAT(a.created, "%d%m" ), "T") as code');
         
         // Calculate price
-        $query->select('SUM(i.price) as total_price');
+        $query->select('SUM(i.price * i.quantity) as total_price');
         $query->join('LEFT', '#__dzproduct_order_items as i ON i.order_id = a.id');
         $query->group('a.id');
         

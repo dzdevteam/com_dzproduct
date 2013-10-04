@@ -1,15 +1,20 @@
 jQuery(document).ready(function(){
     // Add item button
     jQuery('#btn-add-item').on('click', function() {
-        var id = jQuery('#jform_items').val();
-        var index = 0;
+        var id = jQuery('#jform_items').val(),
+            btn = this, index = 0;
+        if (jQuery(this).data('index') == null) {
+            jQuery(this).data('index', index);
+        } else {
+            index = jQuery(this).data('index');
+            index = jQuery(this).data('index', index + 1).data('index');
+        }
         jQuery.ajax(
             'index.php?option=com_dzproduct&task=items.item&format=JSON&id=' + id,
             {
                 success: function(data, textStatus, jqXHR) {
                     if (!jQuery.isEmptyObject(data)) {
                         // Generate new order item row
-                        index = index + 1;
                         prefix = 'jform[ordered][new' + index + ']';
                         var html = '<tr class="new' + index + '">';
                         
@@ -33,20 +38,24 @@ jQuery(document).ready(function(){
                         html += '</td>';
                         
                         // The price
-                        html += '<td class="item-price" contenteditable="true">';
-                        html += data.price;
+                        html += '<td class="item-price">';
+                        html += '<span contenteditable="true">' + data.price + '</span>';
                         html += "<input type='hidden' name='" + prefix + "[price]' value='" + data.price + "' />";
                         html += '</td>';
                         
                         // The quantity
-                        html += '<td class="item-quantity" contenteditable="true">';
+                        html += '<td class="item-quantity">';
                         var quantity = parseInt(jQuery('#input-item-quantity').val());
                         if (quantity < 1) 
                             quantity = 1;
-                        html += quantity;
+                        html += '<span contenteditable="true">' + quantity + '</span>';
                         html += "<input type='hidden' name='" + prefix + "[quantity]' value='" + quantity + "' />";
                         html += '</td>';
                         
+                        // The delete button
+                        html += '<td class="item-delete">';
+                        html += '<button class="btn btn-link" type="button">' + Joomla.JText._('COM_DZPRODUCT_ITEMS_REMOVE') + '</button>';
+                        html += '</td>';
                         // End row
                         html += '</tr>';
                         
@@ -57,7 +66,8 @@ jQuery(document).ready(function(){
                         update_price();
                         
                         // Re-attach handler to newly created cells
-                        jQuery('tr.new' + index + ' > td[contenteditable="true"]').each(function(){contenteditable_init(this)});
+                        jQuery('tr.new' + index + ' > td > span[contenteditable="true"]').each(function(){contenteditable_init(this)});
+                        jQuery('tr.new' + index + ' > td.item-delete > button').on('click', delete_handler);
                     }
                 }
             });
@@ -80,15 +90,15 @@ jQuery(document).ready(function(){
             jQuery(this).trigger('change');
         });
         jQuery(field).on('change', function(){
-            jQuery('input', this).val(jQuery(this).text());
+            jQuery('input', this.parentNode).val(jQuery(this).text());
             update_price();
         });
     }
     
     // Update total price
     var update_price = function() {
-        var prices = jQuery(".item-price");
-        var quantities = jQuery(".item-quantity");
+        var prices = jQuery(".item-price > span");
+        var quantities = jQuery(".item-quantity > span");
         var total = 0;
         for (var i = 0; i < prices.length; i++) {
             total += parseInt(prices[i].innerText) * parseInt(quantities[i].innerText);
@@ -96,7 +106,22 @@ jQuery(document).ready(function(){
         jQuery('#total-price').text(total);
     }
     
+    // Delete item buttons
+    var delete_handler = function() {
+        // Add a new input to declare which item has been deleted
+        var id = jQuery(this).data('id');
+        if (parseInt(id) > 0) {
+            jQuery('#order-form').append('<input type="hidden" name="jform[deleted][]" value="' + id + '" />')
+        }
+        
+        // Then remove the current item from the view
+        jQuery(this).parents('tr').fadeOut(300, function() {
+            jQuery(this).remove(); 
+            update_price(); // Update the price again
+        });
+    }
+    jQuery('.item-delete > button').on('click', delete_handler);
     // Start up
-    jQuery('td[contenteditable="true"]').each(function(){contenteditable_init(this)});
+    jQuery('span[contenteditable="true"]').each(function(){contenteditable_init(this)});
     update_price();
 });

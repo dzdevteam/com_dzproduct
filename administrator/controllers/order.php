@@ -28,7 +28,9 @@ class DZProductControllerOrder extends JControllerForm
      */
     protected function postSaveHook(JModelLegacy $model, $validData = array()) { 
         $order_id = $model->getState($model->getName().'.id');
-        $data = JFactory::getApplication()->input->post->getArray(array('jform' => array('ordered' => 'array')));
+        $data = JFactory::getApplication()->input->post->getArray(array('jform' => array('ordered' => 'array', 'deleted' => 'array')));
+        
+        // We add order items right on order edit view
         foreach ($data['jform']['ordered'] as $item) {
             $item['order_id'] = $order_id;
             $model = JModelLegacy::getInstance('OrderItem', 'DZProductModel');
@@ -47,5 +49,12 @@ class DZProductControllerOrder extends JControllerForm
                 continue;
             }
         }
+        
+        // Make sure the submitted deleted ids are all integer
+        JArrayHelper::toInteger($data['jform']['deleted']);
+        
+        // Remove items
+        $model = JModelLegacy::getInstance('OrderItem', 'DZProductModel');
+        $model->delete($data['jform']['deleted']);        
     }
 }
