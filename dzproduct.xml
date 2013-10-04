@@ -7,7 +7,7 @@
     <author>DZ Team</author>
     <authorEmail>dev@dezign.vn</authorEmail>
     <authorUrl>dezign.vn</authorUrl>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <description>Component for managing products/services/items </description>
     
     <install> <!-- Runs on install -->
