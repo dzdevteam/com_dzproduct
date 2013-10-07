@@ -154,7 +154,7 @@ JText::script('COM_DZPRODUCT_ITEMS_REMOVE');
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3"><span class="pull-right"><strong>Total Price</strong></span></td>
+                        <td colspan="3"><span class="pull-right"><strong><?php echo JText::_('COM_DZPRODUCT_ORDERS_TOTAL_PRICE'); ?></strong></span></td>
                         <td colspan="4" id="total-price"></td>
                     </tr>
                 </tfoot>

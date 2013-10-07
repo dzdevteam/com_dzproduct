@@ -102,15 +102,15 @@ class DZProductModelOrder extends JModelAdmin
     /**
      * Method to get ordered products
      */
-    public function getProducts()
+    public function getProducts($pk = null)
     {
         $app = JFactory::getApplication();
-        $order_id = $app->input->get('id');
+        $pk = (!empty($pk)) ? $pk : (int) $this->getState($this->getName() . '.id');
         $products = array();
         
-        if ($order_id) {
+        if ($pk > 0) {
             $model = JModelLegacy::getInstance('OrderItems', 'DZProductModel', array('ignore_request' => true));
-            $model->setState('filter.order_id', $order_id);
+            $model->setState('filter.order_id', $pk);
             $products = $model->getItems();
         }
         

@@ -119,9 +119,9 @@ class DZProductHelper
      */
     public static function sendOrder($orderid, $mode = self::EMAIL_ADMIN)
     {
-        $model = JModelLegacy::getInstance('Order');
+        $model = JModelLegacy::getInstance('Order', 'DZProductModel');
         $params = JComponentHelper::getParams('com_dzproduct');
-        $order = $model->get((int) $orderid);
+        $order = $model->getItem($orderid);
         if ($order == null) {
             return false;
         }
@@ -130,12 +130,12 @@ class DZProductHelper
         // Basic information
         switch ($mode) {
             case self::EMAIL_ADMIN:
-                $data['subject']    = $params->get('order_email_admin_subject', '');
-                $data['body']       = $params->get('order_email_admin_body', '');
+                $data['subject']    = $params->get('order_mail_admin_subject', '');
+                $data['body']       = $params->get('order_mail_admin_body', '');
                 break;
             case self::EMAIL_CUSTOMER:
-                $data['subject']    = $params->get('order_email_customer_subject', '');
-                $data['body']       = $params->get('order_email_customer_body', '');
+                $data['subject']    = $params->get('order_mail_customer_subject', '');
+                $data['body']       = $params->get('order_mail_customer_body', '');
                 break;
             default:
                 $data['subject']    = '';
@@ -152,30 +152,31 @@ class DZProductHelper
         $data['address']    = $order->address;
         
         // Ordered products
-        $data['ordertable']  = '<table>';
+        $data['ordertable']  = '<table style="border: 1px solid #ddd; border-radius: 4px; border-spacing: 0px;">';
         $data['ordertable'] .= '<thead><tr>';
-        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_TITLE').'</th>';
-        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_IMAGE').'</th>';
-        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_DESCRIPTION').'</th>';
-        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_PRICE').'</th>';
-        $data['ordertable'] .= '<th>'.JText::_('COM_DZPRODUCT_ITEMS_QUANTITY').'</th>';
+        $data['ordertable'] .= '<th width="20%" style="padding: 8px;">'.JText::_('COM_DZPRODUCT_ITEMS_TITLE').'</th>';
+        $data['ordertable'] .= '<th width="10%" style="border-left: 1px solid #ddd;">'.JText::_('COM_DZPRODUCT_ITEMS_IMAGE').'</th>';
+        $data['ordertable'] .= '<th style="border-left: 1px solid #ddd;">'.JText::_('COM_DZPRODUCT_ITEMS_DESCRIPTION').'</th>';
+        $data['ordertable'] .= '<th width="15%" style="border-left: 1px solid #ddd;">'.JText::_('COM_DZPRODUCT_ITEMS_PRICE').'</th>';
+        $data['ordertable'] .= '<th width="15%" style="border-left: 1px solid #ddd;">'.JText::_('COM_DZPRODUCT_ITEMS_QUANTITY').'</th>';
         $data['ordertable'] .= '</tr></thead>';
         $data['ordertable'] .= '<tbody>';
-        $products            = $model->getProducts();
+        $products            = $model->getProducts($orderid);
         $total_price         = 0;
-        foreach ($product as $product) {
+        foreach ($products as $product) {
             $data['ordertable'] .= '<tr>';
-            $data['ordertable'] .= '<td>'.$product->title.'</td>';
-            $data['ordertable'] .= '<td>'.JUri::root().$product->image.'</td>';
-            $data['ordertable'] .= '<td>'.$product->description.'</td>';
-            $data['ordertable'] .= '<td>'.$product->price.'</td>';
-            $data['ordertable'] .= '<td>'.$product->quantity.'</td>';
+            $data['ordertable'] .= '<td style="border-top: 1px solid #ddd;padding: 8px;padding: 8px;">'.$product->title.'</td>';
+            $data['ordertable'] .= '<td style="border-top: 1px solid #ddd;border-left: 1px solid #ddd;padding: 8px;"><img src="'.JUri::root().$product->image.'" width="100%"/></td>';
+            $data['ordertable'] .= '<td style="border-top: 1px solid #ddd;border-left: 1px solid #ddd;padding: 8px;">'.$product->description.'</td>';
+            $data['ordertable'] .= '<td style="text-align: right; border-top: 1px solid #ddd;border-left: 1px solid #ddd;padding: 8px;">'.$product->price.'</td>';
+            $data['ordertable'] .= '<td style="text-align: right; border-top: 1px solid #ddd;border-left: 1px solid #ddd;padding: 8px;">'.$product->quantity.'</td>';
             $data['ordertable'] .= '</tr>';
             $total_price        += $product->price * $product->quantity;
         }
         $data['ordertable'] .= '</tbody>';
         $data['ordertable'] .= '<tfoot><tr>';
-        $data['ordertable'] .= '<td colspan="3">'.JText::_('COM_DZPRODUCT_ORDERS_TOTAL_PRICE').'</td>';
+        $data['ordertable'] .= '<td colspan="3" style="text-align: right; border-top: 1px solid #ddd;padding: 8px;"><strong>'.JText::_('COM_DZPRODUCT_ORDERS_TOTAL_PRICE').'</strong></td>';
+        $data['ordertable'] .= '<td style="text-align: right; border-top: 1px solid #ddd;border-left: 1px solid #ddd;padding: 8px;">'.$total_price.'</td><td style="border-top: 1px solid #ddd;border-left: 1px solid #ddd;"></td>';
         $data['ordertable'] .= '</tr></tfoot>';
         $data['ordertable'] .= '</table>';
         
@@ -190,13 +191,14 @@ class DZProductHelper
         
         /* BUILD THE MAILER */
         $mailer = JFactory::getMailer();
+        $app = JFactory::getApplication();
         
         // Do basic setup
         $mailer->setSender(array($app->getCfg('mailfrom'), $app->getCfg('fromname')));
         $mailer->isHtml(true);
         switch ($mode) {
         case self::EMAIL_ADMIN:
-            $list = explode(',', $params->get('order_email_admin_list', ''));
+            $list = explode(',', $params->get('order_mail_admin_list', ''));
             break;
         case self::EMAIL_CUSTOMER:
             if ($order->email)

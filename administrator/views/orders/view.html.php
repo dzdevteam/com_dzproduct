@@ -101,7 +101,10 @@ class DzproductViewOrders extends JViewLegacy
                 JToolBarHelper::divider();
             }
         }
-
+        
+        JToolBarHelper::custom('orders.mailadmin', 'mail', 'mail', 'COM_DZPRODUCT_TOOLBAR_SEND_ADMIN', true);
+        JToolBarHelper::custom('orders.mailcustomer', 'mail', 'mail', 'COM_DZPRODUCT_TOOLBAR_SEND_CUSTOMER', true);
+        
         if ($canDo->get('core.admin')) {
             JToolBarHelper::preferences('com_dzproduct');
         }
