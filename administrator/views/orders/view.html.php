@@ -114,17 +114,28 @@ class DzproductViewOrders extends JViewLegacy
         
         $this->extra_sidebar = '';
 
+        $options = array();
+        $options[0]         = new stdClass();
+        $options[0]->value  = 1;
+        $options[0]->text   = JText::_('COM_DZPRODUCT_OPTION_CONFIRMED');
+        $options[1]         = new stdClass();
+        $options[1]->value  = 0;
+        $options[1]->text   = JText::_('COM_DZPRODUCT_OPTION_PENDING');
+        $options[2]         = new stdClass();
+        $options[2]->value  = 2;
+        $options[2]->text   = JText::_('COM_DZPRODUCT_OPTION_ARCHIVED');
+        $options[3]         = new stdClass();
+        $options[3]->value  = -2;
+        $options[3]->text   = JText::_('COM_DZPRODUCT_OPTION_CANCELLED');
         JHtmlSidebar::addFilter(
 
             JText::_('JOPTION_SELECT_PUBLISHED'),
 
             'filter_published',
 
-            JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
+            JHtml::_('select.options', $options, "value", "text", $this->state->get('filter.state'), true)
 
         );
-
-        
     }
     
     protected function getSortFields()
