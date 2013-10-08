@@ -134,7 +134,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <?php endif; ?>
     <!-- PRODUCT FOOTER -->
     <div class="product-footer">
-        
+        <button class="btn btn-primary btn-order"><i class="icon-shopping-cart icon-white"></i><?php echo JText::_('COM_DZPRODUCT_BTN_ADD_TO_CART'); ?></button>
     </div>
     
     <!-- PRODUCT BOTTOM MODULE -->

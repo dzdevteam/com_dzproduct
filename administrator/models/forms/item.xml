@@ -284,6 +284,14 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
+                <field
+                    name="item_show_cart_button"
+                    type="radio" default="1" class="btn-group"
+                    label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_CART_BUTTON"
+                    description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_CART_BUTTON">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
             </fieldset>
         </fields>
 

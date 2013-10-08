@@ -235,6 +235,7 @@ function DzproductParseRoute($segments)
             return $vars;
         } else {
             $query = 'SELECT alias, catid FROM #__dzproduct_items WHERE id = ' . (int) $id;
+            $db = JFactory::getDbo();
             $db->setQuery($query);
             $item = $db->loadObject();
 

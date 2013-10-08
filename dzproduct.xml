@@ -25,7 +25,9 @@
             <schemapath type="mysql">sql/updates/mysql</schemapath>
         </schemas>
     </update>
-
+    <media folder="media" destination="com_dzproduct">
+        <folder>js</folder>
+    </media>
     <files folder="site">
         <filename>index.html</filename>
         <filename>dzproduct.php</filename>

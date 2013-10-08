@@ -241,6 +241,16 @@ class DzproductModelCategory extends JModelList {
                 $registry = new JRegistry($field['dname']);
                 $field['dname'] = $registry->toArray();
             }
+            
+            // Build data attribute for cart button
+            $item->data = json_encode(array(
+                'id' => $item->id,
+                'title' => $item->title,
+                'image' => $item->images['intro'],
+                'description' => $item->short_desc,
+                'quantity' => 1,
+                'price' => ($item->saleoff) ? $item->saleoff : $item->price,
+            ));
         }
         
         return $items;

@@ -13,6 +13,9 @@ $menu = &JSite::getMenu();
 $active = $menu->getItem($productid);
 $params = $menu->getParams( $active->id );
 $pageclass_sfx = $params->get( 'pageclass_sfx' );
+JHtml::_('jquery.framework');
+JHtml::_('script', 'com_dzproduct/jquery.cookie.js', true, true);
+JHtml::_('script', 'com_dzproduct/order.js', true, true);
 ?>
 
 <div class="component-inner products-category<?php if($pageclass_sfx) echo $pageclass_sfx?>">
@@ -92,7 +95,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
                 <div class="product-item">
                 <a href="<?php echo $product->link; ?>" class="product-link">
                     <?php if ($this->params->get('category_show_item_intro_image')) : ?>
-                    <div class="product-image"><img src="<?php echo JUri::root().'/'.$product->images['intro'];?>" alt="<?php echo $product->title;?>"/></div>
+                    <div class="product-image"><img src="<?php echo JUri::root().$product->images['intro'];?>" alt="<?php echo $product->title;?>"/></div>
                     <?php endif; ?>
                     
                     <?php if ($this->params->get('category_show_item_title', 1)) : ?>
@@ -161,7 +164,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
                     </span>
                     <?php endif; ?>
                     </div>
-                
+                    <button class="btn btn-primary btn-order" data-info='<?php echo $product->data; ?>'><i class="icon-shopping-cart icon-white"></i><?php echo JText::_('COM_DZPRODUCT_BTN_ADD_TO_CART'); ?></button>
                 </div>                
                
             </div>

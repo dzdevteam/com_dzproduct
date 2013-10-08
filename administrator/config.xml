@@ -207,6 +207,14 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
+        <field
+            name="category_show_item_cart_button"
+            type="radio" default="1" class="btn-group"
+            label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_CART_BUTTON"
+            description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_CART_BUTTON">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
     </fieldset>
     
     <fieldset 
@@ -325,7 +333,74 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
+        <field
+            name="item_show_cart_button"
+            type="radio" default="1" class="btn-group"
+            label="COM_DZPRODUCT_CONFIG_LBL_SHOW_ITEM_CART_BUTTON"
+            description="COM_DZPRODUCT_CONFIG_DESC_SHOW_ITEM_CART_BUTTON">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
     </fieldset>
+    
+    <fieldset
+        name="order"
+        label="COM_DZPRODUCT_ORDER_OPTIONS">
+        <field 
+            type="spacer" 
+            label="COM_DZPRODUCT_CONFIG_RECAPTCHA" />
+        <field 
+            name="order_recaptcha_publickey"
+            type="text" class="span6"
+            label="COM_DZPRODUCT_CONFIG_LBL_RECAPTCHA_PUBLIC_KEY"
+            description="COM_DZPRODUCT_CONFIG_DESC_RECAPTCHA_PUBLIC_KEY" />
+        <field 
+            name="order_recaptcha_privatekey"
+            type="text" class="span6"
+            label="COM_DZPRODUCT_CONFIG_LBL_RECAPTCHA_PRIVATE_KEY"
+            description="COM_DZPRODUCT_CONFIG_DESC_RECAPTCHA_PRIVATE_KEY" />
+        
+        <field 
+            type="spacer" 
+            label="COM_DZPRODUCT_CONFIG_ADMIN_NOTIFICATION" />
+        <field 
+            name="order_mail_admin_subject"
+            type="text" class="span6"
+            default="A new order has just been placed!"
+            label="COM_DZPRODUCT_CONFIG_LBL_SUBJECT"
+            description="COM_DZPRODUCT_CONFIG_DESC_SUBJECT" />
+        
+        <field 
+            name="order_mail_admin_body"
+            type="editor" filter="raw"
+            default="" class="span6" rows="10"
+            label="COM_DZPRODUCT_CONFIG_LBL_BODY"
+            description="COM_DZPRODUCT_CONFIG_DESC_BODY" />
+        
+        <field 
+            name="order_mail_admin_list"
+            type="textarea" class="span6" rows="10"
+            label="COM_DZPRODUCT_CONFIG_LBL_RECEIVERS"
+            description="COM_DZPRODUCT_CONFIG_DESC_RECEIVERS" />
+        
+        <field 
+            type="spacer" 
+            label="COM_DZPRODUCT_CONFIG_CUSTOMER_NOTIFICATION" />
+        <field 
+            name="order_mail_customer_subject"
+            type="text" class="span6"
+            default="You have ordered our products!"
+            label="COM_DZPRODUCT_CONFIG_LBL_SUBJECT"
+            description="COM_DZPRODUCT_CONFIG_DESC_SUBJECT" />
+        
+        <field 
+            name="order_mail_customer_body"
+            type="editor" filter="raw"
+            default="" class="span6" rows="10"
+            label="COM_DZPRODUCT_CONFIG_LBL_BODY"
+            description="COM_DZPRODUCT_CONFIG_DESC_BODY" />
+    </fieldset>
+    
     <fieldset name="permissions"
         description="JCONFIG_PERMISSIONS_DESC"
         label="JCONFIG_PERMISSIONS_LABEL"

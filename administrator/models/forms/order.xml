@@ -32,13 +32,13 @@
             description="COM_DZPRODUCT_FORM_DESC_ORDER_PHONE" 
             /> 
 
-        <field name="address" type="textarea"
+        <field name="address" type="textarea" required="true"
             label="COM_DZPRODUCT_FORM_LBL_ORDER_ADDRESS"
             description="COM_DZPRODUCT_FORM_DESC_ORDER_ADDRESS" 
             cols="100"
             rows="8" /> 
 
-        <field name="email" type="text"
+        <field name="email" type="text" required="true"
             label="COM_DZPRODUCT_FORM_LBL_ORDER_EMAIL"
             description="COM_DZPRODUCT_FORM_DESC_ORDER_EMAIL"
             filter="string" />

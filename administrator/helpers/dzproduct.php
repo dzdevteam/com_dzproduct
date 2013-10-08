@@ -218,7 +218,7 @@ class DZProductHelper
         // Now send
         $response = $mailer->send();
         if ($response instanceof Exception)
-            return false;
+            return $response;
         
         return true;
     }

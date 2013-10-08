@@ -141,6 +141,24 @@ abstract class DZProductHelperRoute
 
         return $link;
     }
+    
+    public static function getOrderRoute()
+    {
+        //Create the link
+        $link = 'index.php?option=com_dzproduct&view=order';
+        
+        $needles = array(
+            'order' => array(0)
+        );
+        
+        if ($item = self::_findItemid($needles)) {
+            $link .= '&Itemid='.$item;
+        } elseif ($item = self::_findItemid()) {
+            $link .= '&Itemid='.$item;
+        }
+        
+        return $link;
+    }
 
 
     protected  static function _findItemid($needles = null)
@@ -177,6 +195,8 @@ abstract class DZProductHelperRoute
                     
                     if (isset($item->query['id'])) {
                         self::$lookup[$language][$view][$item->query['id']] = $item->id;
+                    } else {
+                        self::$lookup[$language][$view][0] = $item->id; // Support view without "id" in query
                     }
                 }
             }
