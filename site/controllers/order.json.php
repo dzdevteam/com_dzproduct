@@ -45,7 +45,10 @@ class DzproductControllerOrder extends DZProductController
 
         // Get the user data.
         $data = JFactory::getApplication()->input->get('jform', array(), 'array');
-
+        $cart = JFactory::getApplication()->input->post->getArray(array('jform' => array('products' => 'array')));
+        if (empty($cart)) {
+            throw new RuntimeException(JText::_('COM_DZPRODUCT_EMPTY_CART'));
+        }
         // Validate the posted data.
         $form = $model->getForm();
         if (!$form) {
@@ -85,14 +88,13 @@ class DzproductControllerOrder extends DZProductController
         }
         $order_id = $model->getState($model->getName().'.id');
         
-        // We add order items right on order edit view
-        $data = JFactory::getApplication()->input->post->getArray(array('jform' => array('products' => 'array')));
+        /* --- CART PROCESSING --- */
         JModelLegacy::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/models/');
         
         // Get the products model
         $products_model = JModelLegacy::getInstance('Items', 'DZProductModel');
         $filter_ids = array();
-        foreach ($data['jform']['products'] as $id => $value) {
+        foreach ($cart['jform']['products'] as $id => $value) {
             $filter_ids[] = $id;
         }
         $products_model->setState('filter.ids', $filter_ids);
@@ -100,10 +102,10 @@ class DzproductControllerOrder extends DZProductController
         
         // Prevent customer from hacking the price
         foreach($products as $product) {
-            $data['jform']['products'][$product->id]['price'] = ($product->saleoff) ? $product->saleoff : $product->price;
+            $cart['jform']['products'][$product->id]['price'] = ($product->saleoff) ? $product->saleoff : $product->price;
         }
         
-        foreach ($data['jform']['products'] as $item) {
+        foreach ($cart['jform']['products'] as $item) {
             $item['order_id'] = $order_id;
             $item['id'] = 0;
             $model = JModelLegacy::getInstance('OrderItem', 'DZProductModel');
