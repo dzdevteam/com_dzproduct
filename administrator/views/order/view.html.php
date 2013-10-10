@@ -72,11 +72,12 @@ class DZProductViewOrder extends JViewLegacy
         // If an existing item, can save to a copy.
         if (!$isNew && $canDo->get('core.create')) {
             JToolBarHelper::custom('order.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
-        }
+        }        
         if (empty($this->item->id)) {
             JToolBarHelper::cancel('order.cancel', 'JTOOLBAR_CANCEL');
-        }
-        else {
+        } else {
+            JToolBarHelper::custom('order.mailadmin', 'mail', 'mail', 'COM_DZPRODUCT_TOOLBAR_SEND_ADMIN', false);
+            JToolBarHelper::custom('order.mailcustomer', 'mail', 'mail', 'COM_DZPRODUCT_TOOLBAR_SEND_CUSTOMER', false);
             JToolBarHelper::cancel('order.cancel', 'JTOOLBAR_CLOSE');
         }
 

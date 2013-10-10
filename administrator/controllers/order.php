@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controllerform');
 
+require_once JPATH_COMPONENT.'/helpers/dzproduct.php';
+
 /**
  * Group controller class.
  */
@@ -56,5 +58,79 @@ class DZProductControllerOrder extends JControllerForm
         // Remove items
         $model = JModelLegacy::getInstance('OrderItem', 'DZProductModel');
         $model->delete($data['jform']['deleted']);        
+    }
+    
+    public function mailAdmin($key = null, $urlVar = null)
+    {
+        $model = $this->getModel();
+        $table = $model->getTable();
+        
+        // Determine the name of the primary key for the data.
+        if (empty($key))
+        {
+            $key = $table->getKeyName();
+        }
+
+        // To avoid data collisions the urlVar may be different from the primary key.
+        if (empty($urlVar))
+        {
+            $urlVar = $key;
+        }
+        
+        $recordId = $this->input->getInt($urlVar);
+        
+        if ($result = DZProductHelper::sendOrder($recordId)) {
+            $message = JText::_('COM_DZPRODUCT_MAILS_SENT_SUCCESSFULLY');
+        } else {
+            $message = JText::sprintf('COM_DZPRODUCT_MAILS_SENT_FAIL', $recordId);
+        }
+        // Redirect back to the edit screen.
+        $this->setRedirect(
+            JRoute::_(
+                'index.php?option=' . $this->option . '&view=' . $this->view_item
+                . $this->getRedirectToItemAppend($recordId, $urlVar), false
+            ),
+            $message,
+            ($result) ? 'message' : 'error'
+        );
+        
+        return $result;
+    }
+    
+    public function mailCustomer($key = null, $urlVar = null)
+    {
+        $model = $this->getModel();
+        $table = $model->getTable();
+        
+        // Determine the name of the primary key for the data.
+        if (empty($key))
+        {
+            $key = $table->getKeyName();
+        }
+
+        // To avoid data collisions the urlVar may be different from the primary key.
+        if (empty($urlVar))
+        {
+            $urlVar = $key;
+        }
+        
+        $recordId = $this->input->getInt($urlVar);
+        
+        if ($result = DZProductHelper::sendOrder($recordId, DZProductHelper::EMAIL_CUSTOMER)) {
+            $message = JText::_('COM_DZPRODUCT_MAILS_SENT_SUCCESSFULLY');
+        } else {
+            $message = JText::sprintf('COM_DZPRODUCT_MAILS_SENT_FAIL', $recordId);
+        }
+        // Redirect back to the edit screen.
+        $this->setRedirect(
+            JRoute::_(
+                'index.php?option=' . $this->option . '&view=' . $this->view_item
+                . $this->getRedirectToItemAppend($recordId, $urlVar), false
+            ),
+            $message,
+            ($result) ? 'message' : 'error'
+        );
+        
+        return $result;
     }
 }
