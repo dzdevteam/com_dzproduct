@@ -35,13 +35,13 @@ jQuery(document).ready(function(){
     var update_price = function() {
         var cart = jQuery.cookie('cart');
         var total, id;
+        total = 0;
         if (typeof cart !== 'undefined') {
-            total = 0;
             for (var id in cart) {
                 total += cart[id].price * cart[id].quantity;
             }
-            jQuery('#total-price').text(total);
         }
+        jQuery('#total-price').text(total);
     }
     jQuery(document).on('cart-updated', update_price);
     
@@ -88,13 +88,20 @@ jQuery(document).ready(function(){
     }
     
     // Send form through ajax
-    var alert_tpl = '<div class="alert fade in"><a class="close" data-dismiss="alert" href="#">&times;</a></div>';
-    var displayAlert = function(message, classname) {
-        jQuery("#alert-area").html(jQuery(alert_tpl).addClass(classname).append(message));
+    var displayAlert = function(message, class_name, show_close_btn) {
+        var alert_tpl = '<div class="alert fade in"></div>';
+        var close_btn = '<a class="close" data-dismiss="alert" href="#">&times;</a>';
+        if (typeof show_close_btn === 'undefined')
+            show_close_btn = true;
+        if (show_close_btn == true)
+            alert_tpl = jQuery(alert_tpl).append(close_btn);
+        var $alert_area = jQuery('#alert-area');
+        $alert_area.html(jQuery(alert_tpl).addClass(class_name).append(message));
+        if (jQuery('body').scrollTop() > $alert_area.offset().top)
+            jQuery('body').animate({scrollTop: $alert_area.offset().top});
     };
     var displayLoading = function() {
-        jQuery("#alert-area").html('<img src="' + Joomla.loadingGIF + '" />');
-        jQuery("#alert-area")[0].scrollIntoView();
+        displayAlert('<img src="' + Joomla.loadingGIF + '" />&nbsp;Please wait while we are processing your order...', 'alert-info', false);
     };
     var disable_handler = function() { return false; };
     
@@ -113,6 +120,9 @@ jQuery(document).ready(function(){
                             jQuery(form).off('submit');
                             jQuery(form).on('submit', disable_handler);
                             jQuery('button', form).addClass('disabled');
+                            
+                            // Remove cookie after successful order
+                            jQuery.removeCookie('cart');
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             displayAlert(errorThrown, 'alert-danger');
@@ -125,6 +135,14 @@ jQuery(document).ready(function(){
         },
         errorClass: "alert"
     });
+    
+    // Disable the form if the cart is empty
+    if (typeof jQuery.cookie('cart') == 'undefined') {
+        jQuery('#order-form').off('submit').on('submit', disable_handler);; // Remove all previous handler
+        jQuery('button', '#order-form').addClass('disabled');
+        
+        displayAlert('You haven\'t ordered any products yet!', 'alert-info', false);
+    }
     
     // Start up event
     jQuery(document).trigger('cart-updated');
