@@ -346,6 +346,18 @@
     <fieldset
         name="order"
         label="COM_DZPRODUCT_ORDER_OPTIONS">
+        <field
+            type="spacer"
+            label="COM_DZPRODUCT_ORDER_SYSTEM" />
+        <field
+            name="order_enabled"
+            type="radio" class="btn-group" default="1"
+            label="COM_DZPRODUCT_CONFIG_LBL_ORDER_ENABLED"
+            description="COM_DZPRODUCT_CONFIG_DESC_ORDER_ENABLED">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        
         <field 
             type="spacer" 
             label="COM_DZPRODUCT_CONFIG_RECAPTCHA" />

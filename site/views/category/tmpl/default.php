@@ -164,7 +164,9 @@ JHtml::_('script', 'com_dzproduct/order.js', true, true);
                     </span>
                     <?php endif; ?>
                     </div>
+                    <?php if ($this->params->get('order_enabled', 1)) { ?>
                     <button class="btn btn-primary btn-order" data-info='<?php echo $product->data; ?>'><i class="icon-shopping-cart icon-white"></i><?php echo JText::_('COM_DZPRODUCT_BTN_ADD_TO_CART'); ?></button>
+                    <?php } ?>
                 </div>                
                
             </div>
