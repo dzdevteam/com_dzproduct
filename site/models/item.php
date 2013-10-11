@@ -168,6 +168,7 @@ class DzproductModelItem extends JModelItem
                 $this->_item->data = json_encode(array(
                     'id' => $this->_item->id,
                     'title' => $this->_item->title,
+                    'link' => JRoute::_(DZProductHelperRoute::getItemRoute($this->_item->id, $this->_item->catid)),
                     'image' => $this->_item->images['intro'],
                     'description' => $this->_item->short_desc,
                     'quantity' => 1,

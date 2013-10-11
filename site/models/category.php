@@ -246,6 +246,7 @@ class DzproductModelCategory extends JModelList {
             $item->data = json_encode(array(
                 'id' => $item->id,
                 'title' => $item->title,
+                'link' => $item->link,
                 'image' => $item->images['intro'],
                 'description' => $item->short_desc,
                 'quantity' => 1,
