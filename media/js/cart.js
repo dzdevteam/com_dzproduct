@@ -4,7 +4,7 @@ jQuery.cookie.json = true;
 
 jQuery(document).ready(function(){
     // Attach handler to control the quantity for a row
-    var quantity_control = function(row, id) {
+    var quantityControl = function(row, id) {
         jQuery('.btn-decrease', row).on('click', function() {
             var cart = jQuery.cookie('cart');
             if (cart[id].quantity > 1) {
@@ -32,7 +32,7 @@ jQuery(document).ready(function(){
         });
     }
     // Update total price
-    var update_price = function() {
+    var updatePrice = function() {
         var cart = jQuery.cookie('cart');
         var total, id;
         total = 0;
@@ -43,7 +43,7 @@ jQuery(document).ready(function(){
         }
         jQuery('#total-price').text(total);
     }
-    jQuery(document).on('cart-updated', update_price);
+    jQuery(document).on('cart-updated', updatePrice);
     
     // Render products from the cart into table
     var cart = jQuery.cookie('cart');
@@ -81,7 +81,7 @@ jQuery(document).ready(function(){
             row += '</tr>';
             row = jQuery(row); // Make this a DOM object
             
-            quantity_control(row, id);
+            quantityControl(row, id);
             
             row.hide().appendTo('table#cart > tbody').fadeIn(1000);
         }
