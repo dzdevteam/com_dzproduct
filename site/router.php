@@ -160,6 +160,8 @@ function DzproductBuildRoute(&$query)
         
         unset($query['id']);
         unset($query['catid']);
+    } else if ($view == 'order') {
+        unset($query['view']);
     }
 
     // if the layout is specified and it is the same as the layout in the menu item, we
