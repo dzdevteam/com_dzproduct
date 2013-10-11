@@ -162,7 +162,17 @@ class DzproductModelItem extends JModelItem
                 $categories = JCategories::getInstance('dzproduct.items');
                 $category = $categories->get($this->_item->catid);
                 $category->link = DZProductHelperRoute::getCategoryRoute($category, $category->language);
-                $this->_item->category = $category;                
+                $this->_item->category = $category;
+                
+                // Prebuild order data
+                $this->_item->data = json_encode(array(
+                    'id' => $this->_item->id,
+                    'title' => $this->_item->title,
+                    'image' => $this->_item->images['intro'],
+                    'description' => $this->_item->short_desc,
+                    'quantity' => 1,
+                    'price' => ($this->_item->saleoff) ? $this->_item->saleoff : $this->_item->price,
+                ));
             } elseif ($error = $table->getError()) {
                 $this->setError($error);
             }

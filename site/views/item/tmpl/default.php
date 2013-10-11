@@ -19,6 +19,10 @@ defined('_JEXEC') or die;
 $itemid = JRequest::getVar('Itemid');
 $params = $this->item->params;
 $pageclass_sfx = $params->get( 'pageclass_sfx' );
+
+JHtml::_('jquery.framework');
+JHtml::_('script', 'com_dzproduct/jquery.cookie.js', true, true);
+JHtml::_('script', 'com_dzproduct/order.js', true, true);
 ?>
 <style>
 .product-images img {height:80px; margin:5px;}
@@ -134,7 +138,7 @@ $pageclass_sfx = $params->get( 'pageclass_sfx' );
     <?php endif; ?>
     <!-- PRODUCT FOOTER -->
     <div class="product-footer">
-        <button class="btn btn-primary btn-order"><i class="icon-shopping-cart icon-white"></i><?php echo JText::_('COM_DZPRODUCT_BTN_ADD_TO_CART'); ?></button>
+        <button class="btn btn-primary btn-order" data-info='<?php echo $this->item->data; ?>' data-is-item-view="true"><i class="icon-shopping-cart icon-white"></i><?php echo JText::_('COM_DZPRODUCT_BTN_ADD_TO_CART'); ?></button>
     </div>
     
     <!-- PRODUCT BOTTOM MODULE -->
