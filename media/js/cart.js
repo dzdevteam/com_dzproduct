@@ -83,7 +83,7 @@ jQuery(document).ready(function(){
             
             quantity_control(row, id);
             
-            jQuery('table#cart > tbody').append(row);
+            row.hide().appendTo('table#cart > tbody').fadeIn(1000);
         }
     }
     
