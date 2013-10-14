@@ -137,7 +137,7 @@ jQuery(document).ready(function(){
     });
     
     // Disable the form if the cart is empty
-    if (typeof jQuery.cookie('cart') == 'undefined') {
+    if (jQuery.isEmptyObject(jQuery.cookie('cart'))) {
         jQuery('#order-form').off('submit').on('submit', disable_handler);; // Remove all previous handler
         jQuery('button', '#order-form').addClass('disabled');
         
